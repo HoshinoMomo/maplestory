@@ -59,9 +59,9 @@ public class NPCScriptManager extends AbstractScriptManager {
                 Invocable iv;// = getInvocable("npc/" + npc + ".js", c, true);
 
                 if (wh == 0) {
-                    iv = getInvocable("npc/" + npc + ".js", c, true);
+                    iv = getInvocable("npc/" + npc + ".js", c);
                 } else {
-                    iv = getInvocable("npc/" + npc + "_" + wh + ".js", c, true);
+                    iv = getInvocable("npc/" + npc + "_" + wh + ".js", c);
                 }
                 /*if (iv == null) {
                     iv = getInvocable("npc/notcoded.js", c, true); //safe disposal
@@ -78,6 +78,10 @@ public class NPCScriptManager extends AbstractScriptManager {
                     cm = new NPCConversationManager(c, npc, -1, (byte) -1, iv, wh);
                 }
                 cms.put(c, cm);
+                if(iv == null)
+                    System.out.println("iv 是空");
+                else
+                    System.out.println("iv 不空");
                 if ((iv == null) || (getInstance() == null)) {
                     if (wh == 0) {
                         cm.sendOk("欢迎来到#b冒险岛Online#k。对不起暂时无法查询到功能。\r\n我的ID是: #r" + npc + "#k.\r\n ");

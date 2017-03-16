@@ -42,7 +42,7 @@ public abstract class AbstractScriptManager {
     private static final ScriptEngineManager sem = new ScriptEngineManager();
 
     protected Invocable getInvocable(String path, MapleClient c) {
-        return getInvocable(path, c, false);
+        return getInvocable(path, c, true);
     }
 
     protected Invocable getInvocable(String path, MapleClient c, boolean npc) {
@@ -70,8 +70,9 @@ public abstract class AbstractScriptManager {
 
                 engine.eval(bf);
             } else if (c != null && npc) {
-                NPCScriptManager.getInstance().dispose(c);
-                c.getSession().write(MaplePacketCreator.enableActions());
+                c.setScriptEngine(path,engine);
+                //NPCScriptManager.getInstance().dispose(c);
+                //c.getSession().write(MaplePacketCreator.enableActions());
                 //c.getPlayer().dropMessage(5, "你现在已经假死请使用@ea");
             }
             return (Invocable) engine;

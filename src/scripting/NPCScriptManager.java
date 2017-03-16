@@ -89,7 +89,6 @@ public class NPCScriptManager extends AbstractScriptManager {
                         cm.sendOk("欢迎来到#b冒险岛Online#k。对不起暂时无法查询到功能。\r\n我的ID是: #r" + npc + "_" + wh + "#k.\r\n ");
 
                     }
-
                     cm.dispose();
                     return;
                 }
@@ -100,12 +99,10 @@ public class NPCScriptManager extends AbstractScriptManager {
                 try {
                     iv.invokeFunction("start"); // Temporary until I've removed all of start
                 } catch (NoSuchMethodException nsme) {
-                    iv.invokeFunction("action", (byte) 1, (byte) 0, 0);
+                    System.out.println("执行JS脚本中的函数错误");
                 }
             } else {
-                NPCScriptManager.getInstance().dispose(c);
-                c.getSession().write(MaplePacketCreator.enableActions());
-                //c.getPlayer().dropMessage(5, "你现在已经假死请使用@ea");
+                return;
             }
 
         } catch (final Exception e) {

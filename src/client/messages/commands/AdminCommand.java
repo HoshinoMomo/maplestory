@@ -82,7 +82,6 @@ import java.sql.ResultSet;
 import java.util.LinkedHashSet;
 import server.CashItemFactory;
 import server.Timer.WorldTimer;
-import server.events.MapleOxQuizFactory;
 import tools.*;
 import tools.data.output.MaplePacketLittleEndianWriter;
 

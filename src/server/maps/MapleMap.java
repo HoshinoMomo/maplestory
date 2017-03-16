@@ -615,7 +615,7 @@ public final class MapleMap {
         SpeedRunType type = SpeedRunType.NULL;
         final MapleSquad sqd = getSquadByMap();
         if (mobid == 8810018 && mapid == 240060200) { // Horntail
-            World.Broadcast.broadcastMessage(MaplePacketCreator.serverNotice(6, "经过无数次的挑战，" + chr.getName() + "所带领的队伍终于击败了暗黑龙王的远征队！你们才是龙之林的真正英雄~").getBytes());
+            World.Broadcast.broadcastMessage(MaplePacketCreator.serverNotice(6, "经过无数次的挑战，" + chr.getName() + "所带领的队伍终于击败了暗黑龙王的远征队！你们才是龙之林的真正英雄").getBytes());
             /*
              * for (MapleCharacter c : getCharactersThreadsafe()) {
              * c.finishAchievement(16); }
@@ -628,7 +628,7 @@ public final class MapleMap {
                 doShrine(true);
             }
         } else if (mobid == 8810122 && mapid == 240060201) { // Horntail
-            World.Broadcast.broadcastMessage(MaplePacketCreator.serverNotice(6, "经过无数次的挑战，" + chr.getName() + "所带领的队伍终于击败了混沌暗黑龙王的远征队！你们才是龙之林的真正英雄~").getBytes());
+            World.Broadcast.broadcastMessage(MaplePacketCreator.serverNotice(6, "经过无数次的挑战，" + chr.getName() + "所带领的队伍终于击败了混沌暗黑龙王的远征队！你们才是龙之林的真正英雄").getBytes());
             /*
              * for (MapleCharacter c : getCharactersThreadsafe()) {
              * c.finishAchievement(24); }

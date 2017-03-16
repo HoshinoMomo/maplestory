@@ -64,9 +64,7 @@ public class NPCScriptManager extends AbstractScriptManager {
                     iv = getInvocable("npc/" + npc + "_" + wh + ".js", c, true);
                 }
                 /*if (iv == null) {
-
                     iv = getInvocable("npc/notcoded.js", c, true); //safe disposal
-
                     if (iv == null) {
                         dispose(c);
                         return;
@@ -82,9 +80,9 @@ public class NPCScriptManager extends AbstractScriptManager {
                 cms.put(c, cm);
                 if ((iv == null) || (getInstance() == null)) {
                     if (wh == 0) {
-                        cm.sendOk("欢迎来到#b冒险岛#k。对不起暂时无法查询到功能。\r\n我的ID是: #r" + npc + "#k.\r\n ");
+                        cm.sendOk("欢迎来到#b冒险岛Online#k。对不起暂时无法查询到功能。\r\n我的ID是: #r" + npc + "#k.\r\n ");
                     } else {
-                        cm.sendOk("欢迎来到#b冒险岛#k。对不起暂时无法查询到功能。\r\n我的ID是: #r" + npc + "_" + wh + "#k.\r\n ");
+                        cm.sendOk("欢迎来到#b冒险岛Online#k。对不起暂时无法查询到功能。\r\n我的ID是: #r" + npc + "_" + wh + "#k.\r\n ");
 
                     }
 

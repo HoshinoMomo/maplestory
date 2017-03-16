@@ -69,7 +69,6 @@ import server.events.MapleEvent;
 import server.events.MapleEventType;
 import server.events.MapleFitness;
 import server.events.MapleOla;
-import server.events.MapleOxQuiz;
 import server.events.MapleSnowball;
 import server.maps.MapleMapObject;
 import server.shops.HiredMerchantSave;
@@ -131,7 +130,6 @@ public class ChannelServer implements Serializable {
         events.put(MapleEventType.打瓶盖比赛, new MapleCoconut(channel, MapleEventType.打瓶盖比赛.mapids));
         events.put(MapleEventType.向高地, new MapleFitness(channel, MapleEventType.向高地.mapids));
         events.put(MapleEventType.上楼上楼, new MapleOla(channel, MapleEventType.上楼上楼.mapids));
-        events.put(MapleEventType.快速0X猜题, new MapleOxQuiz(channel, MapleEventType.快速0X猜题.mapids));
         events.put(MapleEventType.雪球赛, new MapleSnowball(channel, MapleEventType.雪球赛.mapids));
     }
 

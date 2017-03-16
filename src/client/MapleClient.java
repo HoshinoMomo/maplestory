@@ -101,7 +101,6 @@ public class MapleClient implements Serializable {
     private final transient Lock npc_mutex = new ReentrantLock();
     private final static Lock login_mutex = new ReentrantLock(true);
     private transient String tempIP = "";
-    private DebugWindow debugWindow;
 
     public MapleClient(MapleAESOFB send, MapleAESOFB receive, IoSession session) {
         this.send = send;
@@ -115,15 +114,6 @@ public class MapleClient implements Serializable {
 
     public final MapleAESOFB getSendCrypto() {
         return send;
-    }
-
-    public void StartWindow() {
-        if (this.debugWindow != null) {
-            this.debugWindow.dispose();
-        }
-        this.debugWindow = new DebugWindow();
-        this.debugWindow.setVisible(true);
-        this.debugWindow.setC(this);
     }
 
     public final IoSession getSession() {

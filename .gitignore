@@ -3,9 +3,7 @@
 .project
 .classpath
 .idea
-.up-manager.imi
 .elc.log
-/catalina.base_IS_UNDEFINED/
 .idea/
 *.ipr
 *.iml

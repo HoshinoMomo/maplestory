@@ -6,8 +6,18 @@
 
   <groupId>com.github.easyzhang</groupId>
   <artifactId>maplestory</artifactId>
-  <packaging>jar</packaging>
+  <packaging>pom</packaging>
   <version>1.0-SNAPSHOT</version>
+  <modules>
+    <module>ms-client</module>
+    <module>ms-constants</module>
+    <module>ms-database</module>
+    <module>ms-handling</module>
+    <module>ms-provider</module>
+    <module>ms-scripting</module>
+    <module>ms-server</module>
+    <module>ms-tools</module>
+  </modules>
 
   <dependencies>
     <dependency>

@@ -20,6 +20,10 @@
  */
 package net.sf.odinms.client;
 
+/**
+ * @author odinms
+ * rewrite by easyzhang
+ */
 public class SummonSkillEntry {
 
     public byte type;

@@ -26,7 +26,6 @@ public class CharacterNameAndId {
     private String name, group;
 
     public CharacterNameAndId(int id, String name, int level, int job, String group) {
-        super();
         this.id = id;
         this.name = name;
         this.level = level;

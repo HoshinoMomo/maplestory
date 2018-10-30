@@ -20,67 +20,48 @@
  */
 package net.sf.odinms.client;
 
-import net.sf.odinms.database.DatabaseConnection;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-
 /**
- * 纗ね虫
+ *  好友个体
  *
  * @author Flower
  */
 public class BuddyEntry {
 
     /**
-     * ね嘿
+     * 姓名
      */
     private final String name;
 
     /**
-     * ね┮竤舱
+     * 分组
      */
     private String group;
 
     /**
-     * ねID
+     * ID
      */
     private final int characterId;
 
     /**
-     * ね单
+     * 等级
      */
     private final int level;
 
     /**
-     * ね戮穨
+     * 职业
      */
     private final int job;
 
     /**
-     * ねǎ
+     * 是否可见
      */
     private boolean visible;
 
     /**
-     * ね繵笵
+     * 频道
      */
     private int channel;
 
-    /**
-     * 篶
-     *
-     * @param name ねà︹嘿
-     * @param characterId ねà︹ID
-     * @param group ね┮竤舱
-     * @param channel à︹┮繵笵瞒絬玥 -1
-     * @param visible ね琌ǎ
-     * @param job ねà︹戮穨
-     * @param level ねà︹单
-     */
     public BuddyEntry(String name, int characterId, String group, int channel, boolean visible, int level, int job) {
         super();
         this.name = name;
@@ -93,164 +74,56 @@ public class BuddyEntry {
     }
 
     /**
-     * @return 肚ねà︹┮繵笵狦瞒絬杠玥 -1 returns -1.
+     * @return 如果好友不在线返回-1
      */
     public int getChannel() {
         return channel;
     }
 
-    /**
-     * 砞﹚ね┮繵笵
-     *
-     * @param channel 稱璶砞﹚繵笵
-     */
     public void setChannel(int channel) {
         this.channel = channel;
     }
 
-    /**
-     * ね琌絬
-     *
-     * @return 肚ね琌ぃ琌絬
-     */
     public boolean isOnline() {
         return channel >= 0;
     }
 
-    /**
-     * 砞﹚ね竒瞒絬
-     */
     public void setOffline() {
         channel = -1;
     }
 
-    /**
-     * 眔ね嘿
-     *
-     * @return ね嘿
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * 眔ねà︹ID
-     *
-     * @return ねà︹ID
-     */
     public int getCharacterId() {
         return characterId;
     }
 
-    /**
-     * 眔ね单
-     *
-     * @return ね单
-     */
     public int getLevel() {
         return level;
     }
 
-    /**
-     * 眔ね戮穨
-     *
-     * @return ね戮穨
-     */
     public int getJob() {
         return job;
     }
 
-    /**
-     * 砞﹚ね琌ぃ琌ǎ
-     *
-     * @param visible 陪ボ絬籔
-     */
     public void setVisible(boolean visible) {
         this.visible = visible;
     }
 
-    /**
-     * 肚ね琌ぃ琌陪ボ
-     *
-     * @return ね琌ǎ
-     */
     public boolean isVisible() {
         return visible;
     }
 
-    /**
-     * 砞﹚ね┮竤舱
-     *
-     * @return 竤舱嘿
-     */
     public String getGroup() {
         return group;
     }
 
-    /**
-     * 砞﹚ね┮竤舱
-     *
-     * @param newGroup 穝竤舱嘿
-     */
     public void setGroup(String newGroup) {
         this.group = newGroup;
     }
 
-    public static BuddyEntry getByNameFromDB(String buddyName) {
-        try {
-            Connection con = DatabaseConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement("SELECT id, name, level, job FROM characters WHERE name = ?");
-            ps.setString(1, buddyName);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return new BuddyEntry(
-                        rs.getString("name"),
-                        rs.getInt("id"),
-                        BuddyList.DEFAULT_GROUP,
-                        -1,
-                        false,
-                        rs.getInt("level"),
-                        rs.getInt("job"));
-            } else {
-                return null;
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            //FilePrinter.printError("BuddyEntry.txt", ex, "getByNameFromDB has SQLException");
-            return null;
-        }
-    }
-
-    public static BuddyEntry getByIdfFromDB(int buddyCharId) {
-        try {
-            Connection con = DatabaseConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement("SELECT id, name, level, job FROM characters WHERE id = ?");
-            ps.setInt(1, buddyCharId);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return new BuddyEntry(
-                        rs.getString("name"),
-                        rs.getInt("id"),
-                        BuddyList.DEFAULT_GROUP,
-                        -1,
-                        true,
-                        rs.getInt("level"),
-                        rs.getInt("job"));
-            } else {
-                return null;
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            //FilePrinter.printError("BuddyEntry.txt", ex, "getByNameFromDB has SQLException");
-            return null;
-        }
-    }
-
-    /**
-     * 
-     *
-     * @return 俱计
-     */
     @Override
     public final int hashCode() {
         final int prime = 31;
@@ -259,12 +132,6 @@ public class BuddyEntry {
         return result;
     }
 
-    /**
-     * 耞琌ね
-     *
-     * @param obj 饼肚ン
-     * @return 琌妓
-     */
     @Override
     public final boolean equals(Object obj) {
         if (this == obj) {

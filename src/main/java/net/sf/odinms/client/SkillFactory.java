@@ -20,18 +20,28 @@
  */
 package net.sf.odinms.client;
 
-import net.sf.odinms.provider.*;
+
+import net.sf.odinms.provider.MapleData;
+import net.sf.odinms.provider.MapleDataDirectoryEntry;
+import net.sf.odinms.provider.MapleDataFileEntry;
+import net.sf.odinms.provider.MapleDataProvider;
+import net.sf.odinms.provider.MapleDataProviderFactory;
+import net.sf.odinms.provider.MapleDataTool;
 import net.sf.odinms.tools.StringUtil;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SkillFactory {
 
     private static final Map<Integer, ISkill> skills = new HashMap<Integer, ISkill>();
     private static final Map<Integer, List<Integer>> skillsByJob = new HashMap<Integer, List<Integer>>();
     private static final Map<Integer, SummonSkillEntry> SummonSkillInformation = new HashMap<Integer, SummonSkillEntry>();
-     private final static MapleData stringData = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath") + "/String.wz")).getData("Skill.img");
+    private final static MapleData stringData = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath") + "/String.wz")).getData("Skill.img");
    private static MapleDataProvider datasource = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath") + "/Skill.wz"));
 
     public static final ISkill getSkill(final int id) {

@@ -22,6 +22,11 @@ package net.sf.odinms.client;
 
 import java.io.Serializable;
 
+/**
+ * 技能宏指令相关
+ * @author odinms
+ * rewrite by easyzhang
+ */
 public class SkillMacro implements Serializable {
 
     private static final long serialVersionUID = -63413738569L;

@@ -23,6 +23,7 @@ package net.sf.odinms.handling.cashshop;
 import net.sf.odinms.handling.MapleServerHandler;
 import net.sf.odinms.handling.channel.PlayerStorage;
 import net.sf.odinms.handling.mina.MapleCodecFactory;
+import net.sf.odinms.server.MTSStorage;
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.buffer.SimpleBufferAllocator;
 import org.apache.mina.core.filterchain.IoFilter;
@@ -31,10 +32,14 @@ import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.transport.socket.SocketSessionConfig;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 import net.sf.odinms.server.ServerProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.InetSocketAddress;
 
 public class CashShopServer {
+
+    private static final Logger logger = LoggerFactory.getLogger(CashShopServer.class);
 
     private static String ip;
     private final static int PORT = 8600;//商城端口读取配置里面的端口
@@ -48,7 +53,7 @@ public class CashShopServer {
         IoBuffer.setUseDirectBuffer(false);
         IoBuffer.setAllocator(new SimpleBufferAllocator());
         acceptor = new NioSocketAcceptor();
-        acceptor.getFilterChain().addLast("codec", (IoFilter) new ProtocolCodecFilter(new MapleCodecFactory()));
+        acceptor.getFilterChain().addLast("codec",new ProtocolCodecFilter(new MapleCodecFactory()));
 
         ((SocketSessionConfig) acceptor.getSessionConfig()).setTcpNoDelay(true);
         players = new PlayerStorage(-10);
@@ -58,9 +63,10 @@ public class CashShopServer {
             acceptor.setHandler(new MapleServerHandler(-1, true));
             acceptor.bind(new InetSocketAddress(PORT));
             System.out.println("商城服务器绑定端口: " + PORT);
+            logger.info("商城服务器绑定端口: {}",PORT);
 
         } catch (final Exception e) {
-            System.err.println("Binding to port " + PORT + " failed");
+            logger.error("绑定端口失败");
             e.printStackTrace();
             throw new RuntimeException("Binding failed.", e);
         }
@@ -82,11 +88,11 @@ public class CashShopServer {
         if (finishedShutdown) {
             return;
         }
-        System.out.println("正在断开商城内玩家...");
+        logger.info("正在断开商城内玩家...");
         players.disconnectAll();
-        //playersMTS.disconnectAll();
-        // MTSStorage.getInstance().saveBuyNow(true);
-        System.out.println("正在关闭商城伺服器...");
+        playersMTS.disconnectAll();
+        MTSStorage.getInstance().saveBuyNow(true);
+        logger.info("服务器正在关闭");
         //acceptor.unbindAll();
         finishedShutdown = true;
     }

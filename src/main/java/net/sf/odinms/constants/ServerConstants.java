@@ -20,7 +20,7 @@
  */
 package net.sf.odinms.constants;
 
-import net.sf.odinms.handling.login.Balloon;
+import net.sf.odinms.handling.login.handler.Balloon;
 import net.sf.odinms.server.ServerProperties;
 
 import java.util.ArrayList;

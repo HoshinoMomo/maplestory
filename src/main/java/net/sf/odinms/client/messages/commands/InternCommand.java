@@ -40,7 +40,7 @@ public class InternCommand {
         @Override
         public int execute(MapleClient c, String[] splitted) {
             if (splitted.length < 3) {
-                c.getPlayer().dropMessage(5, "[Syntax] !" + getCommand() + " <玩家> <原因>");
+                c.getPlayer().dropMessage(5, "[语法]: !" + getCommand() + " <玩家> <原因>");
                 return 0;
             }
             int ch = World.Find.findChannel(splitted[1]);
@@ -63,14 +63,13 @@ public class InternCommand {
                     c.getPlayer().dropMessage(6, "[" + getCommand() + "] 成功封锁 " + splitted[1] + ".");
                     FileoutputUtil.logToFile_chr(c.getPlayer(), FileoutputUtil.ban_log, sb.toString());// 输出文挡
                     World.Broadcast.broadcastMessage(MaplePacketCreator.serverNotice(6, "[封号系统]" + target.getName() + " 因为使用非法软件而被永久封号。").getBytes());//广播
-
                     return 1;
                 } else {
                     c.getPlayer().dropMessage(6, "[" + getCommand() + "] 封锁失败.");
                     return 0;
                 }
             } else {
-                c.getPlayer().dropMessage(6, "[" + getCommand() + "] 不能封锁GM...");
+                c.getPlayer().dropMessage(6, "[" + getCommand() + "] 不能封禁比自己权限高的GM");
                 return 1;
             }
 
@@ -103,7 +102,7 @@ public class InternCommand {
         @Override
         public int execute(MapleClient c, String[] splitted) {
             SkillFactory.getSkill(9001004).getEffect(1).applyTo(c.getPlayer());
-            c.getPlayer().dropMessage(6, "管理员隐藏 = 开启 \r\n 解除请输入!unhide");
+            c.getPlayer().dropMessage(6, "隐身开始 解除请输入!unhide");
             return 0;
         }
     }
@@ -112,8 +111,11 @@ public class InternCommand {
 
         @Override
         public int execute(MapleClient c, String[] splitted) {
-            c.getPlayer().dispelBuff(9001004);
-            c.getPlayer().dropMessage(6, "管理员隐藏 = 关闭 \r\n 开启请输入!hide");
+            if(c.getPlayer().isGM()){
+                c.getPlayer().dispelBuff(9001004);
+                c.getPlayer().dropMessage(6, "隐身关闭 开启请输入!hide");
+                return 0;
+            }
             return 1;
         }
     }

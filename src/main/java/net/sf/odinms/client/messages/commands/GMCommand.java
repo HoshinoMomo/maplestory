@@ -72,7 +72,7 @@ public class GMCommand {
                 } else {
                     victim = ChannelServer.getInstance(ch).getPlayerStorage().getCharacterByName(splitted[1]);
                     c.getPlayer().dropMessage(5, "正在传送玩家到身边");
-                    victim.dropMessage(5, "GM正在传送你");
+                    //victim.dropMessage(5, "GM正在传送你");
                     if (victim.getMapId() != c.getPlayer().getMapId()) {
                         final MapleMap mapp = victim.getClient().getChannelServer().getMapFactory().getMap(c.getPlayer().getMapId());
                         victim.changeMap(mapp, mapp.getPortal(0));

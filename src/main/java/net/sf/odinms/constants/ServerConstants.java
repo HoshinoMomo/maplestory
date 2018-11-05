@@ -20,7 +20,7 @@
  */
 package net.sf.odinms.constants;
 
-import net.sf.odinms.handling.login.Balloon;
+import net.sf.odinms.handling.login.handler.Balloon;
 import net.sf.odinms.server.ServerProperties;
 
 import java.util.ArrayList;
@@ -88,13 +88,12 @@ public class ServerConstants {
         return 0;
     }
 
-    public static enum PlayerGMRank {
+    public enum PlayerGMRank {
 
         NORMAL('@', 0),
         INTERN('!', 1),
         GM('!', 2),
         ADMIN('!', 3);
-        //SUPERADMIN('!', 3);
         private char commandPrefix;
         private int level;
 

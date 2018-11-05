@@ -244,7 +244,7 @@ public class AdminCommand {
     public static class Shutdown extends CommandExecute {
 
         private static Thread t = null;
-
+        @Override
         public int execute(MapleClient c, String splitted[]) {
             c.getPlayer().dropMessage(6, "关闭服务器...");
             if (t == null || !t.isAlive()) {

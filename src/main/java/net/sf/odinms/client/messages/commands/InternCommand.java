@@ -17,18 +17,6 @@ public class InternCommand {
         return ServerConstants.PlayerGMRank.INTERN;
     }
 
-    public static class 跟踪 extends Warp {
-    }
- 
-    public static class 封号 extends Ban {
-    }
-
-    public static class 隐身 extends Hide {
-    }
-
-    public static class 解除隐身 extends UnHide {
-    }
-
     public static class Ban extends CommandExecute {
 
         protected boolean hellban = false;

@@ -31,33 +31,6 @@ public class GMCommand {
         return PlayerGMRank.GM;
     }
 
-    public static class 拉 extends WarpHere {
-    }
-
-    public static class 等级 extends Level {
-    }
-
-    public static class 转职 extends Job {
-    }
-
-    public static class 清空 extends ClearInv {
-    }
-
-    public static class 踢人 extends DC {
-    }
-
-    public static class 读取玩家 extends spy {
-    }
-
-    public static class 在线人数 extends online {
-    }
-
-    public static class 解除封号 extends UnBan {
-    }
-
-    public static class 刷钱 extends GainMeso {
-    }
-
     public static class WarpHere extends CommandExecute {
 
         public int execute(MapleClient c, String splitted[]) {

@@ -75,17 +75,6 @@ public class InternCommand {
         }
     }
 
-    public static class CnGM extends CommandExecute {
-
-        @Override
-        public int execute(MapleClient c, String[] splitted) {
-
-            World.Broadcast.broadcastGMMessage(MaplePacketCreator.serverNotice(5, "<GM聊天视窗>" + "頻道" + c.getPlayer().getClient().getChannel() + " [" + c.getPlayer().getName() + "] : " + StringUtil.joinStringFrom(splitted, 1)).getBytes());
-
-            return 1;
-        }
-    }
-
     public static class Hide extends CommandExecute {
 
         @Override

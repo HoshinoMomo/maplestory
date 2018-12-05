@@ -23,6 +23,8 @@ package net.sf.odinms.client;
 /**
  * @author odinms
  * rewrite by easyzhang
+ *
+ * 召唤型技能实体
  */
 public class SummonSkillEntry {
 

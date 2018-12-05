@@ -61,8 +61,8 @@ public class MapleClient implements Serializable {
             CASH_SHOP_TRANSITION = 4,
             LOGIN_CS_LOGGEDIN = 5,
             CHANGE_CHANNEL = 6;
-    //MinaMS.MaxCharacters
-    public static final int DEFAULT_CHARSLOT = Integer.parseInt(ServerProperties.getProperty("MinaMS.MaxCharacters"));//最大角色数量
+
+    public static final int DEFAULT_CHARSLOT = Integer.MAX_VALUE;
     public static final String CLIENT_KEY = "CLIENT";
     private transient MapleAESOFB send, receive;
     private transient IoSession session;

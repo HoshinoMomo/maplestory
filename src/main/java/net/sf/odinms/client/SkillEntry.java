@@ -22,6 +22,11 @@ package net.sf.odinms.client;
 
 import java.io.Serializable;
 
+/**
+ * @author odinma
+ *
+ * 技能实体
+ */
 public class SkillEntry implements Serializable {
 
     private static final long serialVersionUID = 9179541993413738569L;

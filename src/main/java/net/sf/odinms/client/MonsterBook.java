@@ -35,6 +35,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+/**
+ * 怪物册
+ */
 public class MonsterBook implements Serializable {
 
     private static final long serialVersionUID = 7179541993413738569L;

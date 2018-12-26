@@ -26,10 +26,13 @@ import net.sf.odinms.database.DatabaseConnection;
 import net.sf.odinms.database.DatabaseException;
 import net.sf.odinms.handling.cashshop.CashShopServer;
 import net.sf.odinms.handling.channel.ChannelServer;
-import net.sf.odinms.handling.world.*;
+import net.sf.odinms.handling.world.MapleMessengerCharacter;
+import net.sf.odinms.handling.world.MapleParty;
+import net.sf.odinms.handling.world.MaplePartyCharacter;
+import net.sf.odinms.handling.world.PartyOperation;
+import net.sf.odinms.handling.world.World;
 import net.sf.odinms.handling.world.family.MapleFamilyCharacter;
 import net.sf.odinms.handling.world.guild.MapleGuildCharacter;
-import net.sf.odinms.server.ServerProperties;
 import net.sf.odinms.server.Timer.PingTimer;
 import net.sf.odinms.server.maps.MapleMap;
 import net.sf.odinms.server.quest.MapleQuest;
@@ -46,7 +49,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -54,20 +64,23 @@ import java.util.concurrent.locks.ReentrantLock;
 public class MapleClient implements Serializable {
 
     private static final long serialVersionUID = 9179541993413738569L;
-    public static final transient byte LOGIN_NOTLOGGEDIN = 0,
-            LOGIN_SERVER_TRANSITION = 1,
-            LOGIN_LOGGEDIN = 2,
-            LOGIN_WAITING = 3,
-            CASH_SHOP_TRANSITION = 4,
-            LOGIN_CS_LOGGEDIN = 5,
-            CHANGE_CHANNEL = 6;
-
+    public static final transient byte LOGIN_NOTLOGGEDIN = 0;
+    public static final transient byte LOGIN_SERVER_TRANSITION = 1;
+    public static final transient byte LOGIN_LOGGEDIN = 2;
+    public static final transient byte LOGIN_WAITING = 3;
+    public static final transient byte CASH_SHOP_TRANSITION = 4;
+    public static final transient byte LOGIN_CS_LOGGEDIN = 5;
+    public static final transient byte CHANGE_CHANNEL = 6;
     public static final int DEFAULT_CHARSLOT = Integer.MAX_VALUE;
     public static final String CLIENT_KEY = "CLIENT";
+
     private transient MapleAESOFB send, receive;
     private transient IoSession session;
     private MapleCharacter player;
-    private int channel = 1, accId = 1, world, birthday;
+    private int channel = 1;
+    private int accId = 1;
+    private int world;
+    private int birthday;
     private int charslots = DEFAULT_CHARSLOT;
     private boolean loggedIn = false, serverTransition = false;
     private transient Calendar tempban = null;

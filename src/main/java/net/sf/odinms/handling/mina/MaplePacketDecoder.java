@@ -21,20 +21,19 @@
 package net.sf.odinms.handling.mina;
 
 import net.sf.odinms.client.MapleClient;
-import net.sf.odinms.constants.ServerConstants;
 import net.sf.odinms.handling.RecvPacketOpcode;
-import org.apache.mina.core.buffer.IoBuffer;
-import org.apache.mina.core.session.IoSession;
-import org.apache.mina.filter.codec.CumulativeProtocolDecoder;
-import org.apache.mina.filter.codec.ProtocolDecoderOutput;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import net.sf.odinms.tools.FileoutputUtil;
 import net.sf.odinms.tools.HexTool;
 import net.sf.odinms.tools.MapleAESOFB;
 import net.sf.odinms.tools.MapleCustomEncryption;
 import net.sf.odinms.tools.data.input.ByteArrayByteStream;
 import net.sf.odinms.tools.data.input.GenericLittleEndianAccessor;
+import org.apache.mina.core.buffer.IoBuffer;
+import org.apache.mina.core.session.IoSession;
+import org.apache.mina.filter.codec.CumulativeProtocolDecoder;
+import org.apache.mina.filter.codec.ProtocolDecoderOutput;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MaplePacketDecoder extends CumulativeProtocolDecoder {
 
@@ -77,41 +76,42 @@ public class MaplePacketDecoder extends CumulativeProtocolDecoder {
             client.getReceiveCrypto().crypt(decryptedPacket);
             MapleCustomEncryption.decryptData(decryptedPacket);
             out.write(decryptedPacket);
-            if (ServerConstants.封包显示) {
-                int packetLen = decryptedPacket.length;
-                int pHeader = readFirstShort(decryptedPacket);
-                String pHeaderStr = Integer.toHexString(pHeader).toUpperCase();
-                String op = lookupSend(pHeader);
-                boolean show = true;
-                switch (op) {
-                    case "PONG":
-                    case "NPC_ACTION":
-                    case "MOVE_LIFE":
-                    case "MOVE_PLAYER":
-                    case "MOVE_ANDROID":
-                    case "MOVE_SUMMON":
-                    case "AUTO_AGGRO":
-                    case "HEAL_OVER_TIME":
-                    case "BUTTON_PRESSED":
-                    case "STRANGE_DATA":
-                        show = false;
-                }
-                String Send = "客户端发送 " + op + " [" + pHeaderStr + "] (" + packetLen + ")\r\n";
-                if (packetLen <= 3000) {
-                    String SendTo = Send + HexTool.toString(decryptedPacket) + "\r\n" + HexTool.toStringFromAscii(decryptedPacket);
-                    //log.info(HexTool.toString(decryptedPacket) + "客户端发送");
-                    if (show) {
-                        FileoutputUtil.packetLog("日志\\log\\客户端封包.log", SendTo);
-                        System.out.println(SendTo);
-                    }
-                    String SendTos = "\r\n时间：" + FileoutputUtil.CurrentReadable_Time() + "  ";
-                    if (op.equals("UNKNOWN")) {
-                        FileoutputUtil.packetLog("日志\\log\\未知客服端封包.log", SendTos + SendTo);
-                    }
-                } else {
-                    log.info(HexTool.toString(new byte[]{decryptedPacket[0], decryptedPacket[1]}) + "...");
-                }
+
+            //客户端发送的封包
+            int packetLen = decryptedPacket.length;
+            int pHeader = readFirstShort(decryptedPacket);
+            String pHeaderStr = Integer.toHexString(pHeader).toUpperCase();
+            String op = lookupSend(pHeader);
+            boolean show = true;
+            switch (op) {
+                case "PONG":
+                case "NPC_ACTION":
+                case "MOVE_LIFE":
+                case "MOVE_PLAYER":
+                case "MOVE_ANDROID":
+                case "MOVE_SUMMON":
+                case "AUTO_AGGRO":
+                case "HEAL_OVER_TIME":
+                case "BUTTON_PRESSED":
+                case "STRANGE_DATA":
+                    show = false;
             }
+            String Send = "客户端发送 " + op + " [" + pHeaderStr + "] (" + packetLen + ")\r\n";
+            if (packetLen <= 3000) {
+                String SendTo = Send + HexTool.toString(decryptedPacket) + "\r\n" + HexTool.toStringFromAscii(decryptedPacket);
+                //log.info(HexTool.toString(decryptedPacket) + "客户端发送");
+                if (show) {
+                    FileoutputUtil.packetLog("日志\\log\\客户端封包.log", SendTo);
+                    System.out.println(SendTo);
+                }
+                String SendTos = "\r\n时间：" + FileoutputUtil.CurrentReadable_Time() + "  ";
+                if (op.equals("UNKNOWN")) {
+                    FileoutputUtil.packetLog("日志\\log\\未知客服端封包.log", SendTos + SendTo);
+                }
+            } else {
+                log.info(HexTool.toString(new byte[]{decryptedPacket[0], decryptedPacket[1]}) + "...");
+            }
+
             return true;
         }
         /*

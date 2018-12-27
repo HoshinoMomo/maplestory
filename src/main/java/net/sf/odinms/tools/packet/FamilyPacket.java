@@ -39,7 +39,7 @@ public class FamilyPacket {
     public static MaplePacket getFamilyData() {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getFamilyData--------------------");
         }
         mplew.writeShort(SendPacketOpcode.FAMILY.getValue());
@@ -69,7 +69,7 @@ public class FamilyPacket {
 
     public static MaplePacket changeRep(int r) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("changeRep--------------------");
         }
         mplew.writeShort(SendPacketOpcode.REP_INCREASE.getValue());
@@ -80,7 +80,7 @@ public class FamilyPacket {
 
     public static MaplePacket getFamilyInfo(MapleCharacter chr) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getFamilyInfo--------------------");
         }
         mplew.writeShort(SendPacketOpcode.OPEN_FAMILY.getValue());
@@ -108,7 +108,7 @@ public class FamilyPacket {
     }
 
     public static void addFamilyCharInfo(MapleFamilyCharacter ldr, MaplePacketLittleEndianWriter mplew) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("addFamilyCharInfo--------------------");
         }
         mplew.writeInt(ldr.getId());
@@ -126,7 +126,7 @@ public class FamilyPacket {
 
     public static MaplePacket getFamilyPedigree(MapleCharacter chr) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getFamilyPedigree--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SEND_PEDIGREE.getValue());
@@ -233,7 +233,7 @@ public class FamilyPacket {
     public static MaplePacket sendFamilyInvite(int cid, int otherLevel, int otherJob, String inviter) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("sendFamilyInvite--------------------");
         }
         mplew.writeShort(SendPacketOpcode.FAMILY_INVITE.getValue());
@@ -247,7 +247,7 @@ public class FamilyPacket {
 
     public static MaplePacket getSeniorMessage(String name) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getSeniorMessage--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SENIOR_MESSAGE.getValue());
@@ -257,7 +257,7 @@ public class FamilyPacket {
 
     public static MaplePacket sendFamilyJoinResponse(boolean accepted, String added) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("sendFamilyJoinResponse--------------------");
         }
         mplew.writeShort(SendPacketOpcode.FAMILY_JUNIOR.getValue());
@@ -268,7 +268,7 @@ public class FamilyPacket {
 
     public static MaplePacket familyBuff(int type, int buffnr, int amount, int time) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("familyBuff--------------------");
         }
         mplew.writeShort(SendPacketOpcode.FAMILY_BUFF.getValue());
@@ -285,7 +285,7 @@ public class FamilyPacket {
     }
 
     public static MaplePacket cancelFamilyBuff() {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("cancelFamilyBuff--------------------");
         }
         return familyBuff(0, 0, 0, 0);
@@ -293,7 +293,7 @@ public class FamilyPacket {
 
     public static MaplePacket familyLoggedIn(boolean online, String name) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("familyLoggedIn--------------------");
         }
         mplew.writeShort(SendPacketOpcode.FAMILY_LOGGEDIN.getValue());
@@ -304,7 +304,7 @@ public class FamilyPacket {
 
     public static MaplePacket familySummonRequest(String name, String mapname) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("familySummonRequest--------------------");
         }
         mplew.writeShort(SendPacketOpcode.FAMILY_USE_REQUEST.getValue());

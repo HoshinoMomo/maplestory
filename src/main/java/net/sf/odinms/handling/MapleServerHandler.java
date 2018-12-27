@@ -646,7 +646,7 @@ public class MapleServerHandler extends IoHandlerAdapter implements MapleServerH
                 break;
             case CHANGE_MAP:
                 if (cs) {
-                    if (ServerConstants.调试输出封包) {
+                    if (ServerConstants.isDebug) {
                         System.out.println("退出商城");
                     }
                     CashShopOperation.LeaveCS(slea, c, c.getPlayer());

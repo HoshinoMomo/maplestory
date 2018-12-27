@@ -52,7 +52,7 @@ public class Start {
             System.out.println("已开启仅管理员登录模式");
         }
         if (Boolean.parseBoolean(ServerProperties.getProperty("MinaMS.AutoRegister", "true"))) {
-            ServerConstants.自动注册 = Boolean.parseBoolean(ServerProperties.getProperty("MinaMS.AutoRegister", "true"));
+            ServerConstants.autoRegister = Boolean.parseBoolean(ServerProperties.getProperty("MinaMS.AutoRegister", "true"));
             System.out.println("已开启自动注册系统");
         }
         try {
@@ -159,7 +159,7 @@ public class Start {
             System.out.println("已开启仅管理员登录模式");
         }
         if (Boolean.parseBoolean(ServerProperties.getProperty("MinaMS.AutoRegister", "true"))) {
-            ServerConstants.自动注册 = Boolean.parseBoolean(ServerProperties.getProperty("MinaMS.AutoRegister", "true"));
+            ServerConstants.autoRegister = Boolean.parseBoolean(ServerProperties.getProperty("MinaMS.AutoRegister", "true"));
             System.out.println("已开启自动注册系统");
         }
         try {

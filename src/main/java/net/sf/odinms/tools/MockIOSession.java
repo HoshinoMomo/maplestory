@@ -38,6 +38,8 @@ import java.net.SocketAddress;
  * this class is mostly undocumented, due to the fact that each and every
  * function does squat.
  *
+ * 这个类暂时没啥用
+ *
  * @author Frz
  * @since Revision 518
  * @version 1.0

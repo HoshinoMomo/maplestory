@@ -24,6 +24,9 @@ import net.sf.odinms.server.MapleInventoryManipulator;
 import net.sf.odinms.server.Randomizer;
 import net.sf.odinms.tools.MaplePacketCreator;
 
+/**
+ * 剪刀石头布
+ */
 public class RockPaperScissors {
 
     private int round = 0;

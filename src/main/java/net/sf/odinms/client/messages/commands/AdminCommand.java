@@ -140,8 +140,10 @@ public class AdminCommand {
     public static class 封号状态 extends BanStatus {
     }
 
+    /**
+     * 调试
+     */
     public static class Debug extends CommandExecute {
-
         @Override
         public int execute(MapleClient c, String[] splitted) {
             c.getPlayer().setDebugMessage(!c.getPlayer().getDebugMessage());
@@ -149,8 +151,10 @@ public class AdminCommand {
         }
     }
 
+    /**
+     * 封号状态
+     */
     public static class BanStatus extends CommandExecute {
-
         @Override
         public int execute(MapleClient c, String splitted[]) {
             if (splitted.length < 2) {
@@ -209,22 +213,25 @@ public class AdminCommand {
         }
     }
 
-    public static class setUserLimit extends CommandExecute {
-
+    /**
+     * 用户人数上限
+     */
+    public static class UserLimit extends CommandExecute {
+        @Override
         public int execute(MapleClient c, String splitted[]) {
-            int UserLimit = LoginServer.getUserLimit();
+            int limitNum = LoginServer.getUserLimit();
             try {
-                UserLimit = Integer.parseInt(splitted[1]);
+                limitNum = Integer.parseInt(splitted[1]);
             } catch (Exception ex) {
             }
-            LoginServer.setUserLimit(UserLimit);
-            c.getPlayer().dropMessage("服务器人数上限已更改为" + UserLimit);
+            LoginServer.setUserLimit(limitNum);
+            c.getPlayer().dropMessage("服务器人数上限已更改为" + limitNum);
             return 1;
         }
     }
 
     public static class SavePlayerShops extends CommandExecute {
-
+        @Override
         public int execute(MapleClient c, String splitted[]) {
             for (net.sf.odinms.handling.channel.ChannelServer cserv : net.sf.odinms.handling.channel.ChannelServer.getAllInstances()) {
                 cserv.closeAllMerchant();
@@ -237,7 +244,7 @@ public class AdminCommand {
     public static class Shutdown extends CommandExecute {
 
         private static Thread t = null;
-
+        @Override
         public int execute(MapleClient c, String splitted[]) {
             c.getPlayer().dropMessage(6, "关闭服务器...");
             if (t == null || !t.isAlive()) {

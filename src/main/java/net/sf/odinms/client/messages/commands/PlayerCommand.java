@@ -1,13 +1,13 @@
 package net.sf.odinms.client.messages.commands;
 
+import net.sf.odinms.client.MapleCharacter;
 import net.sf.odinms.client.MapleClient;
+import net.sf.odinms.client.MapleStat;
 import net.sf.odinms.constants.ServerConstants.PlayerGMRank;
-import net.sf.odinms.handling.world.World;
 import net.sf.odinms.scripting.NPCScriptManager;
 import net.sf.odinms.server.life.MapleMonster;
 import net.sf.odinms.server.maps.MapleMapObject;
 import net.sf.odinms.server.maps.MapleMapObjectType;
-import net.sf.odinms.tools.FileoutputUtil;
 import net.sf.odinms.tools.MaplePacketCreator;
 import net.sf.odinms.tools.StringUtil;
 
@@ -23,65 +23,125 @@ public class PlayerCommand {
         return PlayerGMRank.NORMAL;
     }
 
-    public static class 存档 extends save {
+    public static class STR extends AbstractStatCommands {
+
+        public STR() {
+            stat = MapleStat.STR;
+        }
     }
 
-    public static class 帮助 extends help {
+    public static class DEX extends AbstractStatCommands {
+
+        public DEX() {
+            stat = MapleStat.DEX;
+        }
     }
 
-    public static class 领取点券 extends gainPoint {
+    public static class INT extends AbstractStatCommands {
+
+        public INT() {
+            stat = MapleStat.INT;
+        }
     }
 
-    public static class 爆率 extends Mobdrop {
+    public static class LUK extends AbstractStatCommands {
+
+        public LUK() {
+            stat = MapleStat.LUK;
+        }
     }
 
-    public static class ea extends 查看 {
-    }
+    public abstract static class AbstractStatCommands extends CommandExecute {
 
-    public static class 解卡 extends 查看 {
-    }
+        protected MapleStat stat = null;
+        private static int statLim = 999;
 
-    public static class 查看 extends CommandExecute {
+        private void setStat(MapleCharacter player, int amount) {
+            switch (stat) {
+                case STR:
+                    player.getStat().setStr((short) amount);
+                    player.updateSingleStat(MapleStat.STR, player.getStat().getStr());
+                    break;
+                case DEX:
+                    player.getStat().setDex((short) amount);
+                    player.updateSingleStat(MapleStat.DEX, player.getStat().getDex());
+                    break;
+                case INT:
+                    player.getStat().setInt((short) amount);
+                    player.updateSingleStat(MapleStat.INT, player.getStat().getInt());
+                    break;
+                case LUK:
+                    player.getStat().setLuk((short) amount);
+                    player.updateSingleStat(MapleStat.LUK, player.getStat().getLuk());
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private int getStat(MapleCharacter player) {
+            switch (stat) {
+                case STR:
+                    return player.getStat().getStr();
+                case DEX:
+                    return player.getStat().getDex();
+                case INT:
+                    return player.getStat().getInt();
+                case LUK:
+                    return player.getStat().getLuk();
+                default:
+                    throw new RuntimeException();
+            }
+        }
 
         @Override
         public int execute(MapleClient c, String[] splitted) {
-            //   PredictCardFactory.getInstance().initialize();
-            NPCScriptManager.getInstance().dispose(c);
-            c.getSession().write(MaplePacketCreator.enableActions());
-            c.getPlayer().dropMessage(1, "假死已处理完毕.");
-            c.getPlayer().dropMessage(6, "当前时间是" + FileoutputUtil.CurrentReadable_Time() + " GMT+8 | 经验值倍率 " + (Math.round(c.getPlayer().getEXPMod()) * 100) * Math.round(c.getPlayer().getStat().expBuff / 100.0) + "%, 怪物倍率 " + (Math.round(c.getPlayer().getDropMod()) * 100) * Math.round(c.getPlayer().getStat().dropBuff / 100.0) + "%, 金币倍率 " + Math.round(c.getPlayer().getStat().mesoBuff / 100.0) * 100 + "%");
-            c.getPlayer().dropMessage(6, "当前延迟 " + c.getPlayer().getClient().getLatency() + " 毫秒");
-            //  NPCScriptManager.getInstance().start(c, 9102001);
-            if (c.getPlayer().isAdmin()) {
-                c.sendPacket(MaplePacketCreator.sendPyramidEnergy("massacre_hit", String.valueOf(50)));
-
-//                  c.sendPacket(MaplePacketCreator.sendPyramidResult((byte) 1, 23));
-//                MapleCharacter chr = c.getPlayer();
-//                for (MaplePet pet : chr.getPets()) {
-//                    if (pet.getSummoned()) {
-//                        int newFullness = pet.getFullness() - PetDataFactory.getHunger(pet.getPetItemId());
-//                        newFullness = 100;
-//                        if (newFullness <= 5) {
-//                            pet.setFullness(15);
-//                            chr.unequipPet(pet, true);
-//                        } else {
-//                            pet.setFullness(newFullness);
-//                            chr.getClient().getSession().write(PetPacket.updatePet(pet, chr.getInventory(MapleInventoryType.CASH).getItem(pet.getInventoryPosition()), true));
-//                        }
-//                    }
-//                }
-//                c.getPlayer().getStat().setDex((short) 4);
-//                c.getPlayer().updateSingleStat(MapleStat.DEX, 4);
-                //   System.out.println(new Date(System.currentTimeMillis() + (long) (3 * 60 * 60 * 1000)));
-                //     c.getPlayer().getGuild().gainGP(50);  
-                //     c.getPlayer().saveToDB(false, false);
-            }//      
+            if (splitted.length < 2) {
+                c.getPlayer().dropMessage(5, "数字有问题啊亲.");
+                return 0;
+            }
+            int change = 0;
+            try {
+                change = Integer.parseInt(splitted[1]);
+            } catch (NumberFormatException nfe) {
+                c.getPlayer().dropMessage(5, "数字有问题啊亲.");
+                return 0;
+            }
+            if (change <= 0) {
+                c.getPlayer().dropMessage(5, "你得输入一个比0大的数.");
+                return 0;
+            }
+            if (c.getPlayer().getRemainingAp() < change) {
+                c.getPlayer().dropMessage(5, "你没有足够的法力值.");
+                return 0;
+            }
+            if (getStat(c.getPlayer()) + change > statLim) {
+                c.getPlayer().dropMessage(5, "属性值最大为 " + statLim + ".");
+                return 0;
+            }
+            setStat(c.getPlayer(), getStat(c.getPlayer()) + change);
+            c.getPlayer().setRemainingAp((short) (c.getPlayer().getRemainingAp() - change));
+            c.getPlayer().updateSingleStat(MapleStat.AVAILABLEAP, c.getPlayer().getRemainingAp());
+            c.getPlayer().dropMessage(5, StringUtil.makeEnumHumanReadable(stat.name()) + " has been raised by " + change + ".");
             return 1;
         }
     }
 
-    public static class save extends CommandExecute {
+    public static class Relive extends CommandExecute {
+        @Override
+        public int execute(MapleClient c, String[] splitted) {
+            NPCScriptManager.getInstance().dispose(c);
+            c.getSession().write(MaplePacketCreator.enableActions());
+            c.getPlayer().dropMessage(1, "假死已处理完毕.");
+            c.getPlayer().dropMessage(6, "当前延迟 " + c.getPlayer().getClient().getLatency() + " 毫秒");
+            return 1;
+        }
+    }
 
+    /**
+     * 存档
+     */
+    public static class Save extends CommandExecute {
         @Override
         public int execute(MapleClient c, String[] splitted) {
             c.getPlayer().saveToDB(false, false);
@@ -90,8 +150,10 @@ public class PlayerCommand {
         }
     }
 
-    public static class gainPoint extends CommandExecute {
-
+    /**
+     * 领取点券
+     */
+    public static class GainPoint extends CommandExecute {
         @Override
         public int execute(MapleClient c, String[] splitted) {
             NPCScriptManager.getInstance().dispose(c);
@@ -102,8 +164,10 @@ public class PlayerCommand {
         }
     }
 
+    /**
+     * 爆率
+     */
     public static class Mobdrop extends CommandExecute {
-
         @Override
         public int execute(MapleClient c, String[] splitted) {
             NPCScriptManager.getInstance().dispose(c);
@@ -114,8 +178,11 @@ public class PlayerCommand {
         }
     }
 
+    /**
+     * 查看怪物
+     */
     public static class Mob extends CommandExecute {
-
+        @Override
         public int execute(MapleClient c, String[] splitted) {
             MapleMonster mob = null;
             for (MapleMapObject monstermo : c.getPlayer().getMap().getMapObjectsInRange(c.getPlayer().getPosition(), 100000.0D, Arrays.asList(new MapleMapObjectType[]{MapleMapObjectType.MONSTER}))) {
@@ -132,38 +199,14 @@ public class PlayerCommand {
         }
     }
 
-    public static class CGM extends CommandExecute {
-
-        @Override
-        public int execute(MapleClient c, String[] splitted) {
-            if (splitted[1] == null) {
-                c.getPlayer().dropMessage(6, "请打字谢谢.");
-                return 1;
-            }
-            if (c.getPlayer().isGM()) {
-                c.getPlayer().dropMessage(6, "因为你自己是GM无法使用此命令,可以尝试!cngm <讯息> 來建立GM聊天頻道~");
-                return 1;
-            }
-            if (!c.getPlayer().getCheatTracker().GMSpam(100000, 1)) { // 5 minutes.
-                World.Broadcast.broadcastGMMessage(MaplePacketCreator.serverNotice(6, "頻道 " + c.getPlayer().getClient().getChannel() + " 玩家 [" + c.getPlayer().getName() + "] : " + StringUtil.joinStringFrom(splitted, 1)).getBytes());
-                c.getPlayer().dropMessage(6, "讯息已经发给GM了!");
-            } else {
-                c.getPlayer().dropMessage(6, "为了防止对GM刷屏所以每1分鐘只能发一次.");
-            }
-            return 1;
-        }
-    }
-
-    public static class help extends CommandExecute {
-
+    public static class Help extends CommandExecute {
         @Override
         public int execute(MapleClient c, String[] splitted) {
             c.getPlayer().dropMessage(5, "指令列表 :");
-            c.getPlayer().dropMessage(5, "@解卡/@查看/@ea  <解除异常+查看当前状态>");
-            c.getPlayer().dropMessage(5, "@CGM 讯息        <传送讯息給GM>");
-            c.getPlayer().dropMessage(5, "@爆率 爆率       <查询当前地图怪物爆率>");
-            c.getPlayer().dropMessage(5, "@领取点券        < 充值领取点券 >");
-            c.getPlayer().dropMessage(5, "@存档            < 储存当前人物信息 >");
+            c.getPlayer().dropMessage(5, "@Relive          < 解除卡怪 >");
+            c.getPlayer().dropMessage(5, "@Mob             < 查看怪物 >");
+            c.getPlayer().dropMessage(5, "@GainPoint       < 充值领取点券 >");
+            c.getPlayer().dropMessage(5, "@Save            < 储存当前人物信息 >");
             return 1;
         }
     }

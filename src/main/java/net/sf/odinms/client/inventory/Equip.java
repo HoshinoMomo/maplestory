@@ -32,9 +32,35 @@ import java.util.List;
 
 public class Equip extends Item implements IEquip, Serializable {
 
-    private byte upgradeSlots = 0, level = 0, vicioushammer = 0, enhance = 0;
-    private short str = 0, dex = 0, _int = 0, luk = 0, hp = 0, mp = 0, watk = 0, matk = 0, wdef = 0, mdef = 0, acc = 0, avoid = 0, hands = 0, speed = 0, jump = 0, potential1 = 0, potential2 = 0, potential3 = 0, hpR = 0, mpR = 0, charmExp = 0, pvpDamage = 0;
-    private int itemEXP = 0, durability = -1;
+    private byte upgradeSlots = 0;
+    private byte level = 0;
+    //宿命剪刀
+    private byte vicioushammer = 0;
+    private byte enhance = 0;
+    private short str = 0;
+    private short dex = 0;
+    private short _int = 0;
+    private short luk = 0;
+    private short hp = 0;
+    private short mp = 0;
+    private short watk = 0;
+    private short matk = 0;
+    private short wdef = 0;
+    private short mdef = 0;
+    private short acc = 0;
+    private short avoid = 0;
+    private short hands = 0;
+    private short speed = 0;
+    private short jump = 0;
+    private short potential1 = 0;
+    private short potential2 = 0;
+    private short potential3 = 0;
+    private short hpR = 0;
+    private short mpR = 0;
+    private short charmExp = 0;
+    private short pvpDamage = 0;
+    private int itemEXP = 0;
+    private int durability = -1;
     private byte itemLevel;
 
     public Equip(int id, short position) {

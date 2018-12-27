@@ -22,42 +22,86 @@ package net.sf.odinms.client.messages;
 
 import net.sf.odinms.client.MapleCharacter;
 import net.sf.odinms.client.MapleClient;
-import net.sf.odinms.client.messages.commands.*;
+import net.sf.odinms.client.messages.commands.AdminCommand;
+import net.sf.odinms.client.messages.commands.CommandExecute;
+import net.sf.odinms.client.messages.commands.CommandObject;
+import net.sf.odinms.client.messages.commands.GMCommand;
+import net.sf.odinms.client.messages.commands.InternCommand;
+import net.sf.odinms.client.messages.commands.PlayerCommand;
 import net.sf.odinms.constants.ServerConstants;
 import net.sf.odinms.constants.ServerConstants.CommandType;
 import net.sf.odinms.constants.ServerConstants.PlayerGMRank;
 import net.sf.odinms.database.DatabaseConnection;
 import net.sf.odinms.tools.FileoutputUtil;
-import net.sf.odinms.tools.MaplePacketCreator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Modifier;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
-public class CommandProcessor {
+import static net.sf.odinms.constants.ServerConstants.CommandType.NORMAL;
 
+/**
+ * @author odinms
+ * rewrite by EasyZhang
+ */
+public class CommandProcessor {
+    private final static Logger logger = LoggerFactory.getLogger(CommandProcessor.class);
 
     private final static HashMap<String, CommandObject> commands = new HashMap<String, CommandObject>();
     private final static HashMap<Integer, ArrayList<String>> commandList = new HashMap<Integer, ArrayList<String>>();
-    private final static String NO_PATTERN_COMMAND = "输入的玩家命令不存在,可以使用 @help 来查看指令";
+    private final static String NO_PATTERN_FOUND = "输入的玩家命令不存在,可以使用 @help 来查看指令.";
+
+    static {
+
+        Class[] CommandFiles = {
+                PlayerCommand.class, GMCommand.class, InternCommand.class, AdminCommand.class
+        };
+
+        for (Class<?> clazz : CommandFiles) {
+            try {
+                PlayerGMRank rankNeeded =
+                        (PlayerGMRank) clazz.getMethod("getPlayerLevelRequired", new Class[]{}).invoke(null, (Object[]) null);
+                Class<?>[] innerClasses = clazz.getDeclaredClasses();
+                ArrayList<String> cL = new ArrayList<>();
+                for (Class<?> innerClass : innerClasses) {
+                    try {
+                        if (!Modifier.isAbstract(innerClass.getModifiers()) && !innerClass.isSynthetic()) {
+                            Object object = innerClass.newInstance();
+                            if (object instanceof CommandExecute) {
+                                cL.add(rankNeeded.getCommandPrefix() + innerClass.getSimpleName().toLowerCase());
+                                commands.put(rankNeeded.getCommandPrefix() + innerClass.getSimpleName().toLowerCase(),
+                                        new CommandObject(rankNeeded.getCommandPrefix() + innerClass.getSimpleName().toLowerCase(),
+                                                (CommandExecute) object, rankNeeded.getLevel()));
+                            }
+                        }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        FileoutputUtil.outputFileError(FileoutputUtil.ScriptEx_Log, ex);
+                    }
+                }
+                Collections.sort(cL);
+                commandList.put(rankNeeded.getLevel(), cL);
+            } catch (Exception ex) {
+                logger.error(ex.getMessage(), ex);
+                FileoutputUtil.outputFileError(FileoutputUtil.ScriptEx_Log, ex);
+            }
+        }
+    }
 
     private static void sendDisplayMessage(MapleClient c, String msg, CommandType type) {
         if (c.getPlayer() == null) {
             return;
         }
-        switch (type) {
-            case NORMAL:
-                c.getPlayer().dropMessage(6, msg);
-                break;
-            case TRADE:
-                c.getPlayer().dropMessage(-2, "錯誤 : " + msg);
-                break;
+        if (type == NORMAL) {
+            c.getPlayer().dropMessage(6, msg);
+        } else {
+            c.getPlayer().dropMessage(-2, "錯誤 : " + msg);
         }
-
     }
 
     public static boolean processCommand(MapleClient c, String line, CommandType type) {
@@ -65,19 +109,19 @@ public class CommandProcessor {
             String[] splitted = line.split(" ");
             splitted[0] = splitted[0].toLowerCase();
 
-            CommandObject co = commands.get(splitted[0]);
+            CommandObject commandObject = commands.get(splitted[0]);
 
-            if (co == null || co.getType() != type) {
-                sendDisplayMessage(c, NO_PATTERN_COMMAND, type);
+            if (commandObject == null || commandObject.getType() != type) {
+                sendDisplayMessage(c, NO_PATTERN_FOUND, type);
                 return true;
             }
             try {
-                int ret = co.execute(c, splitted); //Don't really care about the return value. ;D
-                if(ret == 1){
-                    sendDisplayMessage(c, NO_PATTERN_COMMAND, type);
+                int ret = commandObject.execute(c, splitted);
+                if (ret == CommandResult.ERROR) {
+                    sendDisplayMessage(c, NO_PATTERN_FOUND, type);
                 }
             } catch (Exception e) {
-                sendDisplayMessage(c, "有错误.", type);
+                sendDisplayMessage(c, NO_PATTERN_FOUND, type);
                 if (c.getPlayer().isGM()) {
                     sendDisplayMessage(c, "错误: " + e, type);
                 }
@@ -86,14 +130,17 @@ public class CommandProcessor {
         }
 
         if (c.getPlayer().getGMLevel() > ServerConstants.PlayerGMRank.NORMAL.getLevel()) {
-            if (line.charAt(0) == ServerConstants.PlayerGMRank.GM.getCommandPrefix() || line.charAt(0) == ServerConstants.PlayerGMRank.ADMIN.getCommandPrefix() || line.charAt(0) == ServerConstants.PlayerGMRank.INTERN.getCommandPrefix()) { //Redundant for now, but in case we change symbols later. This will become extensible.
+            //Redundant for now, but in case we change symbols later. This will become extensible.
+            if (line.charAt(0) == ServerConstants.PlayerGMRank.GM.getCommandPrefix() ||
+                    line.charAt(0) == ServerConstants.PlayerGMRank.ADMIN.getCommandPrefix() ||
+                    line.charAt(0) == ServerConstants.PlayerGMRank.INTERN.getCommandPrefix()) {
                 String[] splitted = line.split(" ");
                 splitted[0] = splitted[0].toLowerCase();
-
-                if (line.charAt(0) == '!') { //GM Commands
+                //GM Commands
+                if (line.charAt(0) == '!') {
                     CommandObject co = commands.get(splitted[0]);
-                    if (splitted[0].equals("!help")) {
-                        dropHelp(c, 0);
+                    if ("!help".equals(splitted[0])) {
+                        dropHelp(c);
                         return true;
                     } else if (co == null || co.getType() != type) {
                         sendDisplayMessage(c, "输入的命令不存在.", type);
@@ -101,9 +148,10 @@ public class CommandProcessor {
                     }
                     if (c.getPlayer().getGMLevel() >= co.getReqGMLevel()) {
                         int ret = co.execute(c, splitted);
-                        if (ret > 0 && c.getPlayer() != null) { //incase d/c after command or something
+                        //incase d/c after command or something
+                        if (ret > 0 && c.getPlayer() != null) {
                             logGMCommandToDB(c.getPlayer(), line);
-                            System.out.println("[ " + c.getPlayer().getName() + " ] 使用了指令: " + line);
+                            logger.info("[ {} ] 使用了指令: {}" + line, c.getPlayer().getName(), line);
                         }
                     } else {
                         sendDisplayMessage(c, "您的权限等级不足以使用次命令.", type);
@@ -132,72 +180,24 @@ public class CommandProcessor {
         } finally {
             try {
                 ps.close();
-            } catch (SQLException e) {/*
+            } catch (SQLException e) {
+                /*
                  * Err.. Fuck?
                  */
-
             }
         }
     }
 
-    static {
-
-        Class[] CommandFiles = {
-            PlayerCommand.class, GMCommand.class, InternCommand.class, AdminCommand.class
-        };
-
-        for (Class clasz : CommandFiles) {
-            try {
-                PlayerGMRank rankNeeded = (PlayerGMRank) clasz.getMethod("getPlayerLevelRequired", new Class[]{}).invoke(null, (Object[]) null);
-                Class[] a = clasz.getDeclaredClasses();
-                ArrayList<String> cL = new ArrayList<String>();
-                for (Class c : a) {
-                    try {
-                        if (!Modifier.isAbstract(c.getModifiers()) && !c.isSynthetic()) {
-                            Object o = c.newInstance();
-                            boolean enabled;
-                            try {
-                                enabled = c.getDeclaredField("enabled").getBoolean(c.getDeclaredField("enabled"));
-                            } catch (NoSuchFieldException ex) {
-                                enabled = true; //Enable all coded commands by default.
-                            }
-                            if (o instanceof CommandExecute && enabled) {
-                                cL.add(rankNeeded.getCommandPrefix() + c.getSimpleName().toLowerCase());
-                                commands.put(rankNeeded.getCommandPrefix() + c.getSimpleName().toLowerCase(), new CommandObject(rankNeeded.getCommandPrefix() + c.getSimpleName().toLowerCase(), (CommandExecute) o, rankNeeded.getLevel()));
-                            }
-                        }
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                        FileoutputUtil.outputFileError(FileoutputUtil.ScriptEx_Log, ex);
-                    }
-                }
-                Collections.sort(cL);
-                commandList.put(rankNeeded.getLevel(), cL);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                FileoutputUtil.outputFileError(FileoutputUtil.ScriptEx_Log, ex);
-            }
-        }
-    }
-
-    public static void dropHelp(MapleClient c, int type) {
-        final StringBuilder sb = new StringBuilder("指令列表:\r\n ");
-        int check = 0;
-        if (type == 0) {
-            check = c.getPlayer().getGMLevel();
-//        } else if (type == 1) {
-//            commandList = VipCommandList;
-//            check = c.getPlayer().getVip();
-        }
-        for (int i = 0; i <= check; i++) {
+    private static void dropHelp(MapleClient c) {
+        final StringBuilder sb = new StringBuilder("指令列表: ");
+        for (int i = 0; i <= c.getPlayer().getGMLevel(); i++) {
             if (commandList.containsKey(i)) {
-                sb.append(type == 1 ? "VIP" : "").append("权限等級： ").append(i).append("\r\n");
                 for (String s : commandList.get(i)) {
                     sb.append(s);
-                    sb.append(" \r\n");
+                    sb.append(" ");
                 }
             }
         }
-        c.getSession().write(MaplePacketCreator.getNPCTalk(9010000, (byte) 0, sb.toString(), "00 00", (byte) 0));
+        c.getPlayer().dropMessage(6, sb.toString());
     }
 }

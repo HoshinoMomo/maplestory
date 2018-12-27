@@ -101,7 +101,7 @@ public class MaplePacketCreator {
 
     public static final MaplePacket getServerIP(final int port, final int clientId) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getServerIP--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SERVER_IP.getValue());
@@ -124,7 +124,7 @@ public class MaplePacketCreator {
     public static MaplePacket getChannelChange(MapleClient c, int port) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getChannelChange--------------------");
         }
         mplew.writeShort(SendPacketOpcode.CHANGE_CHANNEL.getValue());
@@ -148,7 +148,7 @@ public class MaplePacketCreator {
     public static final MaplePacket getCharInfo(final MapleCharacter chr) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getCharInfo--------------------");
         }
         mplew.writeShort(SendPacketOpcode.WARP_TO_MAP.getValue());
@@ -168,14 +168,14 @@ public class MaplePacketCreator {
     }
 
     public static final MaplePacket enableActions() {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("enableActions--------------------");
         }
         return updatePlayerStats(EMPTY_STATUPDATE, true, 0);
     }
 
     public static final MaplePacket updatePlayerStats(final List<Pair<MapleStat, Integer>> stats, final int evan) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updatePlayerStatsA--------------------");
         }
         return updatePlayerStats(stats, false, evan);
@@ -184,7 +184,7 @@ public class MaplePacketCreator {
     public static final MaplePacket updatePlayerStats(final List<Pair<MapleStat, Integer>> stats, final boolean itemReaction, final int evan) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updatePlayerStats--------------------");
         }
         mplew.writeShort(SendPacketOpcode.UPDATE_STATS.getValue());
@@ -228,7 +228,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket blockedPortal() {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("blockedPortal--------------------");
         }
         mplew.writeShort(SendPacketOpcode.UPDATE_STATS.getValue());
@@ -240,7 +240,7 @@ public class MaplePacketCreator {
     public static MaplePacket weirdStatUpdate() {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("weirdStatUpdate--------------------");
         }
         mplew.writeShort(SendPacketOpcode.UPDATE_STATS.getValue());
@@ -257,7 +257,7 @@ public class MaplePacketCreator {
     }
 
     public static final MaplePacket updateSp(MapleCharacter chr, final boolean itemReaction) { //this will do..
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updateSpA--------------------");
         }
         return updateSp(chr, itemReaction, false);
@@ -265,7 +265,7 @@ public class MaplePacketCreator {
 
     public static final MaplePacket updateSp(MapleCharacter chr, final boolean itemReaction, final boolean overrideJob) { //this will do..
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updateSp--------------------");
         }
         mplew.writeShort(SendPacketOpcode.UPDATE_STATS.getValue());
@@ -288,7 +288,7 @@ public class MaplePacketCreator {
     public static final MaplePacket getWarpToMap(final MapleMap to, final int spawnPoint, final MapleCharacter chr) {
 
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getWarpToMap--------------------");
         }
         mplew.writeShort(SendPacketOpcode.WARP_TO_MAP.getValue());
@@ -309,7 +309,7 @@ public class MaplePacketCreator {
     public static final MaplePacket instantMapWarp(final byte portal) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("instantMapWarp--------------------");
         }
         mplew.writeShort(SendPacketOpcode.CURRENT_MAP_WARP.getValue());
@@ -322,7 +322,7 @@ public class MaplePacketCreator {
     public static final MaplePacket spawnPortal(final int townId, final int targetId, final int skillId, final Point pos) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("spawnPortal--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SPAWN_PORTAL.getValue());
@@ -339,7 +339,7 @@ public class MaplePacketCreator {
     public static final MaplePacket spawnDoor(final int oid, final Point pos, final boolean town) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("spawnDoor--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SPAWN_DOOR.getValue());
@@ -353,7 +353,7 @@ public class MaplePacketCreator {
     public static MaplePacket removeDoor(int oid, boolean town) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("removeDoor--------------------");
         }
         if (town) {
@@ -374,7 +374,7 @@ public class MaplePacketCreator {
     public static MaplePacket spawnSummon(MapleSummon summon, boolean animated) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("spawnSummon--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SPAWN_SUMMON.getValue());
@@ -396,7 +396,7 @@ public class MaplePacketCreator {
     public static MaplePacket removeSummon(MapleSummon summon, boolean animated) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("removeSummon--------------------");
         }
         mplew.writeShort(SendPacketOpcode.REMOVE_SUMMON.getValue());
@@ -410,7 +410,7 @@ public class MaplePacketCreator {
     public static MaplePacket getRelogResponse() {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter(3);
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getRelogResponse--------------------");
         }
         mplew.writeShort(SendPacketOpcode.RELOG_RESPONSE.getValue());
@@ -433,7 +433,7 @@ public class MaplePacketCreator {
     public static MaplePacket serverBlocked(int type) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("serverBlocked--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SERVER_BLOCKED.getValue());
@@ -443,28 +443,28 @@ public class MaplePacketCreator {
     }
 
     public static MaplePacket serverMessage(String message) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("serverMessageA--------------------");
         }
         return serverMessage(4, 0, message, false);
     }
 
     public static MaplePacket serverNotice(int type, String message) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("serverNoticeA--------------------");
         }
         return serverMessage(type, 0, message, false);
     }
 
     public static MaplePacket serverNotice(int type, int channel, String message) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("serverNoticeB--------------------");
         }
         return serverMessage(type, channel, message, false);
     }
 
     public static MaplePacket serverNotice(int type, int channel, String message, boolean smegaEar) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("serverNoticeC--------------------");
         }
         return serverMessage(type, channel, message, smegaEar);
@@ -472,7 +472,7 @@ public class MaplePacketCreator {
 
     private static MaplePacket serverMessage(int type, int channel, String message, boolean megaEar) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("serverMessage--------------------");
         }
 
@@ -510,7 +510,7 @@ public class MaplePacketCreator {
     public static MaplePacket getGachaponMega(final String name, final String message, final IItem item, final byte rareness, int channel) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getGachaponMega--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SERVERMESSAGE.getValue());
@@ -528,7 +528,7 @@ public class MaplePacketCreator {
     public static MaplePacket tripleSmega(List<String> message, boolean ear, int channel) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("tripleSmega--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SERVERMESSAGE.getValue());
@@ -552,7 +552,7 @@ public class MaplePacketCreator {
     public static MaplePacket getAvatarMega(MapleCharacter chr, int channel, int itemId, String message, boolean ear) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getAvatarMega--------------------");
         }
         mplew.writeShort(SendPacketOpcode.AVATAR_MEGA.getValue());
@@ -569,7 +569,7 @@ public class MaplePacketCreator {
     public static MaplePacket itemMegaphone(String msg, boolean whisper, int channel, IItem item) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("itemMegaphone--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SERVERMESSAGE.getValue());
@@ -589,7 +589,7 @@ public class MaplePacketCreator {
     public static MaplePacket spawnNPC(MapleNPC life, boolean show) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("spawnNPC--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SPAWN_NPC.getValue());
@@ -609,7 +609,7 @@ public class MaplePacketCreator {
     public static MaplePacket removeNPC(final int objectid) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("removeNPC--------------------");
         }
         mplew.writeShort(SendPacketOpcode.REMOVE_NPC.getValue());
@@ -621,7 +621,7 @@ public class MaplePacketCreator {
     public static MaplePacket spawnNPCRequestController(MapleNPC life, boolean MiniMap) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("spawnNPCRequestController--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SPAWN_NPC_REQUEST_CONTROLLER.getValue());
@@ -641,7 +641,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket spawnPlayerNPC(PlayerNPC npc) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("spawnPlayerNPC--------------------");
         }
         mplew.writeShort(SendPacketOpcode.PLAYER_NPC.getValue());
@@ -696,7 +696,7 @@ public class MaplePacketCreator {
     public static MaplePacket getChatText(int cidfrom, String text, boolean whiteBG, int show) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getChatText--------------------");
         }
         mplew.writeShort(SendPacketOpcode.CHATTEXT.getValue());
@@ -711,7 +711,7 @@ public class MaplePacketCreator {
     public static MaplePacket GameMaster_Func(int value) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("GameMaster_Func--------------------");
         }
         mplew.writeShort(SendPacketOpcode.GM_EFFECT.getValue());
@@ -724,7 +724,7 @@ public class MaplePacketCreator {
     public static MaplePacket testCombo(int value) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("testCombo--------------------");
         }
         mplew.writeShort(SendPacketOpcode.ARAN_COMBO.getValue());
@@ -734,7 +734,7 @@ public class MaplePacketCreator {
     }
 
     public static MaplePacket getPacketFromHexString(String hex) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getPacketFromHexString--------------------");
         }
         return new ByteArrayMaplePacket(HexTool.getByteArrayFromHexString(hex));
@@ -743,7 +743,7 @@ public class MaplePacketCreator {
     public static final MaplePacket GainEXP_Monster(final int gain, final boolean white, final int wedding_EXP, final int partyinc, final int Class_Bonus_EXP, final int Equipment_Bonus_EXP, final int Premium_Bonus_EXP) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("GainEXP_Monster--------------------");
         }
         // !packet 42 03 01 01 00 00 00 00 02 00 00 00 00 00 09 00 00 00 00 04 00 00 00 05 00 00 00 06 00 00 00
@@ -773,7 +773,7 @@ public class MaplePacketCreator {
     public static final MaplePacket GainEXP_Others(final int gain, final boolean inChat, final boolean white) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("GainEXP_Others--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_STATUS_INFO.getValue());
@@ -801,7 +801,7 @@ public class MaplePacketCreator {
     public static final MaplePacket getShowFameGain(final int gain) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getShowFameGain--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_STATUS_INFO.getValue());
@@ -814,7 +814,7 @@ public class MaplePacketCreator {
     public static final MaplePacket showMesoGain(final int gain, final boolean inChat) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showMesoGain--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_STATUS_INFO.getValue());
@@ -832,7 +832,7 @@ public class MaplePacketCreator {
     }
 
     public static MaplePacket getShowItemGain(int itemId, short quantity) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getShowItemGainA--------------------");
         }
         return getShowItemGain(itemId, quantity, false);
@@ -841,7 +841,7 @@ public class MaplePacketCreator {
     public static MaplePacket getShowItemGain(int itemId, short quantity, boolean inChat) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getShowItemGain--------------------");
         }
         if (inChat) {
@@ -868,7 +868,7 @@ public class MaplePacketCreator {
     public static MaplePacket showRewardItemAnimation(int itemId, String effect) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showRewardItemAnimationA--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_ITEM_GAIN_INCHAT.getValue());
@@ -885,7 +885,7 @@ public class MaplePacketCreator {
     public static MaplePacket showRewardItemAnimation(int itemId, String effect, int from_playerid) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showRewardItemAnimationB--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_FOREIGN_EFFECT.getValue());
@@ -903,7 +903,7 @@ public class MaplePacketCreator {
     public static MaplePacket dropItemFromMapObject(MapleMapItem drop, Point dropfrom, Point dropto, byte mod) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("dropItemFromMapObject--------------------");
         }
         mplew.writeShort(SendPacketOpcode.DROP_ITEM_FROM_MAPOBJECT.getValue());
@@ -951,7 +951,7 @@ public class MaplePacketCreator {
     public static MaplePacket spawnPlayerMapobject(MapleCharacter chr) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("spawnPlayerMapobject--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SPAWN_PLAYER.getValue());
@@ -1207,7 +1207,7 @@ public class MaplePacketCreator {
     public static MaplePacket removePlayerFromMap(int cid) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("removePlayerFromMap--------------------");
         }
         mplew.writeShort(SendPacketOpcode.REMOVE_PLAYER_FROM_MAP.getValue());
@@ -1219,7 +1219,7 @@ public class MaplePacketCreator {
     public static MaplePacket facialExpression(MapleCharacter from, int expression) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("facialExpression--------------------");
         }
         mplew.writeShort(SendPacketOpcode.FACIAL_EXPRESSION.getValue());
@@ -1235,7 +1235,7 @@ public class MaplePacketCreator {
     public static MaplePacket movePlayer(int cid, List<LifeMovementFragment> moves, Point startPos) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("movePlayer--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MOVE_PLAYER.getValue());
@@ -1250,7 +1250,7 @@ public class MaplePacketCreator {
     public static MaplePacket moveSummon(int cid, int oid, Point startPos, List<LifeMovementFragment> moves) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("moveSummon--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MOVE_SUMMON.getValue());
@@ -1266,7 +1266,7 @@ public class MaplePacketCreator {
     public static MaplePacket summonAttack(final int cid, final int summonSkillId, final byte animation, final List<SummonAttackEntry> allDamage) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 //
-//        if (ServerConstants.调试输出封包) {
+//        if (ServerConstants.isDebug) {
 //            System.out.println("summonAttack--------------------");
 //        }
 //        mplew.writeShort(SendPacketOpcode.SUMMON_ATTACK.getValue());
@@ -1289,7 +1289,7 @@ public class MaplePacketCreator {
     public static MaplePacket closeRangeAttack(int cid, int tbyte, int skill, int level, byte display, byte animation, byte speed, List<AttackPair> damage, final boolean energy, int lvl, byte mastery, byte unk, int charge) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("closeRangeAttack--------------------");
         }
         mplew.writeShort(energy ? SendPacketOpcode.ENERGY_ATTACK.getValue() : SendPacketOpcode.CLOSE_RANGE_ATTACK.getValue());
@@ -1346,7 +1346,7 @@ public class MaplePacketCreator {
     public static MaplePacket rangedAttack(int cid, byte tbyte, int skill, int level, byte display, byte animation, byte speed, int itemid, List<AttackPair> damage, final Point pos, int lvl, byte mastery, byte unk) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("rangedAttack--------------------");
         }
         mplew.writeShort(SendPacketOpcode.RANGED_ATTACK.getValue());
@@ -1388,7 +1388,7 @@ public class MaplePacketCreator {
     public static MaplePacket magicAttack(int cid, int tbyte, int skill, int level, byte display, byte animation, byte speed, List<AttackPair> damage, int charge, int lvl, byte unk) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("magicAttack--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MAGIC_ATTACK.getValue());
@@ -1431,7 +1431,7 @@ public class MaplePacketCreator {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
         final MapleItemInformationProvider ii = MapleItemInformationProvider.getInstance();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getNPCShop--------------------");
         }
         mplew.writeShort(SendPacketOpcode.OPEN_NPC_SHOP.getValue());
@@ -1458,7 +1458,7 @@ public class MaplePacketCreator {
     public static MaplePacket confirmShopTransaction(byte code) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("confirmShopTransaction--------------------");
         }
         mplew.writeShort(SendPacketOpcode.CONFIRM_SHOP_TRANSACTION.getValue());
@@ -1468,7 +1468,7 @@ public class MaplePacketCreator {
     }
 
     public static MaplePacket addInventorySlot(MapleInventoryType type, IItem item) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("addInventorySlotA--------------------");
         }
         return addInventorySlot(type, item, false);
@@ -1477,7 +1477,7 @@ public class MaplePacketCreator {
     public static MaplePacket addInventorySlot(MapleInventoryType type, IItem item, boolean fromDrop) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("addInventorySlot--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MODIFY_INVENTORY_ITEM.getValue());
@@ -1493,7 +1493,7 @@ public class MaplePacketCreator {
     public static MaplePacket pet_updateInventorySlot(MapleInventoryType type, IItem item, boolean fromDrop) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updateInventorySlot--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MODIFY_INVENTORY_ITEM.getValue());
@@ -1514,7 +1514,7 @@ public class MaplePacketCreator {
     public static MaplePacket updateInventorySlot(MapleInventoryType type, IItem item, boolean fromDrop) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updateInventorySlot--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MODIFY_INVENTORY_ITEM.getValue());
@@ -1533,7 +1533,7 @@ public class MaplePacketCreator {
     }
 
     public static MaplePacket moveInventoryItem(MapleInventoryType type, short src, short dst) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("moveInventoryItemA--------------------");
         }
         return moveInventoryItem(type, src, dst, (byte) -1);
@@ -1550,7 +1550,7 @@ public class MaplePacketCreator {
     public static MaplePacket moveInventoryItem(MapleInventoryType type, short src, short dst, short equipIndicator) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("moveInventoryItemB--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MODIFY_INVENTORY_ITEM.getValue());
@@ -1567,7 +1567,7 @@ public class MaplePacketCreator {
     public static MaplePacket moveAndMergeInventoryItem(MapleInventoryType type, short src, short dst, short total) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("moveAndMergeInventoryItem--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MODIFY_INVENTORY_ITEM.getValue());
@@ -1585,7 +1585,7 @@ public class MaplePacketCreator {
     public static MaplePacket moveAndMergeWithRestInventoryItem(MapleInventoryType type, short src, short dst, short srcQ, short dstQ) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("moveAndMergeWithRestInventoryItem--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MODIFY_INVENTORY_ITEM.getValue());
@@ -1604,7 +1604,7 @@ public class MaplePacketCreator {
     public static MaplePacket clearInventoryItem(MapleInventoryType type, short slot, boolean fromDrop) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("clearInventoryItem--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MODIFY_INVENTORY_ITEM.getValue());
@@ -1617,7 +1617,7 @@ public class MaplePacketCreator {
     }
 
     public static MaplePacket updateSpecialItemUse(IItem item, byte invType) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updateSpecialItemUseA--------------------");
         }
         return updateSpecialItemUse(item, invType, item.getPosition());
@@ -1626,7 +1626,7 @@ public class MaplePacketCreator {
     public static MaplePacket updateSpecialItemUse(IItem item, byte invType, short pos) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updateSpecialItemUseB--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MODIFY_INVENTORY_ITEM.getValue());
@@ -1651,7 +1651,7 @@ public class MaplePacketCreator {
     }
 
     public static MaplePacket updateSpecialItemUse_(IItem item, byte invType) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updateSpecialItemUse_A--------------------");
         }
         return updateSpecialItemUse_(item, invType, item.getPosition());
@@ -1660,7 +1660,7 @@ public class MaplePacketCreator {
     public static MaplePacket updateSpecialItemUse_(IItem item, byte invType, short pos) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updateSpecialItemUse_B--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MODIFY_INVENTORY_ITEM.getValue());
@@ -1684,7 +1684,7 @@ public class MaplePacketCreator {
     public static MaplePacket scrolledItem(IItem scroll, IItem item, boolean destroyed, boolean potential) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("scrolledItem--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MODIFY_INVENTORY_ITEM.getValue());
@@ -1718,7 +1718,7 @@ public class MaplePacketCreator {
     public static MaplePacket getScrollEffect(int chr, ScrollResult scrollSuccess, boolean legendarySpirit) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getScrollEffect--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_SCROLL_EFFECT.getValue());
@@ -1747,7 +1747,7 @@ public class MaplePacketCreator {
     public static MaplePacket getPotentialEffect(final int chr, final int itemid) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getPotentialEffect--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_POTENTIAL_EFFECT.getValue());
@@ -1760,7 +1760,7 @@ public class MaplePacketCreator {
     public static MaplePacket getPotentialReset(final int chr, final short pos) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getPotentialReset--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_POTENTIAL_RESET.getValue());
@@ -1772,7 +1772,7 @@ public class MaplePacketCreator {
     public static final MaplePacket ItemMaker_Success() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 //D6 00 00 00 00 00 01 00 00 00 00 DC DD 40 00 01 00 00 00 01 00 00 00 8A 1C 3D 00 01 00 00 00 00 00 00 00 00 B0 AD 01 00
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("ItemMaker_Success--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_ITEM_GAIN_INCHAT.getValue());
@@ -1785,7 +1785,7 @@ public class MaplePacketCreator {
     public static final MaplePacket ItemMaker_Success_3rdParty(final int from_playerid) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("ItemMaker_Success_3rdParty--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_FOREIGN_EFFECT.getValue());
@@ -1799,7 +1799,7 @@ public class MaplePacketCreator {
     public static MaplePacket explodeDrop(int oid) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("explodeDrop--------------------");
         }
         mplew.writeShort(SendPacketOpcode.REMOVE_ITEM_FROM_MAP.getValue());
@@ -1811,7 +1811,7 @@ public class MaplePacketCreator {
     }
 
     public static MaplePacket removeItemFromMap(int oid, int animation, int cid) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("removeItemFromMapA--------------------");
         }
         return removeItemFromMap(oid, animation, cid, 0);
@@ -1820,7 +1820,7 @@ public class MaplePacketCreator {
     public static MaplePacket removeItemFromMap(int oid, int animation, int cid, int slot) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("removeItemFromMapB--------------------");
         }
         mplew.writeShort(SendPacketOpcode.REMOVE_ITEM_FROM_MAP.getValue());
@@ -1838,7 +1838,7 @@ public class MaplePacketCreator {
     public static MaplePacket updateCharLook(MapleCharacter chr) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updateCharLook--------------------");
         }
         mplew.writeShort(SendPacketOpcode.UPDATE_CHAR_LOOK.getValue());
@@ -1868,7 +1868,7 @@ public class MaplePacketCreator {
     }
 
     public static void addRingInfo(MaplePacketLittleEndianWriter mplew, List<MapleRing> rings) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("addRingInfo--------------------");
         }
         mplew.write(rings.size() > 0 ? 1 : 0);
@@ -1884,7 +1884,7 @@ public class MaplePacketCreator {
     public static MaplePacket dropInventoryItem(MapleInventoryType type, short src) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("dropInventoryItem--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MODIFY_INVENTORY_ITEM.getValue());
@@ -1901,7 +1901,7 @@ public class MaplePacketCreator {
     public static MaplePacket dropInventoryItemUpdate(MapleInventoryType type, IItem item) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("dropInventoryItemUpdate--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MODIFY_INVENTORY_ITEM.getValue());
@@ -1916,7 +1916,7 @@ public class MaplePacketCreator {
     public static MaplePacket damagePlayer(int skill, int monsteridfrom, int cid, int damage, int fake, byte direction, int reflect, boolean is_pg, int oid, int pos_x, int pos_y) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("damagePlayer--------------------");
         }
         mplew.writeShort(SendPacketOpcode.DAMAGE_PLAYER.getValue());
@@ -1947,7 +1947,7 @@ public class MaplePacketCreator {
     public static final MaplePacket updateQuest(final MapleQuestStatus quest) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updateQuest--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_STATUS_INFO.getValue());
@@ -1972,7 +1972,7 @@ public class MaplePacketCreator {
     public static final MaplePacket updateInfoQuest(final int quest, final String data) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updateInfoQuest--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_STATUS_INFO.getValue());
@@ -1986,7 +1986,7 @@ public class MaplePacketCreator {
     public static MaplePacket updateQuestInfo(MapleCharacter c, int quest, int npc, byte progress) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updateQuestInfo--------------------");
         }
         mplew.writeShort(SendPacketOpcode.UPDATE_QUEST_INFO.getValue());
@@ -2000,7 +2000,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket updateQuestFinish(int quest, int npc, int nextquest) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updateQuestFinish--------------------");
         }
         mplew.writeShort(SendPacketOpcode.UPDATE_QUEST_INFO.getValue());
@@ -2014,7 +2014,7 @@ public class MaplePacketCreator {
     public static final MaplePacket charInfo(final MapleCharacter chr, final boolean isSelf) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("charInfo--------------------");
         }
         mplew.writeShort(SendPacketOpcode.CHAR_INFO.getValue());
@@ -2131,7 +2131,7 @@ public class MaplePacketCreator {
     }
 
     private static void writeLongMask(MaplePacketLittleEndianWriter mplew, List<Pair<MapleBuffStat, Integer>> statups) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("writeLongMask--------------------");
         }
         long firstmask = 0;
@@ -2149,7 +2149,7 @@ public class MaplePacketCreator {
 
     // List<Pair<MapleDisease, Integer>>
     private static void writeLongDiseaseMask(MaplePacketLittleEndianWriter mplew, List<Pair<MapleDisease, Integer>> statups) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("writeLongDiseaseMask--------------------");
         }
         long firstmask = 0;
@@ -2166,7 +2166,7 @@ public class MaplePacketCreator {
     }
 
     private static void writeLongMaskFromListM(MaplePacketLittleEndianWriter mplew, List<MapleBuffStat> statups) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("writeLongMaskFromList--------------------");
         }
         long firstmask = 0;
@@ -2185,7 +2185,7 @@ public class MaplePacketCreator {
     }
 
     private static void writeLongMaskFromList(MaplePacketLittleEndianWriter mplew, List<MapleBuffStat> statups) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("writeLongMaskFromList--------------------");
         }
         long firstmask = 0;
@@ -2204,7 +2204,7 @@ public class MaplePacketCreator {
     public static MaplePacket giveMount(MapleCharacter c, int buffid, int skillid, List<Pair<MapleBuffStat, Integer>> statups) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("giveMount--------------------");
         }
         mplew.writeShort(SendPacketOpcode.GIVE_BUFF.getValue());
@@ -2308,7 +2308,7 @@ public class MaplePacketCreator {
         final boolean infusion = skillid == 5121009 || skillid == 15111005;
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("givePirate--------------------");
         }
         mplew.writeShort(SendPacketOpcode.GIVE_BUFF.getValue());
@@ -2338,7 +2338,7 @@ public class MaplePacketCreator {
         final boolean infusion = skillid == 5121009 || skillid == 15111005;
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("giveForeignPirate--------------------");
         }
         mplew.writeShort(SendPacketOpcode.GIVE_FOREIGN_BUFF.getValue());
@@ -2358,7 +2358,7 @@ public class MaplePacketCreator {
     public static MaplePacket giveHoming(int skillid, int mobid) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("giveHoming--------------------");
         }
         mplew.writeShort(SendPacketOpcode.GIVE_BUFF.getValue());
@@ -2377,7 +2377,7 @@ public class MaplePacketCreator {
     public static MaplePacket giveEnergyChargeTest(int bar, int bufflength) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("giveEnergyChargeTestA--------------------");
         }
         mplew.writeShort(SendPacketOpcode.GIVE_BUFF.getValue());
@@ -2440,7 +2440,7 @@ public class MaplePacketCreator {
     public static MaplePacket giveEnergyChargeTest(int cid, int bar, int bufflength) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("giveEnergyChargeTestB--------------------");
         }
         mplew.writeShort(SendPacketOpcode.GIVE_FOREIGN_BUFF.getValue());
@@ -2463,7 +2463,7 @@ public class MaplePacketCreator {
     public static MaplePacket giveBuff(int buffid, int bufflength, List<Pair<MapleBuffStat, Integer>> statups, MapleStatEffect effect) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("giveBuff--1------------------");
         }
         mplew.writeShort(SendPacketOpcode.GIVE_BUFF.getValue());
@@ -2507,7 +2507,7 @@ public class MaplePacketCreator {
     public static MaplePacket giveDebuff(final List<Pair<MapleDisease, Integer>> statups, int skillid, int level, int duration) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("giveDebuff--------------------");
         }
         mplew.writeShort(SendPacketOpcode.GIVE_BUFF.getValue());
@@ -2532,7 +2532,7 @@ public class MaplePacketCreator {
      */
  /* public static MaplePacket giveForeignDebuff(int cid, long mask, MobSkill skill) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("giveForeignDebuff--------------------");
         }
         mplew.writeShort(SendPacketOpcode.GIVE_FOREIGN_BUFF.getValue());
@@ -2553,7 +2553,7 @@ public class MaplePacketCreator {
     public static MaplePacket giveForeignDebuff(int cid, final List<Pair<MapleDisease, Integer>> statups, int skillid, int level) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("giveForeignDebuff--------------------");
         }
         mplew.writeShort(SendPacketOpcode.GIVE_FOREIGN_BUFF.getValue());
@@ -2576,7 +2576,7 @@ public class MaplePacketCreator {
     public static MaplePacket cancelForeignDebuff(int cid, long mask, boolean first) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("cancelForeignDebuff--------------------");
         }
         mplew.writeShort(SendPacketOpcode.CANCEL_FOREIGN_BUFF.getValue());
@@ -2590,7 +2590,7 @@ public class MaplePacketCreator {
     public static MaplePacket showMonsterRiding(int cid, List<Pair<MapleBuffStat, Integer>> statups, int itemId, int skillId) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showMonsterRiding--------------------");
         }
         mplew.writeShort(SendPacketOpcode.GIVE_FOREIGN_BUFF.getValue());
@@ -2612,7 +2612,7 @@ public class MaplePacketCreator {
     public static MaplePacket giveForeignBuff(MapleCharacter c, int cid, List<Pair<MapleBuffStat, Integer>> statups, MapleStatEffect effect) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("giveForeignBuff--------------------");
         }
         mplew.writeShort(SendPacketOpcode.GIVE_FOREIGN_BUFF.getValue());
@@ -2647,7 +2647,7 @@ public class MaplePacketCreator {
     public static MaplePacket cancelForeignBuff(int cid, List<MapleBuffStat> statups) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("cancelForeignBuff--------------------");
         }
         mplew.writeShort(SendPacketOpcode.CANCEL_FOREIGN_BUFF.getValue());
@@ -2661,7 +2661,7 @@ public class MaplePacketCreator {
     public static MaplePacket cancelForeignBuffMONSTER(int cid, List<MapleBuffStat> statups) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("cancelForeignBuff--------------------");
         }
         mplew.writeShort(SendPacketOpcode.CANCEL_FOREIGN_BUFF.getValue());
@@ -2675,7 +2675,7 @@ public class MaplePacketCreator {
     public static MaplePacket cancelBuffMONSTER(List<MapleBuffStat> statups) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("cancelBuff--------------------");
         }
         mplew.writeShort(SendPacketOpcode.CANCEL_BUFF.getValue());
@@ -2694,7 +2694,7 @@ public class MaplePacketCreator {
     public static MaplePacket cancelBuff(List<MapleBuffStat> statups) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("cancelBuff--------------------");
         }
         mplew.writeShort(SendPacketOpcode.CANCEL_BUFF.getValue());
@@ -2713,7 +2713,7 @@ public class MaplePacketCreator {
     public static MaplePacket cancelHoming() {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("cancelHoming--------------------");
         }
         mplew.writeShort(SendPacketOpcode.CANCEL_BUFF.getValue());
@@ -2727,7 +2727,7 @@ public class MaplePacketCreator {
     public static MaplePacket cancelDebuff(long mask, boolean first) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("cancelDebuff--------------------");
         }
         mplew.writeShort(SendPacketOpcode.CANCEL_BUFF.getValue());
@@ -2741,7 +2741,7 @@ public class MaplePacketCreator {
     public static MaplePacket updateMount(MapleCharacter chr, boolean levelup) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updateMount--------------------");
         }
         mplew.writeShort(SendPacketOpcode.UPDATE_MOUNT.getValue());
@@ -2757,7 +2757,7 @@ public class MaplePacketCreator {
     public static MaplePacket mountInfo(MapleCharacter chr) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("mountInfo--------------------");
         }
         mplew.writeShort(SendPacketOpcode.UPDATE_MOUNT.getValue());
@@ -2773,7 +2773,7 @@ public class MaplePacketCreator {
     public static MaplePacket getPlayerShopNewVisitor(MapleCharacter c, int slot) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getPlayerShopNewVisitor--------------------");
         }
         mplew.writeShort(SendPacketOpcode.PLAYER_INTERACTION.getValue());
@@ -2788,7 +2788,7 @@ public class MaplePacketCreator {
     public static MaplePacket getPlayerShopRemoveVisitor(int slot) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getPlayerShopRemoveVisitor--------------------");
         }
         mplew.writeShort(SendPacketOpcode.PLAYER_INTERACTION.getValue());
@@ -2800,7 +2800,7 @@ public class MaplePacketCreator {
     public static MaplePacket getTradePartnerAdd(MapleCharacter c) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getTradePartnerAdd--------------------");
         }
         mplew.writeShort(SendPacketOpcode.PLAYER_INTERACTION.getValue());
@@ -2816,7 +2816,7 @@ public class MaplePacketCreator {
     public static MaplePacket getTradeInvite(MapleCharacter c, boolean 现金交易) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getTradeInvite--------------------");
         }
         mplew.writeShort(SendPacketOpcode.PLAYER_INTERACTION.getValue());
@@ -2831,7 +2831,7 @@ public class MaplePacketCreator {
     public static MaplePacket getTradeMesoSet(byte number, int meso) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getTradeMesoSet--------------------");
         }
         mplew.writeShort(SendPacketOpcode.PLAYER_INTERACTION.getValue());
@@ -2845,7 +2845,7 @@ public class MaplePacketCreator {
     public static MaplePacket getTradeItemAdd(byte number, IItem item) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getTradeItemAdd--------------------");
         }
         mplew.writeShort(SendPacketOpcode.PLAYER_INTERACTION.getValue());
@@ -2859,7 +2859,7 @@ public class MaplePacketCreator {
     public static MaplePacket getTradeStart(MapleClient c, MapleTrade trade, byte number, boolean 现金交易) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getTradeStart--------------------");
         }
         mplew.writeShort(SendPacketOpcode.PLAYER_INTERACTION.getValue());
@@ -2886,7 +2886,7 @@ public class MaplePacketCreator {
     public static MaplePacket getTradeConfirmation() {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getTradeConfirmation--------------------");
         }
         mplew.writeShort(SendPacketOpcode.PLAYER_INTERACTION.getValue());
@@ -2898,7 +2898,7 @@ public class MaplePacketCreator {
     public static MaplePacket TradeMessage(final byte UserSlot, final byte message) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("TradeMessage--------------------");
         }
         mplew.writeShort(SendPacketOpcode.PLAYER_INTERACTION.getValue());
@@ -2917,7 +2917,7 @@ public class MaplePacketCreator {
     public static MaplePacket getTradeCancel(final byte UserSlot, final int unsuccessful) { //0 = canceled 1 = invent space 2 = pickuprestricted
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getTradeCancel--------------------");
         }
         mplew.writeShort(SendPacketOpcode.PLAYER_INTERACTION.getValue());
@@ -2931,7 +2931,7 @@ public class MaplePacketCreator {
     public static MaplePacket getNPCTalk(int npc, byte msgType, String talk, String endBytes, byte type) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getNPCTalk--------------------");
         }
         mplew.writeShort(SendPacketOpcode.NPC_TALK.getValue());
@@ -2948,7 +2948,7 @@ public class MaplePacketCreator {
     public static final MaplePacket getMapSelection(final int npcid, final String sel) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getMapSelection--------------------");
         }
         mplew.writeShort(SendPacketOpcode.NPC_TALK.getValue());
@@ -2965,7 +2965,7 @@ public class MaplePacketCreator {
     public static MaplePacket getNPCTalkStyle(int npc, String talk, int card, int[] args) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getNPCTalkStyle--------------------");
         }
         mplew.writeShort(SendPacketOpcode.NPC_TALK.getValue());
@@ -2985,7 +2985,7 @@ public class MaplePacketCreator {
     public static MaplePacket getNPCTalkNum(int npc, String talk, int def, int min, int max) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getNPCTalkNum--------------------");
         }
         mplew.writeShort(SendPacketOpcode.NPC_TALK.getValue());
@@ -3004,7 +3004,7 @@ public class MaplePacketCreator {
     public static MaplePacket getNPCTalkText(int npc, String talk) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getNPCTalkText--------------------");
         }
         mplew.writeShort(SendPacketOpcode.NPC_TALK.getValue());
@@ -3021,7 +3021,7 @@ public class MaplePacketCreator {
     public static MaplePacket showForeignEffect(int cid, int effect) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showForeignEffect--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_FOREIGN_EFFECT.getValue());
@@ -3032,7 +3032,7 @@ public class MaplePacketCreator {
     }
 
     public static MaplePacket showBuffeffect(int cid, int skillid, int effectid) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showBuffeffect--------------------");
         }
         return showBuffeffect(cid, skillid, effectid, (byte) 3);
@@ -3041,7 +3041,7 @@ public class MaplePacketCreator {
     public static MaplePacket showBuffeffect(int cid, int skillid, int effectid, byte direction) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showBuffeffectA--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_FOREIGN_EFFECT.getValue());
@@ -3057,7 +3057,7 @@ public class MaplePacketCreator {
     }
 
     public static MaplePacket showOwnBuffEffect(int skillid, int effectid) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showOwnBuffEffectA--------------------");
         }
         return showOwnBuffEffect(skillid, effectid, (byte) 3);
@@ -3066,7 +3066,7 @@ public class MaplePacketCreator {
     public static MaplePacket showOwnBuffEffect(int skillid, int effectid, byte direction) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showOwnBuffEffectB--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_ITEM_GAIN_INCHAT.getValue());
@@ -3082,7 +3082,7 @@ public class MaplePacketCreator {
     }
 
     public static MaplePacket showItemLevelupEffect() {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showItemLevelupEffect--------------------");
         }
         return showSpecialEffect(17);
@@ -3101,7 +3101,7 @@ public class MaplePacketCreator {
     }
 
     public static MaplePacket showForeignItemLevelupEffect(int cid) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showForeignItemLevelupEffect--------------------");
         }
         return showSpecialEffect(cid, 17);
@@ -3110,7 +3110,7 @@ public class MaplePacketCreator {
     public static MaplePacket showSpecialEffect(int effect) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showSpecialEffectA--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_ITEM_GAIN_INCHAT.getValue());
@@ -3122,7 +3122,7 @@ public class MaplePacketCreator {
     public static MaplePacket showSpecialEffect(int cid, int effect) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showSpecialEffectB--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_FOREIGN_EFFECT.getValue());
@@ -3135,7 +3135,7 @@ public class MaplePacketCreator {
     public static MaplePacket updateSkill(int skillid, int level, int masterlevel, long expiration) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updateSkill--------------------");
         }
         mplew.writeShort(SendPacketOpcode.UPDATE_SKILLS.getValue());
@@ -3153,7 +3153,7 @@ public class MaplePacketCreator {
     public static final MaplePacket updateQuestMobKills(final MapleQuestStatus status) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updateQuestMobKills--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_STATUS_INFO.getValue());
@@ -3174,7 +3174,7 @@ public class MaplePacketCreator {
     public static MaplePacket 游戏屏幕中间黄色字体(String status) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updateQuestMobKills--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_STATUS_INFO.getValue());
@@ -3197,7 +3197,7 @@ public class MaplePacketCreator {
     public static MaplePacket 游戏屏幕中间黄色字体(String status, int id) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updateQuestMobKills--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_STATUS_INFO.getValue());
@@ -3220,7 +3220,7 @@ public class MaplePacketCreator {
     public static MaplePacket getShowQuestCompletion(int id) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getShowQuestCompletion--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_QUEST_COMPLETION.getValue());
@@ -3232,7 +3232,7 @@ public class MaplePacketCreator {
     public static MaplePacket getKeymap(MapleKeyLayout layout) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getKeymap--------------------");
         }
         mplew.writeShort(SendPacketOpcode.KEYMAP.getValue());
@@ -3246,7 +3246,7 @@ public class MaplePacketCreator {
     public static MaplePacket getWhisper(String sender, int channel, String text) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getWhisper--------------------");
         }
         mplew.writeShort(SendPacketOpcode.WHISPER.getValue());
@@ -3261,7 +3261,7 @@ public class MaplePacketCreator {
     public static MaplePacket getWhisperReply(String target, byte reply) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getWhisperReply--------------------");
         }
         mplew.writeShort(SendPacketOpcode.WHISPER.getValue());
@@ -3275,7 +3275,7 @@ public class MaplePacketCreator {
     public static MaplePacket getFindReplyWithMap(String target, int mapid, final boolean buddy) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getFindReplyWithMap--------------------");
         }
         mplew.writeShort(SendPacketOpcode.WHISPER.getValue());
@@ -3291,7 +3291,7 @@ public class MaplePacketCreator {
     public static MaplePacket getFindReply(String target, int channel, final boolean buddy) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getFindReply--------------------");
         }
         mplew.writeShort(SendPacketOpcode.WHISPER.getValue());
@@ -3306,7 +3306,7 @@ public class MaplePacketCreator {
     public static MaplePacket getInventoryFull() {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getInventoryFull--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MODIFY_INVENTORY_ITEM.getValue());
@@ -3317,14 +3317,14 @@ public class MaplePacketCreator {
     }
 
     public static MaplePacket getShowInventoryFull() {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getShowInventoryFull--------------------");
         }
         return getShowInventoryStatus(255);
     }
 
     public static MaplePacket showItemUnavailable() {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showItemUnavailable--------------------");
         }
         return getShowInventoryStatus(254);
@@ -3333,7 +3333,7 @@ public class MaplePacketCreator {
     public static MaplePacket getShowInventoryStatus(int mode) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getShowInventoryStatus--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_STATUS_INFO.getValue());
@@ -3348,7 +3348,7 @@ public class MaplePacketCreator {
     public static MaplePacket getStorage(int npcId, byte slots, Collection<IItem> items, int meso) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getStorage--------------------");
         }
         mplew.writeShort(SendPacketOpcode.OPEN_STORAGE.getValue());
@@ -3378,7 +3378,7 @@ public class MaplePacketCreator {
     public static MaplePacket getStorageFull() {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getStorageFull--------------------");
         }
         mplew.writeShort(SendPacketOpcode.OPEN_STORAGE.getValue());
@@ -3391,7 +3391,7 @@ public class MaplePacketCreator {
     public static MaplePacket mesoStorage(byte slots, int meso) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("mesoStorage--------------------");
         }
         mplew.writeShort(SendPacketOpcode.OPEN_STORAGE.getValue());
@@ -3408,7 +3408,7 @@ public class MaplePacketCreator {
     public static MaplePacket storeStorage(byte slots, MapleInventoryType type, Collection<IItem> items) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("storeStorage--------------------");
         }
         mplew.writeShort(SendPacketOpcode.OPEN_STORAGE.getValue());
@@ -3427,7 +3427,7 @@ public class MaplePacketCreator {
     public static MaplePacket takeOutStorage(byte slots, MapleInventoryType type, Collection<IItem> items) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("takeOutStorage--------------------");
         }
         mplew.writeShort(SendPacketOpcode.OPEN_STORAGE.getValue());
@@ -3446,7 +3446,7 @@ public class MaplePacketCreator {
     public static MaplePacket fairyPendantMessage(int type, int percent) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("fairyPendantMessage--------------------");
         }
         mplew.writeShort(SendPacketOpcode.FAIRY_PEND_MSG.getValue());
@@ -3462,7 +3462,7 @@ public class MaplePacketCreator {
     public static MaplePacket giveFameResponse(int mode, String charname, int newfame) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("giveFameResponse--------------------");
         }
         mplew.writeShort(SendPacketOpcode.FAME_RESPONSE.getValue());
@@ -3478,7 +3478,7 @@ public class MaplePacketCreator {
     public static MaplePacket giveFameErrorResponse(int status) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("giveFameErrorResponse--------------------");
         }
         /*
@@ -3494,7 +3494,7 @@ public class MaplePacketCreator {
     public static MaplePacket receiveFame(int mode, String charnameFrom) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("receiveFame--------------------");
         }
         mplew.writeShort(SendPacketOpcode.FAME_RESPONSE.getValue());
@@ -3508,7 +3508,7 @@ public class MaplePacketCreator {
     public static MaplePacket partyCreated(int partyid) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("partyCreated--------------------");
         }
         mplew.writeShort(SendPacketOpcode.PARTY_OPERATION.getValue());
@@ -3524,7 +3524,7 @@ public class MaplePacketCreator {
     public static MaplePacket partyInvite(MapleCharacter from) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("partyInvite--------------------");
         }
         mplew.writeShort(SendPacketOpcode.PARTY_OPERATION.getValue());
@@ -3541,7 +3541,7 @@ public class MaplePacketCreator {
     public static MaplePacket partyStatusMessage(int message) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("partyStatusMessageA--------------------");
         }
         /*
@@ -3560,7 +3560,7 @@ public class MaplePacketCreator {
     public static MaplePacket partyStatusMessage(int message, String charname) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("partyStatusMessageB--------------------");
         }
         mplew.writeShort(SendPacketOpcode.PARTY_OPERATION.getValue());
@@ -3571,7 +3571,7 @@ public class MaplePacketCreator {
     }
 
     private static void addPartyStatus(int forchannel, MapleParty party, LittleEndianWriter lew, boolean leaving) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("addPartyStatus--------------------");
         }
         List<MaplePartyCharacter> partymembers = new ArrayList<MaplePartyCharacter>(party.getMembers());
@@ -3628,7 +3628,7 @@ public class MaplePacketCreator {
     public static MaplePacket updateParty(int forChannel, MapleParty party, PartyOperation op, MaplePartyCharacter target) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updateParty--------------------");
         }
         mplew.writeShort(SendPacketOpcode.PARTY_OPERATION.getValue());
@@ -3677,7 +3677,7 @@ public class MaplePacketCreator {
     public static MaplePacket partyPortal(int townId, int targetId, int skillId, Point position) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("partyPortal--------------------");
         }
         mplew.writeShort(SendPacketOpcode.PARTY_OPERATION.getValue());
@@ -3693,7 +3693,7 @@ public class MaplePacketCreator {
     public static MaplePacket updatePartyMemberHP(int cid, int curhp, int maxhp) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updatePartyMemberHP--------------------");
         }
         mplew.writeShort(SendPacketOpcode.UPDATE_PARTYMEMBER_HP.getValue());
@@ -3707,7 +3707,7 @@ public class MaplePacketCreator {
     public static MaplePacket multiChat(String name, String chattext, int mode) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("multiChat--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MULTICHAT.getValue());
@@ -3721,7 +3721,7 @@ public class MaplePacketCreator {
     public static MaplePacket getClock(int time) { // time in seconds
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getClock--------------------");
         }
         mplew.writeShort(SendPacketOpcode.CLOCK.getValue());
@@ -3734,7 +3734,7 @@ public class MaplePacketCreator {
     public static MaplePacket getClockTime(int hour, int min, int sec) { // Current Time
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getClockTime--------------------");
         }
         mplew.writeShort(SendPacketOpcode.CLOCK.getValue());
@@ -3749,7 +3749,7 @@ public class MaplePacketCreator {
     public static MaplePacket spawnMist(final MapleMist mist) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("spawnMist--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SPAWN_MIST.getValue());
@@ -3775,7 +3775,7 @@ public class MaplePacketCreator {
     public static MaplePacket removeMist(final int oid, boolean eruption) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("removeMist--------------------");
         }
         mplew.writeShort(SendPacketOpcode.REMOVE_MIST.getValue());
@@ -3788,7 +3788,7 @@ public class MaplePacketCreator {
     public static MaplePacket damageSummon(int cid, int summonSkillId, int damage, int unkByte, int monsterIdFrom) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("damageSummon--------------------");
         }
         mplew.writeShort(SendPacketOpcode.DAMAGE_SUMMON.getValue());
@@ -3805,7 +3805,7 @@ public class MaplePacketCreator {
     public static MaplePacket buddylistMessage(byte message) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("buddylistMessage--------------------");
         }
         mplew.writeShort(SendPacketOpcode.BUDDYLIST.getValue());
@@ -3817,7 +3817,7 @@ public class MaplePacketCreator {
     public static MaplePacket updateBuddylist(Collection<BuddyEntry> buddylist) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updateBuddylist--------------------");
         }
         mplew.writeShort(SendPacketOpcode.BUDDYLIST.getValue());
@@ -3844,7 +3844,7 @@ public class MaplePacketCreator {
     public static MaplePacket requestBuddylistAdd(int cidFrom, String nameFrom, int levelFrom, int jobFrom) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("requestBuddylistAdd--------------------");
         }
         mplew.writeShort(SendPacketOpcode.BUDDYLIST.getValue());
@@ -3866,7 +3866,7 @@ public class MaplePacketCreator {
     public static MaplePacket updateBuddyChannel(int characterid, int channel) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updateBuddyChannel--------------------");
         }
         mplew.writeShort(SendPacketOpcode.BUDDYLIST.getValue());
@@ -3881,7 +3881,7 @@ public class MaplePacketCreator {
     public static MaplePacket itemEffect(int characterid, int itemid) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("itemEffect--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_ITEM_EFFECT.getValue());
@@ -3898,7 +3898,7 @@ public class MaplePacketCreator {
     public static MaplePacket itemEffects(int characterid, int itemid) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("itemEffect--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_ITEM_GAIN_INCHAT.getValue());
@@ -3911,7 +3911,7 @@ public class MaplePacketCreator {
     public static MaplePacket updateBuddyCapacity(int capacity) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updateBuddyCapacity--------------------");
         }
         mplew.writeShort(SendPacketOpcode.BUDDYLIST.getValue());
@@ -3924,7 +3924,7 @@ public class MaplePacketCreator {
     public static MaplePacket showChair(int characterid, int itemid) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showChair--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_CHAIR.getValue());
@@ -3937,7 +3937,7 @@ public class MaplePacketCreator {
     public static MaplePacket cancelChair(int id) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("cancelChair--------------------");
         }
         mplew.writeShort(SendPacketOpcode.CANCEL_CHAIR.getValue());
@@ -3953,7 +3953,7 @@ public class MaplePacketCreator {
     public static MaplePacket spawnReactor(MapleReactor reactor) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("spawnReactor--------------------");
         }
         mplew.writeShort(SendPacketOpcode.REACTOR_SPAWN.getValue());
@@ -3970,7 +3970,7 @@ public class MaplePacketCreator {
     public static MaplePacket triggerReactor(MapleReactor reactor, int stance) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("triggerReactor--------------------");
         }
         mplew.writeShort(SendPacketOpcode.REACTOR_HIT.getValue());
@@ -3987,7 +3987,7 @@ public class MaplePacketCreator {
     public static MaplePacket destroyReactor(MapleReactor reactor) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("destroyReactor--------------------");
         }
         mplew.writeShort(SendPacketOpcode.REACTOR_DESTROY.getValue());
@@ -3999,21 +3999,21 @@ public class MaplePacketCreator {
     }
 
     public static MaplePacket musicChange(String song) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("musicChange--------------------");
         }
         return environmentChange(song, 6);
     }
 
     public static MaplePacket showEffect(String effect) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showEffect--------------------");
         }
         return environmentChange(effect, 3);
     }
 
     public static MaplePacket playSound(String sound) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("playSound--------------------");
         }
         return environmentChange(sound, 4);
@@ -4022,7 +4022,7 @@ public class MaplePacketCreator {
     public static MaplePacket environmentChange(String env, int mode) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("environmentChange--------------------");
         }
         mplew.writeShort(SendPacketOpcode.BOSS_ENV.getValue());
@@ -4035,7 +4035,7 @@ public class MaplePacketCreator {
     public static MaplePacket environmentMove(String env, int mode) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("environmentMove--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MOVE_ENV.getValue());
@@ -4048,7 +4048,7 @@ public class MaplePacketCreator {
     public static MaplePacket startMapEffect(String msg, int itemid, boolean active) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("startMapEffect--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MAP_EFFECT.getValue());
@@ -4063,7 +4063,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket removeMapEffect() {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("removeMapEffect--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MAP_EFFECT.getValue());
@@ -4074,7 +4074,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket showMapEffect(String path) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showMapEffect--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MAP_EFFECT.getValue());
@@ -4085,7 +4085,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket playWZSound(String path) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("playWZSound--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MAP_EFFECT.getValue());
@@ -4097,7 +4097,7 @@ public class MaplePacketCreator {
     public static MaplePacket fuckGuildInfo(MapleCharacter c) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("fuckGuildInfo--------------------");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
@@ -4141,7 +4141,7 @@ public class MaplePacketCreator {
     public static MaplePacket showGuildInfo(MapleCharacter c) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showGuildInfo--------------------");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
@@ -4166,7 +4166,7 @@ public class MaplePacketCreator {
 
     private static void getGuildInfo(MaplePacketLittleEndianWriter mplew, MapleGuild guild) {
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getGuildInfo--------------------");
         }
         //System.out.println("writegetGuildInfo");
@@ -4188,7 +4188,7 @@ public class MaplePacketCreator {
 
     private static void getGuildInfo2(MaplePacketLittleEndianWriter mplew, MapleGuild guild, MapleCharacter chr) {
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getGuildInfo2--------------------");
         }
         //System.out.println("writegetGuildInfo2");
@@ -4211,7 +4211,7 @@ public class MaplePacketCreator {
     public static MaplePacket guildMemberOnline(int gid, int cid, boolean bOnline) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("guildMemberOnline--------------------");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
@@ -4226,7 +4226,7 @@ public class MaplePacketCreator {
     public static MaplePacket guildInvite(int gid, String charName, int levelFrom, int jobFrom) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("guildInvite--------------------");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
@@ -4242,7 +4242,7 @@ public class MaplePacketCreator {
     public static MaplePacket denyGuildInvitation(String charname) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("denyGuildInvitation--------------------");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
@@ -4255,7 +4255,7 @@ public class MaplePacketCreator {
     public static MaplePacket genericGuildMessage(byte code) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("genericGuildMessage--------------------");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
@@ -4267,7 +4267,7 @@ public class MaplePacketCreator {
     public static MaplePacket newGuildMember(MapleGuildCharacter mgc) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("newGuildMember--------------------");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
@@ -4290,7 +4290,7 @@ public class MaplePacketCreator {
     public static MaplePacket memberLeft(MapleGuildCharacter mgc, boolean bExpelled) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("memberLeft--------------------");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
@@ -4306,7 +4306,7 @@ public class MaplePacketCreator {
     public static MaplePacket changeRank(MapleGuildCharacter mgc) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("changeRank--------------------");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
@@ -4321,7 +4321,7 @@ public class MaplePacketCreator {
     public static MaplePacket guildNotice(int gid, String notice) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("guildNotice--------------------");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
@@ -4335,7 +4335,7 @@ public class MaplePacketCreator {
     public static MaplePacket guildMemberLevelJobUpdate(MapleGuildCharacter mgc) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("guildMemberLevelJobUpdate--------------------");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
@@ -4351,7 +4351,7 @@ public class MaplePacketCreator {
     public static MaplePacket rankTitleChange(int gid, String[] ranks) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("rankTitleChange--------------------");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
@@ -4367,7 +4367,7 @@ public class MaplePacketCreator {
     public static MaplePacket guildDisband(int gid) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("guildDisband--------------------");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
@@ -4381,7 +4381,7 @@ public class MaplePacketCreator {
     public static MaplePacket guildEmblemChange(int gid, short bg, byte bgcolor, short logo, byte logocolor) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("guildEmblemChange--------------------");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
@@ -4398,7 +4398,7 @@ public class MaplePacketCreator {
     public static MaplePacket guildCapacityChange(int gid, int capacity) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("guildCapacityChange--------------------");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
@@ -4412,7 +4412,7 @@ public class MaplePacketCreator {
     public static MaplePacket removeGuildFromAlliance(MapleGuildAlliance alliance, MapleGuild expelledGuild, boolean expelled) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("removeGuildFromAlliance--------------------");
         }
         mplew.writeShort(SendPacketOpcode.ALLIANCE_OPERATION.getValue());
@@ -4426,7 +4426,7 @@ public class MaplePacketCreator {
     public static MaplePacket changeAlliance(MapleGuildAlliance alliance, final boolean in) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("changeAlliance--------------------");
         }
         mplew.writeShort(SendPacketOpcode.ALLIANCE_OPERATION.getValue());
@@ -4458,7 +4458,7 @@ public class MaplePacketCreator {
     public static MaplePacket changeAllianceLeader(int allianceid, int newLeader, int oldLeader) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("changeAllianceLeaderA--------------------");
         }
         mplew.writeShort(SendPacketOpcode.ALLIANCE_OPERATION.getValue());
@@ -4472,7 +4472,7 @@ public class MaplePacketCreator {
     public static MaplePacket updateAllianceLeader(int allianceid, int newLeader, int oldLeader) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updateAllianceLeaderB--------------------");
         }
         mplew.writeShort(SendPacketOpcode.ALLIANCE_OPERATION.getValue());
@@ -4486,7 +4486,7 @@ public class MaplePacketCreator {
     public static MaplePacket sendAllianceInvite(String allianceName, MapleCharacter inviter) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("sendAllianceInvite--------------------");
         }
         mplew.writeShort(SendPacketOpcode.ALLIANCE_OPERATION.getValue());
@@ -4501,7 +4501,7 @@ public class MaplePacketCreator {
     public static MaplePacket changeGuildInAlliance(MapleGuildAlliance alliance, MapleGuild guild, final boolean add) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("changeGuildInAlliance--------------------");
         }
         mplew.writeShort(SendPacketOpcode.ALLIANCE_OPERATION.getValue());
@@ -4520,7 +4520,7 @@ public class MaplePacketCreator {
     public static MaplePacket changeAllianceRank(int allianceid, MapleGuildCharacter player) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("changeAllianceRank--------------------");
         }
         mplew.writeShort(SendPacketOpcode.ALLIANCE_OPERATION.getValue());
@@ -4534,7 +4534,7 @@ public class MaplePacketCreator {
     public static MaplePacket createGuildAlliance(MapleGuildAlliance alliance) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("createGuildAlliance--------------------");
         }
         mplew.writeShort(SendPacketOpcode.ALLIANCE_OPERATION.getValue());
@@ -4557,7 +4557,7 @@ public class MaplePacketCreator {
     public static MaplePacket getAllianceInfo(MapleGuildAlliance alliance) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getAllianceInfo--------------------");
         }
         mplew.writeShort(SendPacketOpcode.ALLIANCE_OPERATION.getValue());
@@ -4572,7 +4572,7 @@ public class MaplePacketCreator {
     public static MaplePacket getAllianceUpdate(MapleGuildAlliance alliance) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getAllianceUpdate--------------------");
         }
         mplew.writeShort(SendPacketOpcode.ALLIANCE_OPERATION.getValue());
@@ -4584,7 +4584,7 @@ public class MaplePacketCreator {
     public static MaplePacket getGuildAlliance(MapleGuildAlliance alliance) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getGuildAlliance--------------------");
         }
         mplew.writeShort(SendPacketOpcode.ALLIANCE_OPERATION.getValue());
@@ -4611,7 +4611,7 @@ public class MaplePacketCreator {
     public static MaplePacket addGuildToAlliance(MapleGuildAlliance alliance, MapleGuild newGuild) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("addGuildToAlliance--------------------");
         }
         mplew.writeShort(SendPacketOpcode.ALLIANCE_OPERATION.getValue());
@@ -4624,7 +4624,7 @@ public class MaplePacketCreator {
     }
 
     private static void addAllianceInfo(MaplePacketLittleEndianWriter mplew, MapleGuildAlliance alliance) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("addAllianceInfo--------------------");
         }
         mplew.writeInt(alliance.getId());
@@ -4643,7 +4643,7 @@ public class MaplePacketCreator {
     public static MaplePacket allianceMemberOnline(int alliance, int gid, int id, boolean online) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("allianceMemberOnline--------------------");
         }
         mplew.writeShort(SendPacketOpcode.ALLIANCE_OPERATION.getValue());
@@ -4659,7 +4659,7 @@ public class MaplePacketCreator {
     public static MaplePacket updateAlliance(MapleGuildCharacter mgc, int allianceid) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updateAlliance--------------------");
         }
         mplew.writeShort(SendPacketOpcode.ALLIANCE_OPERATION.getValue());
@@ -4676,7 +4676,7 @@ public class MaplePacketCreator {
     public static MaplePacket updateAllianceRank(int allianceid, MapleGuildCharacter mgc) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updateAllianceRank--------------------");
         }
         mplew.writeShort(SendPacketOpcode.ALLIANCE_OPERATION.getValue());
@@ -4691,7 +4691,7 @@ public class MaplePacketCreator {
     public static MaplePacket disbandAlliance(int alliance) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("disbandAlliance--------------------");
         }
         mplew.writeShort(SendPacketOpcode.ALLIANCE_OPERATION.getValue());
@@ -4704,7 +4704,7 @@ public class MaplePacketCreator {
     public static MaplePacket BBSThreadList(final List<MapleBBSThread> bbs, int start) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("BBSThreadList--------------------");
         }
         mplew.writeShort(SendPacketOpcode.BBS_OPERATION.getValue());
@@ -4745,7 +4745,7 @@ public class MaplePacketCreator {
     }
 
     private static void addThread(MaplePacketLittleEndianWriter mplew, MapleBBSThread rs) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("addThread--------------------");
         }
         mplew.writeInt(rs.localthreadID);
@@ -4759,7 +4759,7 @@ public class MaplePacketCreator {
     public static MaplePacket showThread(MapleBBSThread thread) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showThread--------------------");
         }
         mplew.writeShort(SendPacketOpcode.BBS_OPERATION.getValue());
@@ -4784,7 +4784,7 @@ public class MaplePacketCreator {
     public static MaplePacket showGuildRanks(int npcid, List<GuildRankingInfo> all) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showGuildRanks--------------------");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
@@ -4847,7 +4847,7 @@ public class MaplePacketCreator {
     public static MaplePacket updateGP(int gid, int GP) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updateGP--------------------");
         }
         mplew.writeShort(SendPacketOpcode.GUILD_OPERATION.getValue());
@@ -4861,7 +4861,7 @@ public class MaplePacketCreator {
     public static MaplePacket skillEffect(MapleCharacter from, int skillId, byte level, byte flags, byte speed, byte unk) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("skillEffect--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SKILL_EFFECT.getValue());
@@ -4878,7 +4878,7 @@ public class MaplePacketCreator {
     public static MaplePacket skillCancel(MapleCharacter from, int skillId) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("skillCancel--------------------");
         }
         mplew.writeShort(SendPacketOpcode.CANCEL_SKILL_EFFECT.getValue());
@@ -4891,7 +4891,7 @@ public class MaplePacketCreator {
     public static MaplePacket showMagnet(int mobid, byte success) { // Monster Magnet
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showMagnet--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_MAGNET.getValue());
@@ -4904,7 +4904,7 @@ public class MaplePacketCreator {
     public static MaplePacket sendHint(String hint, int width, int height) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("sendHint--------------------");
         }
         if (width < 1) {
@@ -4928,7 +4928,7 @@ public class MaplePacketCreator {
     public static MaplePacket messengerInvite(String from, int messengerid) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("messengerInvite--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MESSENGER.getValue());
@@ -4944,7 +4944,7 @@ public class MaplePacketCreator {
     public static MaplePacket addMessengerPlayer(String from, MapleCharacter chr, int position, int channel) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("addMessengerPlayer--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MESSENGER.getValue());
@@ -4960,7 +4960,7 @@ public class MaplePacketCreator {
     public static MaplePacket removeMessengerPlayer(int position) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("removeMessengerPlayer--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MESSENGER.getValue());
@@ -4973,7 +4973,7 @@ public class MaplePacketCreator {
     public static MaplePacket updateMessengerPlayer(String from, MapleCharacter chr, int position, int channel) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updateMessengerPlayer--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MESSENGER.getValue());
@@ -4989,7 +4989,7 @@ public class MaplePacketCreator {
     public static MaplePacket joinMessenger(int position) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("joinMessenger--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MESSENGER.getValue());
@@ -5002,7 +5002,7 @@ public class MaplePacketCreator {
     public static MaplePacket messengerChat(String text) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("messengerChat--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MESSENGER.getValue());
@@ -5015,7 +5015,7 @@ public class MaplePacketCreator {
     public static MaplePacket messengerNote(String text, int mode, int mode2) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("messengerNote--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MESSENGER.getValue());
@@ -5029,7 +5029,7 @@ public class MaplePacketCreator {
     public static MaplePacket getFindReplyWithCS(String target, final boolean buddy) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getFindReplyWithCS--------------------");
         }
         mplew.writeShort(SendPacketOpcode.WHISPER.getValue());
@@ -5044,7 +5044,7 @@ public class MaplePacketCreator {
     public static MaplePacket getFindReplyWithMTS(String target, final boolean buddy) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getFindReplyWithMTS--------------------");
         }
         mplew.writeShort(SendPacketOpcode.WHISPER.getValue());
@@ -5059,7 +5059,7 @@ public class MaplePacketCreator {
     public static MaplePacket showEquipEffect() {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showEquipEffectA--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_EQUIP_EFFECT.getValue());
@@ -5070,7 +5070,7 @@ public class MaplePacketCreator {
     public static MaplePacket showEquipEffect(int team) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showEquipEffectB--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_EQUIP_EFFECT.getValue());
@@ -5081,7 +5081,7 @@ public class MaplePacketCreator {
     public static MaplePacket summonSkill(int cid, int summonSkillId, int newStance) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("summonSkill--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SUMMON_SKILL.getValue());
@@ -5095,7 +5095,7 @@ public class MaplePacketCreator {
     public static MaplePacket skillCooldown(int sid, int time) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("skillCooldown--------------------");
         }
         mplew.writeShort(SendPacketOpcode.COOLDOWN.getValue());
@@ -5108,7 +5108,7 @@ public class MaplePacketCreator {
     public static MaplePacket useSkillBook(MapleCharacter chr, int skillid, int maxlevel, boolean canuse, boolean success) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("useSkillBook--------------------");
         }
         mplew.writeShort(SendPacketOpcode.USE_SKILL_BOOK.getValue());
@@ -5126,7 +5126,7 @@ public class MaplePacketCreator {
     public static MaplePacket getMacros(SkillMacro[] macros) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getMacros--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SKILL_MACRO.getValue());
@@ -5153,7 +5153,7 @@ public class MaplePacketCreator {
     public static MaplePacket updateAriantPQRanking(String name, int score, boolean empty) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updateAriantPQRanking--------------------");
         }
         mplew.writeShort(SendPacketOpcode.ARIANT_SCORE_UPDATE.getValue());
@@ -5168,7 +5168,7 @@ public class MaplePacketCreator {
     public static MaplePacket catchMonster(int mobid, int itemid, byte success) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("catchMonster--------------------");
         }
         if (itemid == 2270002) {
@@ -5187,7 +5187,7 @@ public class MaplePacketCreator {
     public static MaplePacket showAriantScoreBoard() {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showAriantScoreBoard--------------------");
         }
         mplew.writeShort(SendPacketOpcode.ARIANT_SCOREBOARD.getValue());
@@ -5210,7 +5210,7 @@ public class MaplePacketCreator {
     public static MaplePacket boatPacket(int effect) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("boatPacket--------------------");
         }
         // 1034: balrog boat comes, 1548: boat comes, 3: boat leaves
@@ -5224,7 +5224,7 @@ public class MaplePacketCreator {
     public static MaplePacket boatEffect(int effect) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("boatEffect--------------------");
         }
         // 1034: balrog boat comes, 1548: boat comes, 3: boat leaves
@@ -5238,7 +5238,7 @@ public class MaplePacketCreator {
     public static MaplePacket removeItemFromDuey(boolean remove, int a) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("removeItemFromDuey--------------------");
         }
         mplew.writeShort(SendPacketOpcode.DUEY.getValue());
@@ -5252,7 +5252,7 @@ public class MaplePacketCreator {
     public static MaplePacket sendDuey(byte operation, List<MapleDueyActions> s) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("sendDuey--------------------");
         }
         mplew.writeShort(SendPacketOpcode.DUEY.getValue());
@@ -5293,7 +5293,7 @@ public class MaplePacketCreator {
     public static MaplePacket Mulung_DojoUp2() {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("Mulung_DojoUp2--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_ITEM_GAIN_INCHAT.getValue());
@@ -5312,7 +5312,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket showQuestMsg(final String msg) {//月秒
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showQuestMsg--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_STATUS_INFO.getValue());
@@ -5322,14 +5322,14 @@ public class MaplePacketCreator {
     }
 
     public static MaplePacket HSText(String m) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("Mulung_Pts--------------------");
         }
         return showQuestMsg(m);
     }
 
     public static MaplePacket Mulung_Pts(int recv, int total) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("Mulung_Pts--------------------");
         }
         return showQuestMsg("你获得 " + recv + " 修炼点数, 目前累计了 " + total + " 点修炼点数");
@@ -5337,7 +5337,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket showOXQuiz(int questionSet, int questionId, boolean askQuestion) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showOXQuiz--------------------");
         }
         mplew.writeShort(SendPacketOpcode.OX_QUIZ.getValue());
@@ -5349,7 +5349,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket leftKnockBack() {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("leftKnockBack--------------------");
         }
         mplew.writeShort(SendPacketOpcode.LEFT_KNOCK_BACK.getValue());
@@ -5358,7 +5358,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket rollSnowball(int type, MapleSnowballs ball1, MapleSnowballs ball2) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("rollSnowball--------------------");
         }
         mplew.writeShort(SendPacketOpcode.ROLL_SNOWBALL.getValue());
@@ -5373,7 +5373,7 @@ public class MaplePacketCreator {
     }
 
     public static MaplePacket enterSnowBall() {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("enterSnowBall--------------------");
         }
         return rollSnowball(0, null, null);
@@ -5381,7 +5381,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket hitSnowBall(int team, int damage, int distance, int delay) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("hitSnowBall--------------------");
         }
         mplew.writeShort(SendPacketOpcode.HIT_SNOWBALL.getValue());
@@ -5394,7 +5394,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket snowballMessage(int team, int message) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("snowballMessage--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SNOWBALL_MESSAGE.getValue());
@@ -5405,7 +5405,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket finishedSort(int type) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("finishedSort--------------------");
         }
         mplew.writeShort(SendPacketOpcode.FINISH_SORT.getValue());
@@ -5417,7 +5417,7 @@ public class MaplePacketCreator {
     // 00 01 00 00 00 00
     public static MaplePacket coconutScore(int[] coconutscore) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("coconutScore--------------------");
         }
         mplew.writeShort(SendPacketOpcode.COCONUT_SCORE.getValue());
@@ -5429,7 +5429,7 @@ public class MaplePacketCreator {
     public static MaplePacket hitCoconut(boolean spawn, int id, int type) {
         // FF 00 00 00 00 00 00
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("hitCoconut--------------------");
         }
         mplew.writeShort(SendPacketOpcode.HIT_COCONUT.getValue());
@@ -5445,7 +5445,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket finishedGather(int type) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("finishedGather--------------------");
         }
         mplew.writeShort(SendPacketOpcode.FINISH_GATHER.getValue());
@@ -5456,7 +5456,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket yellowChat(String msg) {//聊天窗显示黄色字体
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("yellowChat--------------------");
         }
         mplew.writeShort(SendPacketOpcode.YELLOW_CHAT.getValue());
@@ -5468,7 +5468,7 @@ public class MaplePacketCreator {
     public static MaplePacket getPeanutResult(int itemId, short quantity, int itemId2, short quantity2) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getPeanutResult--------------------");
         }
         mplew.writeShort(SendPacketOpcode.PIGMI_REWARD.getValue());
@@ -5484,7 +5484,7 @@ public class MaplePacketCreator {
     public static MaplePacket sendLevelup(boolean family, int level, String name) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("sendLevelup--------------------");
         }
         mplew.writeShort(SendPacketOpcode.LEVEL_UPDATE.getValue());
@@ -5498,7 +5498,7 @@ public class MaplePacketCreator {
     public static MaplePacket sendMarriage(boolean family, String name) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("sendMarriage--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MARRIAGE_UPDATE.getValue());
@@ -5511,7 +5511,7 @@ public class MaplePacketCreator {
     public static MaplePacket sendJobup(boolean family, int jobid, String name) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("sendJobup--------------------");
         }
         mplew.writeShort(SendPacketOpcode.JOB_UPDATE.getValue());
@@ -5524,7 +5524,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket showZakumShrine(boolean spawned, int time) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showZakumShrine--------------------");
         }
         mplew.writeShort(SendPacketOpcode.ZAKUM_SHRINE.getValue());
@@ -5535,7 +5535,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket showHorntailShrine(boolean spawned, int time) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showHorntailShrine--------------------");
         }
         mplew.writeShort(SendPacketOpcode.HORNTAIL_SHRINE.getValue());
@@ -5546,7 +5546,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket showChaosZakumShrine(boolean spawned, int time) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showChaosZakumShrine--------------------");
         }
         mplew.writeShort(SendPacketOpcode.CHAOS_ZAKUM_SHRINE.getValue());
@@ -5557,7 +5557,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket showChaosHorntailShrine(boolean spawned, int time) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showChaosHorntailShrine--------------------");
         }
         mplew.writeShort(SendPacketOpcode.CHAOS_HORNTAIL_SHRINE.getValue());
@@ -5568,7 +5568,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket stopClock() {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("stopClock--------------------");
         }
         mplew.writeShort(SendPacketOpcode.STOP_CLOCK.getValue());
@@ -5577,7 +5577,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket spawnDragon(MapleDragon d) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("spawnDragon--------------------");
         }
         mplew.writeShort(SendPacketOpcode.DRAGON_SPAWN.getValue());
@@ -5592,7 +5592,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket removeDragon(int chrid) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("removeDragon--------------------");
         }
         mplew.writeShort(SendPacketOpcode.DRAGON_REMOVE.getValue());
@@ -5603,7 +5603,7 @@ public class MaplePacketCreator {
     public static MaplePacket moveDragon(MapleDragon d, Point startPos, List<LifeMovementFragment> moves) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("moveDragon--------------------");
         }
         mplew.writeShort(SendPacketOpcode.DRAGON_MOVE.getValue()); //not sure
@@ -5618,7 +5618,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket addTutorialStats() {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter(0);
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("addTutorialStats--------------------");
         }
         mplew.writeShort(SendPacketOpcode.TEMP_STATS.getValue());
@@ -5636,7 +5636,7 @@ public class MaplePacketCreator {
     }
 
     public static final MaplePacket temporaryStats_Aran() {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("temporaryStats_Aran--------------------");
         }
         final List<Pair<MapleStat.Temp, Integer>> stats = new ArrayList<Pair<MapleStat.Temp, Integer>>();
@@ -5653,7 +5653,7 @@ public class MaplePacketCreator {
     }
 
     public static final MaplePacket temporaryStats_Balrog(final MapleCharacter chr) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("temporaryStats_Balrog--------------------");
         }
         final List<Pair<MapleStat.Temp, Integer>> stats = new ArrayList<Pair<MapleStat.Temp, Integer>>();
@@ -5670,7 +5670,7 @@ public class MaplePacketCreator {
 
     public static final MaplePacket temporaryStats(final List<Pair<MapleStat.Temp, Integer>> stats) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("temporaryStats--------------------");
         }
         mplew.writeShort(SendPacketOpcode.TEMP_STATS.getValue());
@@ -5715,7 +5715,7 @@ public class MaplePacketCreator {
 
     public static final MaplePacket temporaryStats_Reset() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("temporaryStats_Reset--------------------");
         }
         mplew.writeShort(SendPacketOpcode.TEMP_STATS_RESET.getValue());
@@ -5725,7 +5725,7 @@ public class MaplePacketCreator {
     //its likely that durability items use this
     public static final MaplePacket showHpHealed(final int cid, final int amount) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showHpHealed--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_FOREIGN_EFFECT.getValue());
@@ -5737,7 +5737,7 @@ public class MaplePacketCreator {
 
     public static final MaplePacket showOwnHpHealed(final int amount) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showOwnHpHealed--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_ITEM_GAIN_INCHAT.getValue());
@@ -5748,7 +5748,7 @@ public class MaplePacketCreator {
 
     public static final MaplePacket sendRepairWindow(int npc) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("sendRepairWindow--------------------");
         }
         mplew.writeShort(SendPacketOpcode.REPAIR_WINDOW.getValue());
@@ -5759,7 +5759,7 @@ public class MaplePacketCreator {
 
     public static final MaplePacket sendPyramidUpdate(final int amount) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("sendPyramidUpdate--------------------");
         }
         mplew.writeShort(SendPacketOpcode.PYRAMID_UPDATE.getValue());
@@ -5769,7 +5769,7 @@ public class MaplePacketCreator {
 
     public static final MaplePacket sendPyramidResult(final byte rank, final int amount) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("sendPyramidResult--------------------");
         }
         mplew.writeShort(SendPacketOpcode.PYRAMID_RESULT.getValue());
@@ -5780,7 +5780,7 @@ public class MaplePacketCreator {
 
     public static final MaplePacket sendMarrageEffect() {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("sendMarrageEffect--------------------");
         }
         mplew.writeShort(71);
@@ -5793,7 +5793,7 @@ public class MaplePacketCreator {
     //update_quest_info - 08 51 1E 00 00 00 00 00 00 00 00
 
     public static final MaplePacket sendPyramidEnergy(final String type, final String amount) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("sendPyramidEnergy--------------------");
         }
         return sendString(1, type, amount);
@@ -5801,7 +5801,7 @@ public class MaplePacketCreator {
 
     public static final MaplePacket sendString(final int type, final String object, final String amount) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("sendString--------------------");
         }
         switch (type) {
@@ -5821,21 +5821,21 @@ public class MaplePacketCreator {
     }
 
     public static final MaplePacket sendGhostPoint(final String type, final String amount) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("sendGhostPoint--------------------");
         }
         return sendString(2, type, amount); //PRaid_Point (0-1500???)
     }
 
     public static final MaplePacket sendGhostStatus(final String type, final String amount) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("sendGhostStatus--------------------");
         }
         return sendString(3, type, amount); //Red_Stage(1-5), Blue_Stage, blueTeamDamage, redTeamDamage
     }
 
     public static MaplePacket MulungEnergy(int energy) {
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("MulungEnergy--------------------");
         }
         return sendPyramidEnergy("energy", String.valueOf(energy));
@@ -5844,7 +5844,7 @@ public class MaplePacketCreator {
     public static MaplePacket getPollQuestion() {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getPollQuestion--------------------");
         }
         mplew.writeShort(SendPacketOpcode.GAME_POLL_QUESTION.getValue());
@@ -5862,7 +5862,7 @@ public class MaplePacketCreator {
     public static MaplePacket getPollReply(String message) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getPollReply--------------------");
         }
         mplew.writeShort(SendPacketOpcode.GAME_POLL_REPLY.getValue());
@@ -5874,7 +5874,7 @@ public class MaplePacketCreator {
     public static MaplePacket getEvanTutorial(String data) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getEvanTutorial--------------------");
         }
         mplew.writeShort(SendPacketOpcode.NPC_TALK.getValue());
@@ -5891,7 +5891,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket showEventInstructions() {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showEventInstructions--------------------");
         }
         mplew.writeShort(SendPacketOpcode.GMEVENT_INSTRUCTIONS.getValue());
@@ -5901,7 +5901,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket getOwlOpen() { //best items! hardcoded
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getOwlOpen--------------------");
         }
         mplew.writeShort(SendPacketOpcode.OWL_OF_MINERVA.getValue());
@@ -5915,7 +5915,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket getOwlSearched(final int itemSearch, final List<HiredMerchant> hms) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getOwlSearched--------------------");
         }
         mplew.writeShort(SendPacketOpcode.OWL_OF_MINERVA.getValue());
@@ -5961,7 +5961,7 @@ public class MaplePacketCreator {
     public static MaplePacket getRPSMode(byte mode, int mesos, int selection, int answer) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getRPSMode--------------------");
         }
         mplew.writeShort(SendPacketOpcode.RPS_GAME.getValue());
@@ -5989,7 +5989,7 @@ public class MaplePacketCreator {
     public static final MaplePacket getSlotUpdate(byte invType, byte newSlots) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getSlotUpdate--------------------");
         }
         mplew.writeShort(SendPacketOpcode.UPDATE_INVENTORY_SLOT.getValue());
@@ -6000,7 +6000,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket followRequest(int chrid) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("followRequest--------------------");
         }
         mplew.writeShort(SendPacketOpcode.FOLLOW_REQUEST.getValue());
@@ -6010,7 +6010,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket followEffect(int initiator, int replier, Point toMap) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("followEffect--------------------");
         }
         mplew.writeShort(SendPacketOpcode.FOLLOW_EFFECT.getValue());
@@ -6028,7 +6028,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket getFollowMsg(int opcode) {
         final MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getFollowMsg--------------------");
         }
         mplew.writeShort(SendPacketOpcode.FOLLOW_MSG.getValue());
@@ -6039,7 +6039,7 @@ public class MaplePacketCreator {
     public static MaplePacket moveFollow(Point otherStart, Point myStart, Point otherEnd, List<LifeMovementFragment> moves) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("moveFollow--------------------");
         }
         mplew.writeShort(SendPacketOpcode.FOLLOW_MOVE.getValue());
@@ -6060,7 +6060,7 @@ public class MaplePacketCreator {
     public static final MaplePacket getFollowMessage(final String msg) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getFollowMessage--------------------");
         }
         mplew.writeShort(SendPacketOpcode.FOLLOW_MESSAGE.getValue());
@@ -6071,7 +6071,7 @@ public class MaplePacketCreator {
 
     public static final MaplePacket getNodeProperties(final MapleMonster objectid, final MapleMap map) {
         //idk.
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getNodeProperties--------------------");
         }
         if (objectid.getNodePacket() != null) {
@@ -6100,7 +6100,7 @@ public class MaplePacketCreator {
     public static final MaplePacket getMovingPlatforms(final MapleMap map) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getMovingPlatforms--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MOVE_PLATFORM.getValue());
@@ -6127,7 +6127,7 @@ public class MaplePacketCreator {
     public static final MaplePacket getUpdateEnvironment(final MapleMap map) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("getUpdateEnvironment--------------------");
         }
         mplew.writeShort(SendPacketOpcode.UPDATE_ENV.getValue());
@@ -6141,7 +6141,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket sendEngagementRequest(String name, int cid) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("sendEngagementRequest--------------------");
         }
         mplew.writeShort(SendPacketOpcode.ENGAGE_REQUEST.getValue());
@@ -6159,7 +6159,7 @@ public class MaplePacketCreator {
      */
     public static MaplePacket trembleEffect(int type, int delay) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("trembleEffect--------------------");
         }
         mplew.writeShort(SendPacketOpcode.BOSS_ENV.getValue());
@@ -6171,7 +6171,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket sendEngagement(final byte msg, final int item, final MapleCharacter male, final MapleCharacter female) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("sendEngagement--------------------");
         }
         // 0B = Engagement has been concluded.
@@ -6215,7 +6215,7 @@ public class MaplePacketCreator {
     public static MaplePacket englishQuizMsg(String msg) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("englishQuizMsg--------------------");
         }
         mplew.writeShort(SendPacketOpcode.ENGLISH_QUIZ.getValue());
@@ -6227,7 +6227,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket openBeans(int beansCount, int type) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("openBeans--------------------");
         }
         mplew.writeShort(SendPacketOpcode.BEANS_GAME1.getValue());
@@ -6238,7 +6238,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket updateBeans(int cid, int beansCount) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updateBeans--------------------");
         }
         mplew.writeShort(SendPacketOpcode.UPDATE_BEANS.getValue());
@@ -6250,7 +6250,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket showBeans(int 力度, int size, int Pos, int Type) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showBeans--------------------");
         }
         mplew.writeShort(SendPacketOpcode.BEANS_GAME2.getValue());
@@ -6273,7 +6273,7 @@ public class MaplePacketCreator {
     public static MaplePacket showCharCash(MapleCharacter chr) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showCharCash--------------------");
         }
         mplew.writeShort(SendPacketOpcode.CHAR_CASH.getValue());
@@ -6285,7 +6285,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket spawnLove(int oid, int itemid, String name, String msg, Point pos, int ft) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("spawnLove--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SPAWN_LOVE.getValue());
@@ -6300,7 +6300,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket removeLove(int oid) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("removeLove--------------------");
         }
         mplew.writeShort(SendPacketOpcode.REMOVE_LOVE.getValue());
@@ -6311,7 +6311,7 @@ public class MaplePacketCreator {
     public static MaplePacket licenseRequest() {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("licenseRequest--------------------");
         }
         mplew.writeShort(SendPacketOpcode.LOGIN_STATUS.getValue());
@@ -6322,7 +6322,7 @@ public class MaplePacketCreator {
     public static MaplePacket licenseResult() {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("licenseResult--------------------");
         }
         mplew.writeShort(SendPacketOpcode.LICENSE_RESULT.getValue());
@@ -6332,7 +6332,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket showForcedEquip() {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showForcedEquip--------------------");
         }
         mplew.writeShort(SendPacketOpcode.FORCED_MAP_EQUIP.getValue());
@@ -6342,7 +6342,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket removeTutorialStats() {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("removeTutorialStats--------------------");
         }
         mplew.writeShort(SendPacketOpcode.TEMP_STATS_RESET.getValue());
@@ -6351,7 +6351,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket spawnTutorialSummon(int type) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("spawnTutorialSummon--------------------");
         }
         mplew.writeShort(SendPacketOpcode.TUTORIAL_SUMMON.getValue());
@@ -6505,7 +6505,7 @@ public class MaplePacketCreator {
 
     public static MaplePacket updateEquipSlot(IItem item) {//道具取名
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("updateEquipSlot--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MODIFY_INVENTORY_ITEM.getValue());

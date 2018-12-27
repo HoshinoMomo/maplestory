@@ -42,22 +42,23 @@ public class ServerConstants {
     public static final int MTS_TAX = 10; //+% to everything
     public static final int MTS_MESO = 5000; //mesos needed
     public static final int CHANNEL_COUNT = 200;
-    //服务端输出操作
-    public static boolean 封包显示 = Boolean.parseBoolean(ServerProperties.getProperty("MinaMS.封包显示", "false"));
-    public static boolean 调试输出封包 = Boolean.parseBoolean(ServerProperties.getProperty("MinaMS.调试输出封包", "false"));
-    public static boolean 自动注册 = false;
+    //过图输出日志
+    public static boolean mapChangeLog = Boolean.parseBoolean(ServerProperties.getProperty("MinaMS.mapChangeLog", "false"));
+    //输出调试封包
+    public static boolean isDebug = Boolean.parseBoolean(ServerProperties.getProperty("MinaMS.isDebug", "false"));
+    public static boolean autoRegister = false;
     public static boolean Super_password = false;
     public static String superpw = "";
     public static final List<Balloon> lBalloon = new ArrayList();
     public static boolean 防卡号 = true;
 
     public static boolean getAutoReg() {
-        return 自动注册;
+        return autoRegister;
     }
 
     public static String ChangeAutoReg() {
-        自动注册 = !getAutoReg();
-        return 自动注册 ? "开启" : "关闭";
+        autoRegister = !getAutoReg();
+        return autoRegister ? "开启" : "关闭";
     }
 
     public static List<Balloon> getBalloons() {
@@ -88,13 +89,12 @@ public class ServerConstants {
         return 0;
     }
 
-    public static enum PlayerGMRank {
+    public enum PlayerGMRank {
 
         NORMAL('@', 0),
         INTERN('!', 1),
         GM('!', 2),
         ADMIN('!', 3);
-        //SUPERADMIN('!', 3);
         private char commandPrefix;
         private int level;
 

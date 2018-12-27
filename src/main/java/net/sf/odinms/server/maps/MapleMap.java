@@ -1871,16 +1871,16 @@ public final class MapleMap {
         } finally {
             charactersLock.writeLock().unlock();
         }
-        boolean 进入地图开启显示数据 = false;
+
         if (mapid == 109080000 || mapid == 109080001 || mapid == 109080002 || mapid == 109080003 || mapid == 109080010 || mapid == 109080011 || mapid == 109080012) {
             chr.setCoconutTeam(getAndSwitchTeam() ? 0 : 1);
-            if (ServerConstants.封包显示 || 进入地图开启显示数据) {
+            if (ServerConstants.mapChangeLog) {
                 System.out.println("进入地图加载数据A");
             }
         }
         if (!chr.isHidden()) {
             broadcastMessage(chr, MaplePacketCreator.spawnPlayerMapobject(chr), false);
-            if (ServerConstants.封包显示 || 进入地图开启显示数据) {
+            if (ServerConstants.mapChangeLog) {
                 System.out.println("进入地图加载数据B");
             }
 
@@ -1890,7 +1890,7 @@ public final class MapleMap {
                     chr.getClient().getSession().write(PetPacket.updatePet(pet, chr.getInventory(MapleInventoryType.CASH).getItem((short) (byte) pet.getInventoryPosition()), true));
                     broadcastMessage(chr, PetPacket.showPet(chr, pet, false, false), false);
                     //broadcastMessage(chr, PetPacket.showPet(chr, pet, false, false), false);
-                    if (ServerConstants.封包显示 || 进入地图开启显示数据) {
+                    if (ServerConstants.mapChangeLog) {
                         System.out.println("进入地图加载数据B+");
                     }
                 }
@@ -1899,7 +1899,7 @@ public final class MapleMap {
             if (chr.isGM() && speedRunStart > 0) {
                 endSpeedRun();
                 broadcastMessage(MaplePacketCreator.serverNotice(5, "The speed run has ended."));
-                if (ServerConstants.封包显示 || 进入地图开启显示数据) {
+                if (ServerConstants.mapChangeLog) {
                     System.out.println("进入地图加载数据C");
                 }
             }
@@ -1920,7 +1920,7 @@ public final class MapleMap {
              * MapScriptMethods.startScript_User(chr.getClient(), onUserEnter);
              * }
              */
-            if (ServerConstants.封包显示 || 进入地图开启显示数据) {
+            if (ServerConstants.mapChangeLog) {
                 System.out.println("进入地图加载数据D");
             }
             switch (mapid) {
@@ -1989,7 +1989,7 @@ public final class MapleMap {
             }
             this.spawnSummon(summon);
             chr.addVisibleMapObject(summon);
-            if (ServerConstants.封包显示 || 进入地图开启显示数据) {
+            if (ServerConstants.mapChangeLog) {
                 System.out.println("进入地图加载数据H");
             }
         }
@@ -1999,39 +1999,39 @@ public final class MapleMap {
         broadcastMessage(MaplePacketCreator.loveEffect());
         if (timeLimit > 0 && getForcedReturnMap() != null && !chr.isClone()) {
             chr.startMapTimeLimitTask(timeLimit, getForcedReturnMap());
-            if (ServerConstants.封包显示 || 进入地图开启显示数据) {
+            if (ServerConstants.mapChangeLog) {
                 System.out.println("进入地图加载数据I");
             }
         }
         if (getSquadBegin() != null && getSquadBegin().getTimeLeft() > 0 && getSquadBegin().getStatus() == 1) {
             chr.getClient().getSession().write(MaplePacketCreator.getClock((int) (getSquadBegin().getTimeLeft() / 1000)));
-            if (ServerConstants.封包显示 || 进入地图开启显示数据) {
+            if (ServerConstants.mapChangeLog) {
                 System.out.println("进入地图加载数据O");
             }
         }
         if (chr.getCarnivalParty() != null && chr.getEventInstance() != null) {
             chr.getEventInstance().onMapLoad(chr);
-            if (ServerConstants.封包显示 || 进入地图开启显示数据) {
+            if (ServerConstants.mapChangeLog) {
                 System.out.println("进入地图加载数据M");
             }
         }
         MapleEvent.mapLoad(chr, channel);
         if (chr.getEventInstance() != null && chr.getEventInstance().isTimerStarted() && !chr.isClone()) {
             chr.getClient().getSession().write(MaplePacketCreator.getClock((int) (chr.getEventInstance().getTimeLeft() / 1000)));
-            if (ServerConstants.封包显示 || 进入地图开启显示数据) {
+            if (ServerConstants.mapChangeLog) {
                 System.out.println("进入地图加载数据K");
             }
         }
         if (hasClock()) {
             final Calendar cal = Calendar.getInstance();
             chr.getClient().getSession().write((MaplePacketCreator.getClockTime(cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), cal.get(Calendar.SECOND))));
-            if (ServerConstants.封包显示 || 进入地图开启显示数据) {
+            if (ServerConstants.mapChangeLog) {
                 System.out.println("进入地图加载数据L");
             }
         }
         if (isTown()) {
             chr.cancelEffectFromBuffStat(MapleBuffStat.RAINING_MINES);
-            if (ServerConstants.封包显示 || 进入地图开启显示数据) {
+            if (ServerConstants.mapChangeLog) {
                 System.out.println("进入地图加载数据W-------------完");
             }
         }
@@ -2040,7 +2040,7 @@ public final class MapleMap {
             //chr.getClient().getSession().write(MaplePacketCreator.updateParty(chr.getClient().getChannel(), chr.getParty(), PartyOperation.SILENT_UPDATE, null));
             chr.updatePartyMemberHP();
             chr.receivePartyMemberHP();
-            if (ServerConstants.封包显示 || 进入地图开启显示数据) {
+            if (ServerConstants.mapChangeLog) {
                 System.out.println("进入地图加载数据G");
             }
         }
@@ -2050,12 +2050,12 @@ public final class MapleMap {
  /*
          * if (timeLimit > 0 && getForcedReturnMap() != null && !chr.isClone())
          * { chr.startMapTimeLimitTask(timeLimit, getForcedReturnMap()); if
-         * (ServerConstants.封包显示 || 进入地图开启显示数据) {
+         * (ServerConstants.mapChangeLog) {
          * System.out.println("进入地图加载数据I"); } } if
          * (chr.getBuffedValue(MapleBuffStat.MONSTER_RIDING) != null) { if
          * (FieldLimitType.Mount.check(fieldLimit)) {
          * chr.cancelBuffStats(MapleBuffStat.MONSTER_RIDING); if
-         * (ServerConstants.封包显示 || 进入地图开启显示数据) {
+         * (ServerConstants.mapChangeLog) {
          * System.out.println("进入地图加载数据J"); } } }
          */
  /*
@@ -2063,23 +2063,20 @@ public final class MapleMap {
          * chr.getEventInstance().isTimerStarted() && !chr.isClone()) {
          * chr.getClient().getSession().write(MaplePacketCreator.getClock((int)
          * (chr.getEventInstance().getTimeLeft() / 1000))); if
-         * (ServerConstants.封包显示 || 进入地图开启显示数据) {
+         * (ServerConstants.mapChangeLog) {
          * System.out.println("进入地图加载数据K"); } } if (hasClock()) { final Calendar
          * cal = Calendar.getInstance();
          * chr.getClient().getSession().write((MaplePacketCreator.getClockTime(cal.get(Calendar.HOUR_OF_DAY),
          * cal.get(Calendar.MINUTE), cal.get(Calendar.SECOND)))); if
-         * (ServerConstants.封包显示 || 进入地图开启显示数据) {
+         * (ServerConstants.mapChangeLog) {
          * System.out.println("进入地图加载数据L"); } } if (chr.getCarnivalParty() !=
          * null && chr.getEventInstance() != null) {
-         * chr.getEventInstance().onMapLoad(chr); if (ServerConstants.封包显示 ||
-         * 进入地图开启显示数据) { System.out.println("进入地图加载数据M"); } }
-         * MapleEvent.mapLoad(chr, channel); if (ServerConstants.封包显示 ||
-         * 进入地图开启显示数据) { System.out.println("进入地图加载数据N"); } if (getSquadBegin()
+         * chr.getEventInstance().onMapLoad(chr); if (ServerConstants.mapChangeLog) { System.out.println("进入地图加载数据M"); } }
+         * MapleEvent.mapLoad(chr, channel); if (ServerConstants.mapChangeLog) { System.out.println("进入地图加载数据N"); } if (getSquadBegin()
          * != null && getSquadBegin().getTimeLeft() > 0 &&
          * getSquadBegin().getStatus() == 1) {
          * chr.getClient().getSession().write(MaplePacketCreator.getClock((int)
-         * (getSquadBegin().getTimeLeft() / 1000))); if (ServerConstants.封包显示 ||
-         * 进入地图开启显示数据) { System.out.println("进入地图加载数据O"); } }
+         * (getSquadBegin().getTimeLeft() / 1000))); if (ServerConstants.mapChangeLog) { System.out.println("进入地图加载数据O"); } }
          */
  /*
          * if (mapid / 1000 != 105100 && mapid / 100 != 8020003 && mapid / 100
@@ -2088,7 +2085,7 @@ public final class MapleMap {
          * if (!squadTimer && sqd != null &&
          * chr.getName().equals(sqd.getLeaderName()) && !chr.isClone()) {
          * //leader? display doShrine(false); squadTimer = true; } if
-         * (ServerConstants.封包显示 || 进入地图开启显示数据) {
+         * (ServerConstants.mapChangeLog) {
          * System.out.println("进入地图加载数据P"); } }
          */
  /*
@@ -2100,31 +2097,31 @@ public final class MapleMap {
          * = "Bgm06/FinalFight"; break; case 200090000: case 200090010: music =
          * "Bgm04/ArabPirate"; break; }
          * chr.getClient().getSession().write(MaplePacketCreator.musicChange(music));
-         * if (ServerConstants.封包显示 || 进入地图开启显示数据) {
+         * if (ServerConstants.mapChangeLog) {
          * System.out.println("进入地图加载数据Q"); } //maybe timer too for zak/ht }
          */
  /*
          * for (final WeakReference<MapleCharacter> chrz : chr.getClones()) { if
          * (chrz.get() != null) { chrz.get().setPosition(new
          * Point(chr.getPosition())); chrz.get().setMap(this);
-         * addPlayer(chrz.get()); } if (ServerConstants.封包显示 || 进入地图开启显示数据) {
+         * addPlayer(chrz.get()); } if (ServerConstants.mapChangeLog) {
          * System.out.println("进入地图加载数据R"); } }
          */
         //  if (mapid == 914000000) {
         ///     chr.getClient().getSession().write(MaplePacketCreator.addTutorialStats());
-        //   if (ServerConstants.封包显示 || 进入地图开启显示数据) {
+        //   if (ServerConstants.mapChangeLog) {
         //       System.out.println("进入地图加载数据S");
         //  }
         // }
         /*
          * else if (mapid == 105100300 && chr.getLevel() >= 91) {
          * chr.getClient().getSession().write(MaplePacketCreator.temporaryStats_Balrog(chr));
-         * if (ServerConstants.封包显示 || 进入地图开启显示数据) {
+         * if (ServerConstants.mapChangeLog) {
          * System.out.println("进入地图加载数据T"); } }
          */
         //  else if (mapid == 140090000 || mapid == 105100301 || mapid == 105100401 || mapid == 105100100) {
         //  chr.getClient().getSession().write(MaplePacketCreator.temporaryStats_Reset());
-        //   if (ServerConstants.封包显示 || 进入地图开启显示数据) {
+        //   if (ServerConstants.mapChangeLog) {
         //      System.out.println("进入地图加载数据U");
         //  }
         // }
@@ -2153,7 +2150,7 @@ public final class MapleMap {
         }
         if (isTown()) {
             chr.cancelEffectFromBuffStat(MapleBuffStat.RAINING_MINES);
-            if (ServerConstants.封包显示 || 进入地图开启显示数据) {
+            if (ServerConstants.mapChangeLog) {
                 System.out.println("进入地图加载数据W-------------完");
             }
         }

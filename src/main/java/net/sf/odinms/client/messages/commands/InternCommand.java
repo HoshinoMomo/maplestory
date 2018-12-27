@@ -17,18 +17,6 @@ public class InternCommand {
         return ServerConstants.PlayerGMRank.INTERN;
     }
 
-    public static class 跟踪 extends Warp {
-    }
- 
-    public static class 封号 extends Ban {
-    }
-
-    public static class 隐身 extends Hide {
-    }
-
-    public static class 解除隐身 extends UnHide {
-    }
-
     public static class Ban extends CommandExecute {
 
         protected boolean hellban = false;
@@ -82,17 +70,6 @@ public class InternCommand {
         public int execute(MapleClient c, String[] splitted) {
             c.getPlayer().dropMessage(6, "上线的角色 頻道-" + c.getChannel() + ":");
             c.getPlayer().dropMessage(6, c.getChannelServer().getPlayerStorage().getOnlinePlayers(true));
-            return 1;
-        }
-    }
-
-    public static class CnGM extends CommandExecute {
-
-        @Override
-        public int execute(MapleClient c, String[] splitted) {
-
-            World.Broadcast.broadcastGMMessage(MaplePacketCreator.serverNotice(5, "<GM聊天视窗>" + "頻道" + c.getPlayer().getClient().getChannel() + " [" + c.getPlayer().getName() + "] : " + StringUtil.joinStringFrom(splitted, 1)).getBytes());
-
             return 1;
         }
     }

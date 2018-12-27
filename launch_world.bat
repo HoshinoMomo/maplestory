@@ -1,0 +1,3 @@
+@echo off
+set CLASSPATH=.;dist\odinms.jar;mina-core.jar;slf4j-api.jar;slf4j-jdk14.jar;mysql-connector-java-bin.jar
+java -Dnet.sf.odinms.recvops=recvops.properties -Dnet.sf.odinms.sendops=sendops.properties -Dnet.sf.odinms.wzpath=. -Djavax.net.ssl.keyStore=world.keystore -Djavax.net.ssl.keyStorePassword=worldkeystorepassword -Djavax.net.ssl.trustStore=world.truststore -Djavax.net.ssl.trustStorePassword=worldtruststorepassword net.sf.odinms.net.world.WorldServer

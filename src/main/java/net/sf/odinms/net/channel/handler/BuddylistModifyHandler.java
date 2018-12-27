@@ -145,7 +145,7 @@ public class BuddylistModifyHandler extends AbstractMaplePacketHandler {
                             } else {
                                 int count = rs.getInt("buddyCount");
                                 if (count >= charWithId.getBuddyCapacity()) {
-                                    buddyAddResult = BuddyAddResult.BUDDYLIST_FULL;
+                                    buddyAddResult = BuddyAddResult.BUDDY_LIST_FULL;
                                 }
                             }
                             rs.close();
@@ -160,7 +160,7 @@ public class BuddylistModifyHandler extends AbstractMaplePacketHandler {
                             rs.close();
                             ps.close();
                         }
-                        if (buddyAddResult == BuddyAddResult.BUDDYLIST_FULL) {
+                        if (buddyAddResult == BuddyAddResult.BUDDY_LIST_FULL) {
                             // User's Buddy List is Full
                             c.getSession().write(MaplePacketCreator.buddylistMessage((byte) 12));
                         } else {

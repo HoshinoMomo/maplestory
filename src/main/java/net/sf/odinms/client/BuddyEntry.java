@@ -21,7 +21,7 @@
 
 package net.sf.odinms.client;
 
-public class BuddylistEntry {
+public class BuddyEntry {
 
     private String name;
     private String group;
@@ -36,7 +36,7 @@ public class BuddylistEntry {
      * @param channel should be -1 if the buddy is offline
      * @param visible
      */
-    public BuddylistEntry(String name, int characterId, int channel, boolean visible) {
+    public BuddyEntry(String name, int characterId, int channel, boolean visible) {
         super();
         this.name = name;
         this.group = "群未定";
@@ -53,7 +53,7 @@ public class BuddylistEntry {
      * @param channel should be -1 if the buddy is offline
      * @param visible
      */
-    public BuddylistEntry(String name, String group, int characterId, int channel, boolean visible) {
+    public BuddyEntry(String name, String group, int characterId, int channel, boolean visible) {
         super();
         this.name = name;
         this.group = group;
@@ -124,7 +124,7 @@ public class BuddylistEntry {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final BuddylistEntry other = (BuddylistEntry) obj;
+        final BuddyEntry other = (BuddyEntry) obj;
         if (cid != other.cid) {
             return false;
         }

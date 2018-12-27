@@ -229,7 +229,7 @@ public class ChannelWorldInterfaceImpl extends UnicastRemoteObject implements Ch
         if (addChar != null) {
             BuddyList buddylist = addChar.getBuddylist();
             if (buddylist.isFull()) {
-                return BuddyAddResult.BUDDYLIST_FULL;
+                return BuddyAddResult.BUDDY_LIST_FULL;
             }
             if (!buddylist.contains(cidFrom)) {
                 buddylist.addBuddyRequest(addChar.getClient(), cidFrom, nameFrom, channelFrom);

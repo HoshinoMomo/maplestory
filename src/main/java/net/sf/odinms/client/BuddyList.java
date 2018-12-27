@@ -164,8 +164,13 @@ public class BuddyList {
      * 取得所有好友的ID
      *
      */
-    public Collection<Integer> getBuddiesIds() {
-        return buddies.keySet();
+    public int[] getBuddyIds() {
+        int buddyIds[] = new int[buddies.size()];
+        int i = 0;
+        for (BuddyEntry ble : buddies.values()) {
+            buddyIds[i++] = ble.getCharacterId();
+        }
+        return buddyIds;
     }
 
     public void loadFromDb(int characterId) throws SQLException {

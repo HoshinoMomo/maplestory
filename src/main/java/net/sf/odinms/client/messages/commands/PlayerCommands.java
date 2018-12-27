@@ -1,8 +1,6 @@
 
 package net.sf.odinms.client.messages.commands;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
 import java.awt.Point;
 import java.sql.SQLException;
 import net.sf.odinms.server.MapleAchievements;

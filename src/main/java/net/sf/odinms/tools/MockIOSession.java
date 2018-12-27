@@ -24,17 +24,15 @@ package net.sf.odinms.tools;
 import java.net.SocketAddress;
 
 import net.sf.odinms.net.MaplePacket;
+import org.apache.mina.core.filterchain.IoFilterChain;
+import org.apache.mina.core.future.CloseFuture;
+import org.apache.mina.core.future.WriteFuture;
+import org.apache.mina.core.service.IoHandler;
+import org.apache.mina.core.service.IoService;
+import org.apache.mina.core.session.DummySession;
+import org.apache.mina.core.session.IoSessionConfig;
+import org.apache.mina.core.write.WriteRequest;
 
-import org.apache.mina.common.CloseFuture;
-import org.apache.mina.common.IoFilterChain;
-import org.apache.mina.common.IoHandler;
-import org.apache.mina.common.IoService;
-import org.apache.mina.common.IoServiceConfig;
-import org.apache.mina.common.IoSessionConfig;
-import org.apache.mina.common.TransportType;
-import org.apache.mina.common.WriteFuture;
-import org.apache.mina.common.IoFilter.WriteRequest;
-import org.apache.mina.common.support.BaseIoSession;
 
 /**
  * Represents a mock version of an IOSession to use a MapleClient instance
@@ -43,19 +41,14 @@ import org.apache.mina.common.support.BaseIoSession;
  * Most methods return void, or when they return something, null. Therefore,
  * this class is mostly undocumented, due to the fact that each and every
  * function does squat.
- * 
+ *
+ * 这个类暂时没啥用
+ *
  * @author Frz
  * @since Revision 518
  * @version 1.0
  */
-public class MockIOSession extends BaseIoSession {
-
-    /**
-     * Does nothing.
-     */
-    @Override
-    protected void updateTrafficMask() {
-    }
+public class MockIOSession extends DummySession {
 
     /**
      * Does nothing.
@@ -117,37 +110,6 @@ public class MockIOSession extends BaseIoSession {
      * Does nothing.
      */
     @Override
-    public IoServiceConfig getServiceConfig() {
-        return null;
-    }
-
-    /**
-     * Does nothing.
-     */
-    @Override
-    public TransportType getTransportType() {
-        return null;
-    }
-
-    /**
-     * Does nothing.
-     */
-    @Override
-    public CloseFuture close() {
-        return null;
-    }
-
-    /**
-     * Does nothing.
-     */
-    @Override
-    protected void close0() {
-    }
-
-    /**
-     * Does nothing.
-     */
-    @Override
     public WriteFuture write(Object message, SocketAddress remoteAddress) {
         return null;
     }
@@ -167,10 +129,4 @@ public class MockIOSession extends BaseIoSession {
         return null;
     }
 
-    /**
-     * Does nothing.
-     */
-    @Override
-    protected void write0(WriteRequest writeRequest) {
-    }
 }

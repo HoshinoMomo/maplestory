@@ -21,6 +21,7 @@
 
 package net.sf.odinms.client;
 
+import net.sf.odinms.client.inventory.IItem;
 import net.sf.odinms.client.messages.MessageCallback;
 import net.sf.odinms.database.DatabaseConnection;
 import net.sf.odinms.database.DatabaseException;

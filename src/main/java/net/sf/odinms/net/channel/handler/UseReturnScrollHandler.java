@@ -20,9 +20,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package net.sf.odinms.net.channel.handler;
 
-import net.sf.odinms.client.IItem;
+import net.sf.odinms.client.inventory.IItem;
 import net.sf.odinms.client.MapleClient;
-import net.sf.odinms.client.MapleInventoryType;
+import net.sf.odinms.client.inventory.MapleInventoryType;
 import net.sf.odinms.net.AbstractMaplePacketHandler;
 import net.sf.odinms.server.MapleInventoryManipulator;
 import net.sf.odinms.server.MapleItemInformationProvider;

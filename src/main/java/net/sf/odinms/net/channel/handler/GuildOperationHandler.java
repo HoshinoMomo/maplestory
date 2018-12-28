@@ -29,7 +29,7 @@ import net.sf.odinms.tools.data.input.SeekableLittleEndianAccessor;
 import net.sf.odinms.net.world.guild.*;
 import net.sf.odinms.tools.MaplePacketCreator;
 import net.sf.odinms.client.MapleCharacter;
-import net.sf.odinms.client.MaplePet;
+import net.sf.odinms.client.inventory.MaplePet;
 
 public class GuildOperationHandler extends AbstractMaplePacketHandler {
 

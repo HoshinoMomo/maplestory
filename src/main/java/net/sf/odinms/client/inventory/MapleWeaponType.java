@@ -19,7 +19,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package net.sf.odinms.client;
+package net.sf.odinms.client.inventory;
 
 public enum MapleWeaponType {
 

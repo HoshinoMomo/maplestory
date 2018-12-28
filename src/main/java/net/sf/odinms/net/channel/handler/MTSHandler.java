@@ -22,6 +22,10 @@
 package net.sf.odinms.net.channel.handler;
 
 import net.sf.odinms.client.*;
+import net.sf.odinms.client.inventory.Equip;
+import net.sf.odinms.client.inventory.IItem;
+import net.sf.odinms.client.inventory.Item;
+import net.sf.odinms.client.inventory.MapleInventoryType;
 import net.sf.odinms.database.DatabaseConnection;
 import net.sf.odinms.net.AbstractMaplePacketHandler;
 import net.sf.odinms.net.MaplePacket;

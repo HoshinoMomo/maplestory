@@ -26,13 +26,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sf.odinms.client.IItem;
+import net.sf.odinms.client.inventory.IItem;
 import net.sf.odinms.client.ISkill;
 import net.sf.odinms.client.MapleBuffStat;
 import net.sf.odinms.client.MapleCharacter;
-import net.sf.odinms.client.MapleInventoryType;
+import net.sf.odinms.client.inventory.MapleInventoryType;
 import net.sf.odinms.client.MapleJob;
-import net.sf.odinms.client.MapleWeaponType;
+import net.sf.odinms.client.inventory.MapleWeaponType;
 import net.sf.odinms.client.SkillFactory;
 import net.sf.odinms.client.anticheat.CheatingOffense;
 import net.sf.odinms.client.status.MonsterStatus;

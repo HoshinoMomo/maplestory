@@ -21,7 +21,7 @@
 
 package net.sf.odinms.server.playerinteractions;
 
-import net.sf.odinms.client.IItem;
+import net.sf.odinms.client.inventory.IItem;
 
 /**
  *

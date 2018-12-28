@@ -19,12 +19,15 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package net.sf.odinms.client;
+package net.sf.odinms.client.inventory;
+
+import net.sf.odinms.client.MapleClient;
+import net.sf.odinms.client.MapleJob;
+import net.sf.odinms.tools.MaplePacketCreator;
+import net.sf.odinms.tools.Randomizer;
 
 import java.sql.Timestamp;
 import java.util.LinkedList;
-import net.sf.odinms.tools.MaplePacketCreator;
-import net.sf.odinms.tools.Randomizer;
 
 public class Equip extends Item implements IEquip {
 

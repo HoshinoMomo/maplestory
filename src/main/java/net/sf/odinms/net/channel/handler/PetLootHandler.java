@@ -22,7 +22,7 @@
 package net.sf.odinms.net.channel.handler;
 
 import net.sf.odinms.client.MapleClient;
-import net.sf.odinms.client.MaplePet;
+import net.sf.odinms.client.inventory.MaplePet;
 import net.sf.odinms.client.anticheat.CheatingOffense;
 import net.sf.odinms.net.AbstractMaplePacketHandler;
 import net.sf.odinms.net.channel.ChannelServer;

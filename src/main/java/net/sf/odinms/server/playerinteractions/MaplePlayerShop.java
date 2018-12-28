@@ -24,7 +24,7 @@ package net.sf.odinms.server.playerinteractions;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import net.sf.odinms.client.IItem;
+import net.sf.odinms.client.inventory.IItem;
 import net.sf.odinms.client.MapleCharacter;
 import net.sf.odinms.client.MapleClient;
 import net.sf.odinms.server.MapleInventoryManipulator;

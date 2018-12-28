@@ -28,6 +28,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import net.sf.odinms.client.inventory.ExpTable;
 import net.sf.odinms.database.DatabaseConnection;
 import net.sf.odinms.tools.MaplePacketCreator;
 
@@ -61,7 +63,7 @@ public final class MonsterBook {
         final int size = NormalCard + SpecialCard;
         BookLevel = 8;
         for (int i = 1; i < 8; i++) {
-            if (size < net.sf.odinms.client.ExpTable.getBookLevel(i)) {
+            if (size < ExpTable.getBookLevel(i)) {
                 BookLevel = i;
                 return;
             }

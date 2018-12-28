@@ -14,10 +14,12 @@ Copyright (C) 2008 Patrick Huy <patrick.huy@frz.cc>
 package net.sf.odinms.server.maps.pvp;
 
 import java.util.Collections;
-import net.sf.odinms.client.*;
+
 import net.sf.odinms.client.ISkill;
 import net.sf.odinms.client.SkillFactory;
 import net.sf.odinms.client.MapleCharacter;
+import net.sf.odinms.client.inventory.IItem;
+import net.sf.odinms.client.inventory.MapleInventoryType;
 import net.sf.odinms.net.channel.handler.AbstractDealDamageHandler;
 import net.sf.odinms.server.MapleInventoryManipulator;
 import net.sf.odinms.server.MapleItemInformationProvider;

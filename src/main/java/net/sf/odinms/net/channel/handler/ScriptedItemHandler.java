@@ -21,7 +21,7 @@
 
 package net.sf.odinms.net.channel.handler;
 
-import net.sf.odinms.client.IItem;
+import net.sf.odinms.client.inventory.IItem;
 import net.sf.odinms.client.MapleClient;
 import net.sf.odinms.net.AbstractMaplePacketHandler;
 import net.sf.odinms.scripting.npc.NPCScriptManager;

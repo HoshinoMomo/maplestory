@@ -19,12 +19,14 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package net.sf.odinms.client;
+package net.sf.odinms.client.inventory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import net.sf.odinms.client.MapleCharacter;
 import net.sf.odinms.database.DatabaseConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

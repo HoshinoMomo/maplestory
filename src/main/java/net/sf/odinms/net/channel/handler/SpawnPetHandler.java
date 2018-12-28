@@ -26,10 +26,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sf.odinms.client.MapleClient;
-import net.sf.odinms.client.MapleInventoryType;
-import net.sf.odinms.client.MaplePet;
+import net.sf.odinms.client.inventory.MapleInventoryType;
+import net.sf.odinms.client.inventory.MaplePet;
 import net.sf.odinms.client.MapleStat;
-import net.sf.odinms.client.PetDataFactory;
+import net.sf.odinms.client.inventory.PetDataFactory;
 import net.sf.odinms.client.SkillFactory;
 import net.sf.odinms.net.AbstractMaplePacketHandler;
 import net.sf.odinms.tools.MaplePacketCreator;

@@ -35,11 +35,11 @@ import java.util.Map.Entry;
 import java.util.LinkedList;
 
 import java.util.TimeZone;
-import net.sf.odinms.client.Equip;
-import net.sf.odinms.client.IItem;
+import net.sf.odinms.client.inventory.Equip;
+import net.sf.odinms.client.inventory.IItem;
 import net.sf.odinms.client.MapleClient;
-import net.sf.odinms.client.MapleInventoryType;
-import net.sf.odinms.client.MapleWeaponType;
+import net.sf.odinms.client.inventory.MapleInventoryType;
+import net.sf.odinms.client.inventory.MapleWeaponType;
 import net.sf.odinms.client.SkillFactory;
 import net.sf.odinms.database.DatabaseConnection;
 import net.sf.odinms.net.channel.handler.FishingHandler.MapleFish;

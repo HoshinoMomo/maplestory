@@ -21,6 +21,8 @@
 
 package net.sf.odinms.client;
 
+import net.sf.odinms.client.inventory.MapleInventory;
+
 import java.util.Collection;
 
 public interface InventoryContainer {

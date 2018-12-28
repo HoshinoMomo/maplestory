@@ -26,7 +26,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
 import net.sf.odinms.client.MapleCharacter;
-import net.sf.odinms.client.MapleInventoryType;
+import net.sf.odinms.client.inventory.MapleInventoryType;
 import net.sf.odinms.database.DatabaseConnection;
 
 public class MaplePlayerNPC {

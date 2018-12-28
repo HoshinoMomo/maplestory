@@ -25,9 +25,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.sf.odinms.client.ISkill;
-import net.sf.odinms.client.InventoryException;
+import net.sf.odinms.client.inventory.InventoryException;
 import net.sf.odinms.client.MapleCharacter;
-import net.sf.odinms.client.MapleInventoryType;
+import net.sf.odinms.client.inventory.MapleInventoryType;
 import net.sf.odinms.client.MapleJob;
 import net.sf.odinms.client.MapleQuestStatus;
 import net.sf.odinms.client.MapleStat;

@@ -25,9 +25,9 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import net.sf.odinms.client.IItem;
+import net.sf.odinms.client.inventory.IItem;
 import net.sf.odinms.client.MapleCharacter;
-import net.sf.odinms.client.MapleInventoryType;
+import net.sf.odinms.client.inventory.MapleInventoryType;
 import net.sf.odinms.server.constants.InventoryConstants;
 import net.sf.odinms.tools.MaplePacketCreator;
 

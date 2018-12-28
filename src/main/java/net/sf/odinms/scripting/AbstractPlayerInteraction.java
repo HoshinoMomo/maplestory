@@ -27,13 +27,13 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import net.sf.odinms.client.Equip;
-import net.sf.odinms.client.IItem;
+import net.sf.odinms.client.inventory.Equip;
+import net.sf.odinms.client.inventory.IItem;
 import net.sf.odinms.client.MapleCharacter;
 import net.sf.odinms.client.MapleClient;
-import net.sf.odinms.client.MapleInventory;
-import net.sf.odinms.client.MapleInventoryType;
-import net.sf.odinms.client.MaplePet;
+import net.sf.odinms.client.inventory.MapleInventory;
+import net.sf.odinms.client.inventory.MapleInventoryType;
+import net.sf.odinms.client.inventory.MaplePet;
 import net.sf.odinms.client.MapleQuestStatus;
 import net.sf.odinms.client.SkillFactory;
 import net.sf.odinms.client.messages.ServernoticeMapleClientMessageCallback;

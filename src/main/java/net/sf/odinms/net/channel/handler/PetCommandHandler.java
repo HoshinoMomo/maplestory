@@ -21,12 +21,11 @@
 
 package net.sf.odinms.net.channel.handler;
 
-import net.sf.odinms.client.ExpTable;
-import net.sf.odinms.client.MapleCharacter;
+import net.sf.odinms.client.inventory.ExpTable;
 import net.sf.odinms.client.MapleClient;
-import net.sf.odinms.client.MaplePet;
-import net.sf.odinms.client.PetCommand;
-import net.sf.odinms.client.PetDataFactory;
+import net.sf.odinms.client.inventory.MaplePet;
+import net.sf.odinms.client.inventory.PetCommand;
+import net.sf.odinms.client.inventory.PetDataFactory;
 import net.sf.odinms.net.AbstractMaplePacketHandler;
 import net.sf.odinms.tools.MaplePacketCreator;
 import net.sf.odinms.tools.Randomizer;

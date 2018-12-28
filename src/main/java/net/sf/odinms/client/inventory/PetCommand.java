@@ -19,53 +19,36 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package net.sf.odinms.client;
+package net.sf.odinms.client.inventory;
 
-import java.sql.Timestamp;
-import java.util.List;
+/**
+ *
+ * @author Danny (Leifde)
+ */
+public class PetCommand {
 
-public interface IItem extends Comparable<IItem> {
+    private int petId,  skillId,  prob,  inc;
 
-    public final int PET = 3;
-    public final int ITEM = 2;
-    public final int EQUIP = 1;
-    public void setFlag(byte b);
+    public PetCommand(int petId, int skillId, int prob, int inc) {
+        this.petId = petId;
+        this.skillId = skillId;
+        this.prob = prob;
+        this.inc = inc;
+    }
 
-    byte getFlag();
+    public int getPetId() {
+        return petId;
+    }
 
-    byte getType();
+    public int getSkillId() {
+        return skillId;
+    }
 
-    byte getPosition();
+    public int getProbability() {
+        return prob;
+    }
 
-    void setPosition(byte position);
-
-    int getItemId();
-
-    short getQuantity();
-
-    String getOwner();
-
-    int getPetId();
-
-    IItem copy();
-
-    void setOwner(String owner);
-
-    void setQuantity(short quantity);
-
-    public void log(String msg, boolean fromDB);
-
-    List<String> getLog();
-
-    Timestamp getExpiration();
-
-    void setExpiration(Timestamp expire);
-
-    int getSN();
-
-    int getUniqueId();
-
-    void setUniqueId(int id);
-
-    void setSN(int sn);
+    public int getIncrease() {
+        return inc;
+    }
 }

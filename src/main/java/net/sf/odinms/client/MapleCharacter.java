@@ -53,6 +53,18 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 import net.sf.odinms.client.anticheat.CheatTracker;
+import net.sf.odinms.client.inventory.Equip;
+import net.sf.odinms.client.inventory.ExpTable;
+import net.sf.odinms.client.inventory.IEquip;
+import net.sf.odinms.client.inventory.IItem;
+import net.sf.odinms.client.inventory.Item;
+import net.sf.odinms.client.inventory.MapleInventory;
+import net.sf.odinms.client.inventory.MapleInventoryType;
+import net.sf.odinms.client.inventory.MapleMount;
+import net.sf.odinms.client.inventory.MaplePet;
+import net.sf.odinms.client.inventory.MapleRing;
+import net.sf.odinms.client.inventory.MapleWeaponType;
+import net.sf.odinms.client.inventory.PetDataFactory;
 import net.sf.odinms.client.messages.ServernoticeMapleClientMessageCallback;
 import net.sf.odinms.database.DatabaseConnection;
 import net.sf.odinms.database.DatabaseException;

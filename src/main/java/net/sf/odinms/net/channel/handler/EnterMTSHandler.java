@@ -30,9 +30,9 @@ import java.sql.SQLException;
 
 import java.util.*;
 
-import net.sf.odinms.client.Equip;
-import net.sf.odinms.client.IItem;
-import net.sf.odinms.client.Item;
+import net.sf.odinms.client.inventory.Equip;
+import net.sf.odinms.client.inventory.IItem;
+import net.sf.odinms.client.inventory.Item;
 import net.sf.odinms.client.MapleClient;
 import net.sf.odinms.database.DatabaseConnection;
 import net.sf.odinms.net.AbstractMaplePacketHandler;

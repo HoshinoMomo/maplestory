@@ -29,12 +29,12 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.sf.odinms.client.Equip;
-import net.sf.odinms.client.IItem;
-import net.sf.odinms.client.Item;
+import net.sf.odinms.client.inventory.Equip;
+import net.sf.odinms.client.inventory.IItem;
+import net.sf.odinms.client.inventory.Item;
 import net.sf.odinms.client.MapleCharacter;
 import net.sf.odinms.client.MapleClient;
-import net.sf.odinms.client.MapleInventoryType;
+import net.sf.odinms.client.inventory.MapleInventoryType;
 import net.sf.odinms.database.DatabaseConnection;
 import net.sf.odinms.tools.data.input.SeekableLittleEndianAccessor;
 import net.sf.odinms.net.AbstractMaplePacketHandler;

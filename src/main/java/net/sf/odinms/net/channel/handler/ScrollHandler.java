@@ -23,16 +23,16 @@ package net.sf.odinms.net.channel.handler;
 
 import java.util.List;
 
-import net.sf.odinms.client.IEquip;
-import net.sf.odinms.client.IItem;
-import net.sf.odinms.client.InventoryException;
+import net.sf.odinms.client.inventory.IEquip;
+import net.sf.odinms.client.inventory.IItem;
+import net.sf.odinms.client.inventory.InventoryException;
 import net.sf.odinms.client.ISkill;
-import net.sf.odinms.client.Item;
+import net.sf.odinms.client.inventory.Item;
 import net.sf.odinms.client.MapleClient;
-import net.sf.odinms.client.MapleInventory;
-import net.sf.odinms.client.MapleInventoryType;
+import net.sf.odinms.client.inventory.MapleInventory;
+import net.sf.odinms.client.inventory.MapleInventoryType;
 import net.sf.odinms.client.SkillFactory;
-import net.sf.odinms.client.IEquip.ScrollResult;
+import net.sf.odinms.client.inventory.IEquip.ScrollResult;
 import net.sf.odinms.net.AbstractMaplePacketHandler;
 import net.sf.odinms.server.MapleItemInformationProvider;
 import net.sf.odinms.tools.MaplePacketCreator;

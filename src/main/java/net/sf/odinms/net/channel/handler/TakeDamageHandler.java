@@ -30,7 +30,7 @@ import net.sf.odinms.client.MapleClient;
 import net.sf.odinms.client.SkillFactory;
 import net.sf.odinms.client.status.MonsterStatus;
 import net.sf.odinms.client.status.MonsterStatusEffect;
-import net.sf.odinms.client.MapleInventoryType;
+import net.sf.odinms.client.inventory.MapleInventoryType;
 import net.sf.odinms.client.anticheat.CheatingOffense;
 import net.sf.odinms.net.AbstractMaplePacketHandler;
 import net.sf.odinms.server.life.MapleMonster;

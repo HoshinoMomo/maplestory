@@ -22,6 +22,11 @@
 package net.sf.odinms.client;
 
 import java.sql.Timestamp;
+
+import net.sf.odinms.client.inventory.Equip;
+import net.sf.odinms.client.inventory.IItem;
+import net.sf.odinms.client.inventory.Item;
+import net.sf.odinms.client.inventory.MapleInventoryType;
 import net.sf.odinms.server.MapleItemInformationProvider;
 
 /**

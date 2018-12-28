@@ -37,11 +37,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import net.sf.odinms.client.IItem;
-import net.sf.odinms.client.Item;
+import net.sf.odinms.client.inventory.IItem;
+import net.sf.odinms.client.inventory.Item;
 import net.sf.odinms.client.MapleClient;
-import net.sf.odinms.client.MapleInventoryType;
-import net.sf.odinms.client.MaplePet;
+import net.sf.odinms.client.inventory.MapleInventoryType;
+import net.sf.odinms.client.inventory.MaplePet;
 import net.sf.odinms.database.DatabaseConnection;
 import net.sf.odinms.net.PacketProcessor;
 import net.sf.odinms.tools.MaplePacketCreator;

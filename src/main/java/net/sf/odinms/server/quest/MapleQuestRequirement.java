@@ -23,9 +23,9 @@ package net.sf.odinms.server.quest;
 
 import java.util.Calendar;
 
-import net.sf.odinms.client.IItem;
+import net.sf.odinms.client.inventory.IItem;
 import net.sf.odinms.client.MapleCharacter;
-import net.sf.odinms.client.MapleInventoryType;
+import net.sf.odinms.client.inventory.MapleInventoryType;
 import net.sf.odinms.client.MapleJob;
 import net.sf.odinms.client.MapleQuestStatus;
 import net.sf.odinms.provider.MapleData;

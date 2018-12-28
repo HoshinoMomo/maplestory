@@ -19,9 +19,11 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package net.sf.odinms.client;
+package net.sf.odinms.client.inventory;
 
 import java.util.concurrent.ScheduledFuture;
+
+import net.sf.odinms.client.MapleCharacter;
 import net.sf.odinms.server.TimerManager;
 import net.sf.odinms.tools.MaplePacketCreator;
 

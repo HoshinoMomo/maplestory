@@ -22,7 +22,7 @@
 package net.sf.odinms.net.channel.handler;
 
 import net.sf.odinms.client.MapleClient;
-import net.sf.odinms.client.MapleInventoryType;
+import net.sf.odinms.client.inventory.MapleInventoryType;
 import net.sf.odinms.net.AbstractMaplePacketHandler;
 import net.sf.odinms.server.MapleItemInformationProvider;
 import net.sf.odinms.tools.data.input.SeekableLittleEndianAccessor;

@@ -58,7 +58,7 @@
           </descriptorRefs>
           <archive>
             <manifest>
-              <mainClass>study.wzp.maven.App</mainClass>
+              <mainClass>net.sf.odinms.Bootstrap</mainClass>
             </manifest>
           </archive>
           </configuration>

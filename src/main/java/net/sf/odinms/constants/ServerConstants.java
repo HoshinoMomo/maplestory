@@ -63,8 +63,8 @@ public class ServerConstants {
 
     public static List<Balloon> getBalloons() {
         if (lBalloon.isEmpty()) {
-            lBalloon.add(new Balloon("[MinaMS服务端]致力于打造最完善的079", 236, 122));
-            lBalloon.add(new Balloon("购买请联系QQ：529926174", 0, 276));
+            lBalloon.add(new Balloon("[冒险岛Online]欢迎来到冒险岛online", 236, 122));
+            lBalloon.add(new Balloon("欢迎来到冒险岛online", 0, 276));
         }
         return lBalloon;
     }

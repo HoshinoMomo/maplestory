@@ -3141,7 +3141,7 @@ public final class MapleMap {
             if (squad != null) {
                 z = z.substring(0, z.length() - 1);
             }
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("INSERT INTO speedruns(`type`, `leader`, `timestring`, `time`, `members`) VALUES (?,?,?,?,?)");
             ps.setString(1, type.name());
             ps.setString(2, leader);

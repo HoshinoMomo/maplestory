@@ -83,7 +83,7 @@ public class MapleGuildRanking {
     private void reload() {
         ranks.clear();
 
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         ResultSet rs;
         try (PreparedStatement ps = con.prepareStatement("SELECT * FROM guilds ORDER BY `GP` DESC LIMIT 50")) {
             rs = ps.executeQuery();
@@ -108,7 +108,7 @@ public class MapleGuildRanking {
     private void showLevelRank() {
         ranks1.clear();
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("SELECT * FROM characters WHERE gm < 1 ORDER BY `level` DESC LIMIT 100");
             ResultSet rs = ps.executeQuery();
 
@@ -132,7 +132,7 @@ public class MapleGuildRanking {
     private void showMesoRank() {
         ranks2.clear();
 
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         ResultSet rs;
         try (PreparedStatement ps = con.prepareStatement("SELECT *, ( chr.meso + s.meso ) as money FROM `characters` as chr , `storages` as s WHERE chr.gm < 1  AND s.accountid = chr.accountid ORDER BY money DESC LIMIT 20")) {
             rs = ps.executeQuery();

@@ -65,7 +65,7 @@ public class BuddyListHandler {
     }
 
     private static final CharacterIdNameBuddyCapacity getCharacterIdAndNameFromDatabase(final String name, final String group) throws SQLException {
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
 
         PreparedStatement ps = con.prepareStatement("SELECT * FROM characters WHERE name LIKE ?");
         ps.setString(1, name);
@@ -126,7 +126,7 @@ public class BuddyListHandler {
                         if (channel > 0) {
                             buddyAddResult = World.Buddy.requestBuddyAdd(addName, c.getChannel(), c.getPlayer().getId(), c.getPlayer().getName(), c.getPlayer().getLevel(), c.getPlayer().getJob());
                         } else {
-                            Connection con = DatabaseConnection.getConnection();
+                            Connection con = InitHikariCP.getCollection();
                             PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) as buddyCount FROM buddies WHERE characterid = ? AND pending = 0");
                             ps.setInt(1, charWithId.getId());
                             ResultSet rs = ps.executeQuery();
@@ -163,7 +163,7 @@ public class BuddyListHandler {
                                 displayChannel = channel;
                                 notifyRemoteChannel(c, channel, otherCid, groupName, ADDED);
                             } else if (buddyAddResult != BuddyAddResult.ALREADY_ON_LIST && channel > 0) {
-                                Connection con = DatabaseConnection.getConnection();
+                                Connection con = InitHikariCP.getCollection();
                                 PreparedStatement ps = con.prepareStatement("INSERT INTO buddies (`characterid`, `buddyid`, `groupname`, `pending`) VALUES (?, ?, ?, 1)");
                                 ps.setInt(1, charWithId.getId());
                                 ps.setInt(2, c.getPlayer().getId());
@@ -190,7 +190,7 @@ public class BuddyListHandler {
                     String otherName = null;
                     int otherLevel = 0, otherJob = 0;
                     if (channel < 0) {
-                        Connection con = DatabaseConnection.getConnection();
+                        Connection con = InitHikariCP.getCollection();
                         PreparedStatement ps = con.prepareStatement("SELECT name, level, job FROM characters WHERE id = ?");
                         ps.setInt(1, otherCid);
                         ResultSet rs = ps.executeQuery();

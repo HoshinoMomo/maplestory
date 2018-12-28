@@ -189,7 +189,7 @@ public class BuddyList implements Serializable {
      */
     public void loadFromDb(int characterId) throws SQLException {
 
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         PreparedStatement ps = con.prepareStatement("SELECT b.buddyid, b.pending, c.name as buddyname, c.job as buddyjob, c.level as buddylevel, b.groupname FROM buddies as b, characters as c WHERE c.id = b.buddyid AND b.characterid = ?");
         ps.setInt(1, characterId);
         ResultSet rs = ps.executeQuery();

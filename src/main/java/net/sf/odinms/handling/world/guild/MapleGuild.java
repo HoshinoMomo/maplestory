@@ -71,7 +71,7 @@ public class MapleGuild implements java.io.Serializable {
         super();
 
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("SELECT * FROM guilds WHERE guildid = ?");
             ps.setInt(1, guildid);
             ResultSet rs = ps.executeQuery();
@@ -163,7 +163,7 @@ public class MapleGuild implements java.io.Serializable {
         final Collection<MapleGuild> ret = new ArrayList<MapleGuild>();
         MapleGuild g;
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("SELECT guildid FROM guilds");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -183,7 +183,7 @@ public class MapleGuild implements java.io.Serializable {
 
     public final void writeGPToDB() {
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             StringBuilder buf = new StringBuilder("UPDATE guilds SET GP = ?");
             buf.append(" WHERE guildid = ?");
             PreparedStatement ps = con.prepareStatement(buf.toString());
@@ -199,7 +199,7 @@ public class MapleGuild implements java.io.Serializable {
 
     public final void writeToDB(final boolean bDisband) {
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             if (!bDisband) {
                 StringBuilder buf = new StringBuilder("UPDATE guilds SET GP = ?, logo = ?, logoColor = ?, logoBG = ?, logoBGColor = ?, ");
                 for (int i = 1; i < 6; i++) {
@@ -477,7 +477,7 @@ public class MapleGuild implements java.io.Serializable {
     public void setAllianceId(int a) {
         this.allianceid = a;
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("UPDATE guilds SET alliance = ? WHERE guildid = ?");
             ps.setInt(1, a);
             ps.setInt(2, id);
@@ -494,7 +494,7 @@ public class MapleGuild implements java.io.Serializable {
             return 0;
         }
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("SELECT guildid FROM guilds WHERE name = ?");
             ps.setString(1, name);
             ResultSet rs = ps.executeQuery();
@@ -712,7 +712,7 @@ public class MapleGuild implements java.io.Serializable {
         broadcast(null, -1, BCOp.EMBELMCHANGE);
 
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("UPDATE guilds SET logo = ?, logoColor = ?, logoBG = ?, logoBGColor = ? WHERE guildid = ?");
             ps.setInt(1, logo);
             ps.setInt(2, logoColor);
@@ -744,7 +744,7 @@ public class MapleGuild implements java.io.Serializable {
         broadcast(MaplePacketCreator.guildCapacityChange(this.id, this.capacity));
 
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("UPDATE guilds SET capacity = ? WHERE guildid = ?");
             ps.setInt(1, this.capacity);
             ps.setInt(2, this.id);
@@ -863,7 +863,7 @@ public class MapleGuild implements java.io.Serializable {
 
     public static void setOfflineGuildStatus(int guildid, byte guildrank, byte alliancerank, int cid) {
         try {
-            java.sql.Connection con = DatabaseConnection.getConnection();
+            java.sql.Connection con = InitHikariCP.getCollection();
             java.sql.PreparedStatement ps = con.prepareStatement("UPDATE characters SET guildid = ?, guildrank = ?, alliancerank = ? WHERE id = ?");
             ps.setInt(1, guildid);
             ps.setInt(2, guildrank);

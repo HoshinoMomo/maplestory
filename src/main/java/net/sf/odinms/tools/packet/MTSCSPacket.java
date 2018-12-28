@@ -3791,7 +3791,7 @@ public class MTSCSPacket {
         mplew.writeShort(SendPacketOpcode.CS_OPERATION.getValue());
 
         mplew.write(70);
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         int i = 10;
         try {
             PreparedStatement ps = con.prepareStatement("SELECT sn FROM wishlist WHERE characterid = ? LIMIT 10");

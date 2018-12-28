@@ -572,7 +572,7 @@ public class MapleMapFactory {
 
     public static void loadCustomLife() {
         try {
-            Connection con = (Connection) DatabaseConnection.getConnection();
+            Connection con = (Connection) InitHikariCP.getCollection();
             try (java.sql.PreparedStatement ps = con.prepareStatement("SELECT * FROM `wz_customlife`"); ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     final int mapid = rs.getInt("mid");

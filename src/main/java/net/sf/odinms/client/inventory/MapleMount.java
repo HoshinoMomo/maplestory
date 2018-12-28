@@ -54,7 +54,7 @@ public class MapleMount implements Serializable {
         if (!changed) {
             return;
         }
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         PreparedStatement ps = con.prepareStatement("UPDATE mountdata set `Level` = ?, `Exp` = ?, `Fatigue` = ? WHERE characterid = ?");
         ps.setByte(1, level);
         ps.setInt(2, exp);

@@ -23,7 +23,7 @@ package net.sf.odinms.handling.channel.handler;
 import net.sf.odinms.client.MapleCharacter;
 import net.sf.odinms.client.MapleClient;
 import net.sf.odinms.client.MapleStat;
-import net.sf.odinms.client.anticheat.CheatingOffense;
+import net.sf.odinms.client.anticheat.CheatingOffenseEnum;
 import net.sf.odinms.client.inventory.IItem;
 import net.sf.odinms.client.inventory.MapleInventoryType;
 import net.sf.odinms.constants.GameConstants;
@@ -86,10 +86,10 @@ public class PlayersHandler {
         final MapleCharacter target = (MapleCharacter) chr.getMap().getMapObject(who, MapleMapObjectType.PLAYER);
 
         if (target == chr) { // faming self
-            chr.getCheatTracker().registerOffense(CheatingOffense.添加自己声望);
+            chr.getCheatTracker().registerOffense(CheatingOffenseEnum.添加自己声望);
             return;
         } else if (chr.getLevel() < 15) {
-            chr.getCheatTracker().registerOffense(CheatingOffense.声望十五级以下添加);
+            chr.getCheatTracker().registerOffense(CheatingOffenseEnum.声望十五级以下添加);
             return;
         }
         switch (chr.canGiveFame(target)) {

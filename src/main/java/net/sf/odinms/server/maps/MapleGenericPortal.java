@@ -21,7 +21,7 @@
 package net.sf.odinms.server.maps;
 
 import net.sf.odinms.client.MapleClient;
-import net.sf.odinms.client.anticheat.CheatingOffense;
+import net.sf.odinms.client.anticheat.CheatingOffenseEnum;
 import net.sf.odinms.handling.channel.ChannelServer;
 import net.sf.odinms.scripting.PortalScriptManager;
 import net.sf.odinms.server.MaplePortal;
@@ -103,7 +103,7 @@ public class MapleGenericPortal implements MaplePortal {
     @Override
     public final void enterPortal(final MapleClient c) {
         if (getPosition().distanceSq(c.getPlayer().getPosition()) > 22500) {
-            c.getPlayer().getCheatTracker().registerOffense(CheatingOffense.使用过远传送点);
+            c.getPlayer().getCheatTracker().registerOffense(CheatingOffenseEnum.使用过远传送点);
         }
         final MapleMap currentmap = c.getPlayer().getMap();
         if (portalState || c.getPlayer().isGM()) {

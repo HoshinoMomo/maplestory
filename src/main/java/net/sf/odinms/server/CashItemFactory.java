@@ -175,7 +175,7 @@ public class CashItemFactory {
                 return null;
             }
             try {
-                Connection con = DatabaseConnection.getConnection();
+                Connection con = InitHikariCP.getCollection();
                 PreparedStatement ps = con.prepareStatement("SELECT * FROM cashshop_modified_items WHERE serial = ?");
                 ps.setInt(1, sn);
                 ResultSet rs = ps.executeQuery();

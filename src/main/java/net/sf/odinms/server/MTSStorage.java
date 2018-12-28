@@ -126,7 +126,7 @@ public class MTSStorage {
         int lastPackage = 0;
         int cId;
         Map<Integer, Pair<IItem, MapleInventoryType>> items;
-        final Connection con = DatabaseConnection.getConnection();
+        final Connection con = InitHikariCP.getCollection();
         try {
             final PreparedStatement ps = con.prepareStatement("SELECT * FROM mts_items WHERE tab = 1");
             final ResultSet rs = ps.executeQuery();
@@ -163,7 +163,7 @@ public class MTSStorage {
         final List<Integer> toRemove = new ArrayList<Integer>();
         final long now = System.currentTimeMillis();
         final Map<Integer, ArrayList<Pair<IItem, MapleInventoryType>>> items = new HashMap<Integer, ArrayList<Pair<IItem, MapleInventoryType>>>();
-        final Connection con = DatabaseConnection.getConnection();
+        final Connection con = InitHikariCP.getCollection();
         mutex.writeLock().lock(); //lock wL so rL will also be locked
         try {
             PreparedStatement ps = con.prepareStatement("DELETE FROM mts_items WHERE tab = 1");

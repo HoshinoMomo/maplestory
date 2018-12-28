@@ -164,7 +164,7 @@ public class World {
         private static final AtomicInteger runningPartyId = new AtomicInteger();
 
         static {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps;
             try {
                 ps = con.prepareStatement("SELECT MAX(party)+2 FROM characters");

@@ -26,7 +26,7 @@ import net.sf.odinms.client.MapleCharacter;
 import net.sf.odinms.client.MapleClient;
 import net.sf.odinms.client.SkillFactory;
 import net.sf.odinms.client.SummonSkillEntry;
-import net.sf.odinms.client.anticheat.CheatingOffense;
+import net.sf.odinms.client.anticheat.CheatingOffenseEnum;
 import net.sf.odinms.client.status.MonsterStatus;
 import net.sf.odinms.client.status.MonsterStatusEffect;
 import net.sf.odinms.server.MapleStatEffect;
@@ -164,7 +164,7 @@ public class SummonHandler {
         slea.skip(8);//3
         final byte numAttacked = slea.readByte();
         if (numAttacked > sse.mobCount) {
-            chr.getCheatTracker().registerOffense(CheatingOffense.召唤兽攻击怪物数量异常);
+            chr.getCheatTracker().registerOffense(CheatingOffenseEnum.召唤兽攻击怪物数量异常);
             //AutobanManager.getInstance().autoban(c, "Attacking more monster that summon can do (Skillid : "+summon.getSkill()+" Count : " + numAttacked + ", allowed : " + sse.mobCount + ")");
             return;
         }
@@ -179,7 +179,7 @@ public class SummonHandler {
                 continue;
             }
             if (chr.getPosition().distanceSq(mob.getPosition()) > 400000.0) {
-                chr.getCheatTracker().registerOffense(CheatingOffense.召唤兽攻击范围过大);
+                chr.getCheatTracker().registerOffense(CheatingOffenseEnum.召唤兽攻击范围过大);
             }
             slea.skip(14); // who knows
             final int damage = slea.readInt();

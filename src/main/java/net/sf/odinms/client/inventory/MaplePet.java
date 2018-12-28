@@ -109,7 +109,7 @@ public class MaplePet implements Serializable {
         try {
             final MaplePet ret = new MaplePet(itemid, petid, inventorypos);
 
-            Connection con = DatabaseConnection.getConnection(); // Get a connection to the database
+            Connection con = InitHikariCP.getCollection(); // Get a connection to the database
             PreparedStatement ps = con.prepareStatement("SELECT * FROM pets WHERE petid = ?"); // Get pet details..
             ps.setInt(1, petid);
 
@@ -143,7 +143,7 @@ public class MaplePet implements Serializable {
             return;
         }
         try {
-            final PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("UPDATE pets SET name = ?, level = ?, closeness = ?, fullness = ?, seconds = ?, flags = ? WHERE petid = ?");
+            final PreparedStatement ps = InitHikariCP.getCollection().prepareStatement("UPDATE pets SET name = ?, level = ?, closeness = ?, fullness = ?, seconds = ?, flags = ? WHERE petid = ?");
             ps.setString(1, name); // Set name
             ps.setByte(2, level); // Set Level
             ps.setShort(3, closeness); // Set Closeness
@@ -168,7 +168,7 @@ public class MaplePet implements Serializable {
         } 
         short ret1 = MapleItemInformationProvider.getInstance().getPetFlagInfo(itemid);    
         try { // Commit to db first
-            PreparedStatement pse = DatabaseConnection.getConnection().prepareStatement("INSERT INTO pets (petid, name, level, closeness, fullness, seconds, flags) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement pse = InitHikariCP.getCollection().prepareStatement("INSERT INTO pets (petid, name, level, closeness, fullness, seconds, flags) VALUES (?, ?, ?, ?, ?, ?, ?)");
             pse.setInt(1, uniqueid);
             pse.setString(2, name);
             pse.setByte(3, (byte) level);

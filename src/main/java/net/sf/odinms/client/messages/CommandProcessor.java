@@ -167,7 +167,7 @@ public class CommandProcessor {
 
         PreparedStatement ps = null;
         try {
-            ps = DatabaseConnection.getConnection().prepareStatement("INSERT INTO gmlog (cid, name, command, mapid, ip) VALUES (?, ?, ?, ?, ?)");
+            ps = InitHikariCP.getCollection().prepareStatement("INSERT INTO gmlog (cid, name, command, mapid, ip) VALUES (?, ?, ?, ?, ?)");
             ps.setInt(1, player.getId());
             ps.setString(2, player.getName());
             ps.setString(3, command);

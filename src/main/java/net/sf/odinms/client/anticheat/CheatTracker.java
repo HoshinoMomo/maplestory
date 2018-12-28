@@ -29,25 +29,35 @@ import net.sf.odinms.server.Timer.CheatTimer;
 import net.sf.odinms.tools.FileoutputUtil;
 import net.sf.odinms.tools.MaplePacketCreator;
 import net.sf.odinms.tools.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.lang.ref.WeakReference;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.stream.Collectors;
 
 public class CheatTracker {
 
+    private static final Logger logger = LoggerFactory.getLogger(CheatTracker.class);
+
     private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
-    private final Lock rL = lock.readLock(), wL = lock.writeLock();
-    private final Map<CheatingOffense, CheatingOffenseEntry> offenses = new LinkedHashMap<CheatingOffense, CheatingOffenseEntry>();
+    private final Lock readLock = lock.readLock();
+    private final Lock writeLock = lock.writeLock();
+    private final Map<CheatingOffenseEnum, CheatingOffenseEntry> offenses = new LinkedHashMap<>();
     private final WeakReference<MapleCharacter> chr;
-    // For keeping track of speed attack hack.
-    private int lastAttackTickCount = 0;
-    private byte Attack_tickResetCount = 0;
-    private long Server_ClientAtkTickDiff = 0;
+    // For keeping track of speed attack hack
+    private int lastAttacktickCount = 0;
+    private byte attackTickResetCount = 0;
+    private long serverClientAtkTickDiff = 0;
     private long lastDamage = 0;
     private long takingDamageSince;
     private int numSequentialDamage = 0;
@@ -64,39 +74,42 @@ public class CheatTracker {
     private byte msgsPerSecond = 0;
     private long lastMsgTime = 0;
     private ScheduledFuture<?> invalidationTask;
-    private int gm_message = 50;
-    private int lastTickCount = 0, tickSame = 0;
+    private int gmMessage = 50;
+    private int lastTickCount = 0;
+    private int tickSame = 0;
     private long lastASmegaTime = 0;
     private long[] lastTime = new long[6];
     private long lastSaveTime = 0L;
 
     public CheatTracker(final MapleCharacter chr) {
-        this.chr = new WeakReference<MapleCharacter>(chr);
+        this.chr = new WeakReference<>(chr);
         invalidationTask = CheatTimer.getInstance().register(new InvalidationTask(), 60000);
         takingDamageSince = System.currentTimeMillis();
     }
 
-    public final void checkAttack(final int skillId, final int tickcount) {
+    public final void checkAttack(final int skillId, final int tickCount) {
         final short AtkDelay = GameConstants.getAttackDelay(skillId);
-        if ((tickcount - lastAttackTickCount) < AtkDelay) {
-            registerOffense(CheatingOffense.快速攻击);
+        if ((tickCount - lastAttacktickCount) < AtkDelay) {
+            registerOffense(CheatingOffenseEnum.FAST_ATTACK);
         }
-        final long STime_TC = System.currentTimeMillis() - tickcount; // hack = - more
-        if (Server_ClientAtkTickDiff - STime_TC > 250) { // 250 is the ping, TODO
-            registerOffense(CheatingOffense.快速攻击2);
+        //system time minus tick count
+        final long minusTickCount = System.currentTimeMillis() - tickCount; // hack = - more
+        if (serverClientAtkTickDiff - minusTickCount > 250) { // 250 is the ping,
+            // TODO
+            registerOffense(CheatingOffenseEnum.FAST_ATTACK2);
         }
-        // if speed hack, client tickcount values will be running at a faster pace
+        // if speed hack, client tickCount values will be running at a faster pace
         // For lagging, it isn't an issue since TIME is running simotaniously, client
         // will be sending values of older time
 
-//	System.out.println("Delay [" + skillId + "] = " + (tickcount - lastAttackTickCount) + ", " + (Server_ClientAtkTickDiff - STime_TC));
-        Attack_tickResetCount++; // Without this, the difference will always be at 100
-        if (Attack_tickResetCount >= (AtkDelay <= 200 ? 2 : 4)) {
-            Attack_tickResetCount = 0;
-            Server_ClientAtkTickDiff = STime_TC;
+//	System.out.println("Delay [" + skillId + "] = " + (tickCount - lastAttacktickCount) + ", " + (serverClientAtkTickDiff - minusTickCount));
+        // Without ++, the difference will always be at 100
+        if (++attackTickResetCount >= (AtkDelay <= 200 ? 2 : 4)) {
+            attackTickResetCount = 0;
+            serverClientAtkTickDiff = minusTickCount;
         }
-        chr.get().updateTick(tickcount);
-        lastAttackTickCount = tickcount;
+        chr.get().updateTick(tickCount);
+        lastAttacktickCount = tickCount;
     }
 
     public final void checkTakeDamage(final int damage) {
@@ -107,7 +120,7 @@ public class CheatTracker {
         // System.out.println("ns" + numSequentialDamage);
         // System.out.println(timeBetweenDamage / 1500 + "(" + timeBetweenDamage / numSequentialDamage + ")");
         if (lastDamageTakenTime - takingDamageSince / 500 < numSequentialDamage) {
-            registerOffense(CheatingOffense.怪物碰撞过快);
+            registerOffense(CheatingOffenseEnum.FAST_TAKE_DAMAGE);
         }
         if (lastDamageTakenTime - takingDamageSince > 4500) {
             takingDamageSince = lastDamageTakenTime;
@@ -121,7 +134,7 @@ public class CheatTracker {
             numZeroDamageTaken++;
             if (numZeroDamageTaken >= 35) { // Num count MSEA a/b players
                 numZeroDamageTaken = 0;
-                registerOffense(CheatingOffense.回避率过高);
+                registerOffense(CheatingOffenseEnum.HIGH_AVOID);
             }
         } else if (damage != -1) {
             numZeroDamageTaken = 0;
@@ -134,7 +147,7 @@ public class CheatTracker {
 
             if (numSameDamage > 5) {
                 numSameDamage = 0;
-                registerOffense(CheatingOffense.伤害相同, numSameDamage + " times: " + dmg);
+                registerOffense(CheatingOffenseEnum.SAME_DAMAGE, numSameDamage + " times: " + dmg);
             }
         } else {
             lastDamage = dmg;
@@ -150,7 +163,7 @@ public class CheatTracker {
             if (monsterMoveCount > 50) {
                 //   registerOffense(CheatingOffense.MOVE_MONSTERS);
                 monsterMoveCount = 0;
-                World.Broadcast.broadcastGMMessage(MaplePacketCreator.serverNotice(6, "[管理员信息] 开挂玩家[" + MapleCharacterUtil.makeMapleReadable(chr.getName()) + "] 地图ID[" + chr.getMapId() + "] 怀疑使用吸怪! ").getBytes());
+                World.Broadcast.broadcastGMMessage(MaplePacketCreator.serverNotice(6, "[Admin notice] Player:[" + MapleCharacterUtil.makeMapleReadable(chr.getName()) + "] map:[" + chr.getMapId() + "] is moving monster! ").getBytes());
                 String note = "时间：" + FileoutputUtil.CurrentReadable_Time() + " "
                         + "|| 玩家名字：" + chr.getName() + ""
                         + "|| 玩家地图：" + chr.getMapId() + "\r\n";
@@ -177,7 +190,7 @@ public class CheatTracker {
         //estimated
         // System.out.println(numMPRegens + "/" + allowedRegens);
         if ((System.currentTimeMillis() - summonSummonTime) / (2000 + 1) < numSequentialSummonAttack) {
-            registerOffense(CheatingOffense.召唤兽快速攻击);
+            registerOffense(CheatingOffenseEnum.FAST_SUMMON_ATTACK);
             return false;
         }
         return true;
@@ -247,21 +260,21 @@ public class CheatTracker {
         }
     }
 
-    public final void registerOffense(final CheatingOffense offense) {
+    public final void registerOffense(final CheatingOffenseEnum offense) {
         registerOffense(offense, null);
     }
 
-    public final void registerOffense(final CheatingOffense offense, final String param) {
+    public final void registerOffense(final CheatingOffenseEnum offense, final String param) {
         final MapleCharacter chrhardref = chr.get();
         if (chrhardref == null || !offense.isEnabled() || chrhardref.isClone() || chrhardref.isGM()) {
             return;
         }
         CheatingOffenseEntry entry = null;
-        rL.lock();
+        readLock.lock();
         try {
             entry = offenses.get(offense);
         } finally {
-            rL.unlock();
+            readLock.unlock();
         }
         if (entry != null && entry.isExpired()) {
             expireEntry(entry);
@@ -274,7 +287,7 @@ public class CheatTracker {
             entry.setParam(param);
         }
         entry.incrementCount();
-        if (offense.shouldAutoban(entry.getCount())) {
+        if (offense.shouldAutoBan(entry.getCount())) {
             final byte type = offense.getBanType();
             if (type == 1) {
                 AutobanManager.getInstance().autoban(chrhardref.getClient(), StringUtil.makeEnumHumanReadable(offense.name()));
@@ -287,41 +300,38 @@ public class CheatTracker {
                 //chrhardref.getClient().getSession().close();
             } else if (type == 3) {
             }
-            gm_message = 50;
+            gmMessage = 50;
             return;
         }
-        wL.lock();
+        writeLock.lock();
         try {
             offenses.put(offense, entry);
         } finally {
-            wL.unlock();
+            writeLock.unlock();
         }
         switch (offense) {
-
-            case 魔法伤害过高:
-            case 魔法伤害过高2:
-            case 攻击过高2:
-            case 攻击力过高:
-            case 快速攻击:
-            case 快速攻击2:
-            case 攻击范围过大:
-            case 召唤兽攻击范围过大:
-            case 伤害相同:
-
-            case 吸怪:
-            case 怪物移动:
-
-            case 回避率过高:
+            case HIGH_DAMAGE_MAGIC:
+            case HIGH_DAMAGE_MAGIC_2:
+            case HIGH_DAMAGE_2:
+            case HIGH_DAMAGE:
+            case FAST_ATTACK:
+            case FAST_ATTACK2:
+            case ATTACK_FARAWAY_MONSTER:
+            case ATTACK_FARAWAY_MONSTER_SUMMON:
+            case SAME_DAMAGE:
+            case ATTRACT_MODS:
+            case MOVE_MONSTERS:
+            case HIGH_AVOID:
                 String show = offense.name();
-                gm_message--;
-                if (gm_message % 5 == 0) {
+                gmMessage--;
+                if (gmMessage % 5 == 0) {
                     String msg = "[管理员信息] " + chrhardref.getName() + " 疑似 " + show
                             + "地图ID [" + chrhardref.getMapId() + "]" + ""
                             + (param == null ? "" : (" - " + param));
                     World.Broadcast.broadcastGMMessage(MaplePacketCreator.serverNotice(6, msg).getBytes());
                     FileoutputUtil.logToFile_chr(chrhardref, FileoutputUtil.hack_log, show);
                 }
-                if (gm_message == 0) {
+                if (gmMessage == 0) {
 
                     // System.out.println(MapleCharacterUtil.makeMapleReadable(chrhardref.getName()) + "怀疑使用外挂");
                     // World.Broadcast.broadcastGMMessage(MaplePacketCreator.serverNotice(6, "[管理員訊息] 开挂玩家[" + MapleCharacterUtil.makeMapleReadable(chrhardref.getName()) + "] 地图ID[" + chrhardref.getMapId() + "] suspected of hacking! " + StringUtil.makeEnumHumanReadable(offense.name()) + (param == null ? "" : (" - " + param))).getBytes());
@@ -333,7 +343,7 @@ public class CheatTracker {
                      * + "\r\n"; FileoutputUtil.packetLog("日志\\log\\外挂检测\\" +
                      * chrhardref.getName() + ".log", note);
                      */ //                    AutobanManager.getInstance().autoban(chrhardref.getClient(), StringUtil.makeEnumHumanReadable(offense.name()));
-                    gm_message = 50;
+                    gmMessage = 50;
                 }
                 break;
         }
@@ -345,7 +355,8 @@ public class CheatTracker {
 /*
              * if (tickSame >= 5) { chr.get().getClient().getSession().close();
              * //i could also add a check for less than, but i'm not too worried
-             * at the moment :) } else {
+             * at the moment :)
+             } else {
              */
             tickSame++;
 //	    }
@@ -356,24 +367,24 @@ public class CheatTracker {
     }
 
     public final void expireEntry(final CheatingOffenseEntry coe) {
-        wL.lock();
+        writeLock.lock();
         try {
             offenses.remove(coe.getOffense());
         } finally {
-            wL.unlock();
+            writeLock.unlock();
         }
     }
 
     public final int getPoints() {
         int ret = 0;
-        CheatingOffenseEntry[] offenses_copy;
-        rL.lock();
+        CheatingOffenseEntry[] cheatingOffenseEntries;
+        readLock.lock();
         try {
-            offenses_copy = offenses.values().toArray(new CheatingOffenseEntry[offenses.size()]);
+            cheatingOffenseEntries = offenses.values().toArray(new CheatingOffenseEntry[offenses.size()]);
         } finally {
-            rL.unlock();
+            readLock.unlock();
         }
-        for (final CheatingOffenseEntry entry : offenses_copy) {
+        for (final CheatingOffenseEntry entry : cheatingOffenseEntries) {
             if (entry.isExpired()) {
                 expireEntry(entry);
             } else {
@@ -383,14 +394,14 @@ public class CheatTracker {
         return ret;
     }
 
-    public final Map<CheatingOffense, CheatingOffenseEntry> getOffenses() {
+    public final Map<CheatingOffenseEnum, CheatingOffenseEntry> getOffenses() {
         return Collections.unmodifiableMap(offenses);
     }
 
     public final String getSummary() {
-        final StringBuilder ret = new StringBuilder();
-        final List<CheatingOffenseEntry> offenseList = new ArrayList<CheatingOffenseEntry>();
-        rL.lock();
+        StringBuilder ret = new StringBuilder();
+        List<CheatingOffenseEntry> offenseList = new ArrayList<>();
+        readLock.lock();
         try {
             for (final CheatingOffenseEntry entry : offenses.values()) {
                 if (!entry.isExpired()) {
@@ -398,17 +409,9 @@ public class CheatTracker {
                 }
             }
         } finally {
-            rL.unlock();
+            readLock.unlock();
         }
-        Collections.sort(offenseList, new Comparator<CheatingOffenseEntry>() {
-
-            @Override
-            public final int compare(final CheatingOffenseEntry o1, final CheatingOffenseEntry o2) {
-                final int thisVal = o1.getPoints();
-                final int anotherVal = o2.getPoints();
-                return (thisVal < anotherVal ? 1 : (thisVal == anotherVal ? 0 : -1));
-            }
-        });
+        offenseList = offenseList.stream().sorted(Comparator.comparing(CheatingOffenseEntry::getPoints)).collect(Collectors.toList());
         final int to = Math.min(offenseList.size(), 4);
         for (int x = 0; x < to; x++) {
             ret.append(StringUtil.makeEnumHumanReadable(offenseList.get(x).getOffense().name()));
@@ -441,12 +444,11 @@ public class CheatTracker {
         return true;
     }
 
-    public int getlastSaveTime() {
+    public int getLastSaveTime() {
         if (lastSaveTime <= 0) {
             lastSaveTime = System.currentTimeMillis();
         }
-        int seconds = (int) (((lastSaveTime + (3 * 60 * 1000)) - System.currentTimeMillis()) / 1000);
-        return seconds;
+        return (int) (((lastSaveTime + (3 * 60 * 1000)) - System.currentTimeMillis()) / 1000);
     }
 
     private final class InvalidationTask implements Runnable {
@@ -454,11 +456,11 @@ public class CheatTracker {
         @Override
         public final void run() {
             CheatingOffenseEntry[] offenses_copy;
-            rL.lock();
+            readLock.lock();
             try {
                 offenses_copy = offenses.values().toArray(new CheatingOffenseEntry[offenses.size()]);
             } finally {
-                rL.unlock();
+                readLock.unlock();
             }
             for (CheatingOffenseEntry offense : offenses_copy) {
                 if (offense.isExpired()) {

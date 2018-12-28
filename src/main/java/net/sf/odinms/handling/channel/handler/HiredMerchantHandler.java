@@ -78,7 +78,7 @@ public class HiredMerchantHandler {
     }
 
     private static final byte checkExistance(final int accid, final int charid) {
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         try {
             PreparedStatement ps = con.prepareStatement("SELECT * from hiredmerch where accountid = ? OR characterid = ?");
             ps.setInt(1, accid);
@@ -269,7 +269,7 @@ public class HiredMerchantHandler {
     }
 
     private static final boolean deletePackage(final int charid, final int accid, final int packageid) {
-        final Connection con = DatabaseConnection.getConnection();
+        final Connection con = InitHikariCP.getCollection();
 
         try {
             PreparedStatement ps = con.prepareStatement("DELETE from hiredmerch where characterid = ? OR accountid = ? OR packageid = ?");
@@ -286,7 +286,7 @@ public class HiredMerchantHandler {
     }
 
     private static final MerchItemPackage loadItemFrom_Database(final int charid, final int accountid) {
-        final Connection con = DatabaseConnection.getConnection();
+        final Connection con = InitHikariCP.getCollection();
 
         try {
             PreparedStatement ps = con.prepareStatement("SELECT * from hiredmerch where characterid = ? OR accountid = ?");

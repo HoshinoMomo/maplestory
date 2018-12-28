@@ -55,7 +55,7 @@ public class RankingWorker {
             public void run() {
                 try {
 
-                    con = DatabaseConnection.getConnection();
+                    con = InitHikariCP.getCollection();
                     updateRanking();
                     System.out.println("Ranking update");
                 } catch (Exception ex) {

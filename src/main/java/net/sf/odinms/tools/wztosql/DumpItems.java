@@ -34,7 +34,7 @@ public class DumpItems {
     protected boolean hadError = false;
     protected boolean update = false;
     protected int id = 0;
-    private final Connection con = DatabaseConnection.getConnection();
+    private final Connection con = InitHikariCP.getCollection();
 
     public DumpItems(boolean update) throws Exception {
         this.update = update;

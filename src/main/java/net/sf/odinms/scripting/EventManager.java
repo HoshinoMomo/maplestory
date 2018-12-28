@@ -364,7 +364,7 @@ public class EventManager {
     }
     
         public int online() {
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         PreparedStatement ps;
         ResultSet re;
         int count = 0;

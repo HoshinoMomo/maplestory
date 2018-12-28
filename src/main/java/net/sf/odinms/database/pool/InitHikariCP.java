@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Objects;
 
 /**
@@ -31,10 +32,20 @@ public class InitHikariCP {
         ds = new HikariDataSource(config);
     }
 
-    public static Connection getDataSource() throws Exception{
-        if(Objects.isNull(ds)){
+    /**
+     * by reading hikariCP code
+     * we know when ds is close it will throw a exception
+     * so what we can do is restart the hikariCP
+     */
+    public static Connection getCollection(){
+        if(Objects.isNull(ds) || ds.isClosed()){
             init();
         }
-        return ds.getConnection();
+        try {
+            return ds.getConnection();
+        } catch (SQLException e) {
+            logger.error(e.getMessage(),e);
+            return getCollection();
+        }
     }
 }

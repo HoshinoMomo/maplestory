@@ -51,7 +51,7 @@ public class MapleGuildAlliance implements java.io.Serializable {
         super();
 
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("SELECT * FROM alliances WHERE id = ?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
@@ -83,7 +83,7 @@ public class MapleGuildAlliance implements java.io.Serializable {
         final Collection<MapleGuildAlliance> ret = new ArrayList<MapleGuildAlliance>();
         MapleGuildAlliance g;
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("SELECT id FROM alliances");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -116,7 +116,7 @@ public class MapleGuildAlliance implements java.io.Serializable {
         if (name.length() > 12) {
             return ret;
         }
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         try {
             PreparedStatement ps = con.prepareStatement("SELECT id FROM alliances WHERE name = ?");
             ps.setString(1, name);
@@ -151,7 +151,7 @@ public class MapleGuildAlliance implements java.io.Serializable {
 
     public final boolean deleteAlliance() {
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps;
             for (int i = 0; i < getNoGuilds(); i++) {
                 ps = con.prepareStatement("UPDATE characters SET alliancerank = 5 WHERE guildid = ?");
@@ -199,7 +199,7 @@ public class MapleGuildAlliance implements java.io.Serializable {
     }
 
     public final void saveToDb() {
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         try {
             PreparedStatement ps = con.prepareStatement("UPDATE alliances set guild1 = ?, guild2 = ?, guild3 = ?, guild4 = ?, guild5 = ?, rank1 = ?, rank2 = ?, rank3 = ?, rank4 = ?, rank5 = ?, capacity = ?, leaderid = ?, notice = ? where id = ?");
             for (int i = 0; i < 5; i++) {

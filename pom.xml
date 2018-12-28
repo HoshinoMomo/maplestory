@@ -64,7 +64,7 @@
           <archive>
             <manifest>
               <!-- 此处指定main方法入口的class -->
-              <mainClass>net.sf.odinms.server.Start</mainClass>
+              <mainClass>net.sf.odinms.Bootstrap</mainClass>
             </manifest>
           </archive>
           </configuration>

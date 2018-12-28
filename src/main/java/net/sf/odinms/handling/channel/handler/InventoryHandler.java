@@ -26,7 +26,7 @@ import net.sf.odinms.client.MapleClient;
 import net.sf.odinms.client.MapleStat;
 import net.sf.odinms.client.PlayerStats;
 import net.sf.odinms.client.SkillFactory;
-import net.sf.odinms.client.anticheat.CheatingOffense;
+import net.sf.odinms.client.anticheat.CheatingOffenseEnum;
 import net.sf.odinms.client.inventory.Equip;
 import net.sf.odinms.client.inventory.IEquip;
 import net.sf.odinms.client.inventory.IEquip.ScrollResult;
@@ -2502,9 +2502,9 @@ public class InventoryHandler {
             }
             final double Distance = Client_Reportedpos.distanceSq(mapitem.getPosition());
             if (Distance > 2500) {
-                chr.getCheatTracker().registerOffense(CheatingOffense.全图吸物_客户端, String.valueOf(Distance));
+                chr.getCheatTracker().registerOffense(CheatingOffenseEnum.全图吸物_客户端, String.valueOf(Distance));
             } else if (chr.getPosition().distanceSq(mapitem.getPosition()) > 640000.0) {
-                chr.getCheatTracker().registerOffense(CheatingOffense.全图吸物_服务端);
+                chr.getCheatTracker().registerOffense(CheatingOffenseEnum.全图吸物_服务端);
             }
             if (mapitem.getMeso() > 0) {
                 if (chr.getParty() != null && mapitem.getOwner() != chr.getId()) {
@@ -2590,9 +2590,9 @@ public class InventoryHandler {
             }
             final double Distance = Client_Reportedpos.distanceSq(mapitem.getPosition());
             if (Distance > 10000 && (mapitem.getMeso() > 0 || mapitem.getItemId() != 4001025)) {
-                chr.getCheatTracker().registerOffense(CheatingOffense.宠物全图吸物_客户端, String.valueOf(Distance));
+                chr.getCheatTracker().registerOffense(CheatingOffenseEnum.宠物全图吸物_客户端, String.valueOf(Distance));
             } else if (pet.getPos().distanceSq(mapitem.getPosition()) > 640000.0) {
-                chr.getCheatTracker().registerOffense(CheatingOffense.宠物全图吸物_服务端);
+                chr.getCheatTracker().registerOffense(CheatingOffenseEnum.宠物全图吸物_服务端);
             }
 
             if (mapitem.getMeso() > 0) {

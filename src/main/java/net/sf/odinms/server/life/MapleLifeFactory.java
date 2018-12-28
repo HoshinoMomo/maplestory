@@ -112,7 +112,7 @@ public class MapleLifeFactory {
             } catch (RuntimeException e) {
             }
         }*/
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         try {
             try (PreparedStatement ps = con.prepareStatement("SELECT * FROM wz_npcnamedata ORDER BY `npc`"); ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -146,7 +146,7 @@ public class MapleLifeFactory {
                 }
             }
         }
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         try {
             try (PreparedStatement ps = con.prepareStatement("SELECT * FROM wz_npcnamedata ORDER BY `npc`"); ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {

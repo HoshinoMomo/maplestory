@@ -2,7 +2,7 @@ package net.sf.odinms.client.messages.commands;
 
 
 import net.sf.odinms.client.*;
-import net.sf.odinms.client.anticheat.CheatingOffense;
+import net.sf.odinms.client.anticheat.CheatingOffenseEnum;
 import net.sf.odinms.client.inventory.*;
 import net.sf.odinms.client.messages.CommandProcessorUtil;
 import net.sf.odinms.constants.GameConstants;
@@ -170,7 +170,7 @@ public class AdminCommand {
             boolean MACbanned = false;
             String reason = null;
             try {
-                Connection con = DatabaseConnection.getConnection();
+                Connection con = InitHikariCP.getCollection();
                 PreparedStatement ps;
                 ps = (PreparedStatement) con.prepareStatement("select accountid from characters where name = ?");
                 ps.setString(1, name);
@@ -2124,7 +2124,7 @@ public class AdminCommand {
 
             }
             try {
-                CheatingOffense co = CheatingOffense.valueOf(splitted[1]);
+                CheatingOffenseEnum co = CheatingOffenseEnum.valueOf(splitted[1]);
                 co.setEnabled(!co.isEnabled());
             } catch (IllegalArgumentException iae) {
                 c.getPlayer().dropMessage(6, "Offense " + splitted[1] + " not found");
@@ -3194,7 +3194,7 @@ public class AdminCommand {
                 npc.setFh(fh);
                 npc.setCustom(true);
                 try {
-                    Connection con = (Connection) DatabaseConnection.getConnection();
+                    Connection con = (Connection) InitHikariCP.getCollection();
                     try (PreparedStatement ps = (PreparedStatement) con.prepareStatement("INSERT INTO wz_customlife (dataid, f, hide, fh, cy, rx0, rx1, type, x, y, mid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
                         ps.setInt(1, npcId);
                         ps.setInt(2, 0); // 1 = right , 0 = left
@@ -3308,7 +3308,7 @@ public class AdminCommand {
             if (splitted.length < 2) {
                 return 0;
             }
-            Connection dcon = (Connection) DatabaseConnection.getConnection();
+            Connection dcon = (Connection) InitHikariCP.getCollection();
             try {
                 int id = 0, quantity = 0;
                 String name = splitted[2];
@@ -3700,7 +3700,7 @@ public class AdminCommand {
 
             Connection con;
             try {
-                con = (Connection) DatabaseConnection.getConnection();
+                con = (Connection) InitHikariCP.getCollection();
             } catch (Exception ex) {
                 System.out.println("register错误1" + ex);
                 return 0;

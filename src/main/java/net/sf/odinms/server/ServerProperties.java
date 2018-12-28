@@ -40,7 +40,7 @@ public class ServerProperties {
 
         }
         try {
-            PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM auth_server_channel_ip");
+            PreparedStatement ps = InitHikariCP.getCollection().prepareStatement("SELECT * FROM auth_server_channel_ip");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 props.put(rs.getString("name") + rs.getInt("channelid"), rs.getString("value"));

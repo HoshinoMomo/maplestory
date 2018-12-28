@@ -20,7 +20,7 @@ public class InitHikariCP {
     private static final Logger logger = LoggerFactory.getLogger(InitHikariCP.class);
     private static HikariDataSource ds = null;
 
-    public static void init(){
+    public static boolean init(){
         HikariConfig config = new HikariConfig();
         config.setMaximumPoolSize(100);
         config.setDataSourceClassName("com.mysql.jdbc.Driver");
@@ -30,6 +30,7 @@ public class InitHikariCP {
         config.addDataSourceProperty("user", "bart");
         config.addDataSourceProperty("password", "51mp50n");
         ds = new HikariDataSource(config);
+        return !ds.isClosed();
     }
 
     /**

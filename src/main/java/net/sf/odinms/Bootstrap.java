@@ -45,7 +45,10 @@ public class Bootstrap {
     //maven bootstrap
     public static void main(String[] args) {
         //init database collection pool
-        InitHikariCP.init();
+        //if collection pool is close means init fail
+        if(!InitHikariCP.init()){
+            return;
+        }
         //auto open autoRegister
         ServerConstants.autoRegister = true;
         try {

@@ -39,7 +39,7 @@ import net.sf.odinms.server.MapleItemInformationProvider;
 import net.sf.odinms.server.MaplePortal;
 import net.sf.odinms.server.MapleStatEffect;
 import net.sf.odinms.server.Randomizer;
-import net.sf.odinms.server.Timer.CloneTimer;
+import net.sf.odinms.server.timer.Timer.CloneTimer;
 import net.sf.odinms.server.events.MapleSnowball.MapleSnowballs;
 import net.sf.odinms.server.life.MapleMonster;
 import net.sf.odinms.server.life.MobAttackInfo;

@@ -107,7 +107,7 @@ public class MapleCharacterUtil {
 
         boolean prompt = false;
         try {
-            ps = InitHikariCP.getCollection().prepareStatement("SELECT * from game_poll_reply where AccountId = ?");
+            ps = InitHikariCP.execute("SELECT * from game_poll_reply where AccountId = ?");
             ps.setInt(1, accountid);
 
             rs = ps.executeQuery();
@@ -134,7 +134,7 @@ public class MapleCharacterUtil {
 
         PreparedStatement ps = null;
         try {
-            ps = InitHikariCP.getCollection().prepareStatement("INSERT INTO game_poll_reply (AccountId, SelectAns) VALUES (?, ?)");
+            ps = InitHikariCP.execute("INSERT INTO game_poll_reply (AccountId, SelectAns) VALUES (?, ?)");
             ps.setInt(1, accountid);
             ps.setInt(2, selection);
 

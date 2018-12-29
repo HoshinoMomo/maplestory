@@ -26,7 +26,7 @@ import net.sf.odinms.handling.MaplePacket;
 import net.sf.odinms.handling.world.CharacterTransfer;
 import net.sf.odinms.handling.world.CheaterData;
 import net.sf.odinms.handling.world.World;
-import net.sf.odinms.server.Timer.PingTimer;
+import net.sf.odinms.server.timer.Timer.PingTimer;
 
 import java.util.ArrayList;
 import java.util.Collection;

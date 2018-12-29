@@ -20,7 +20,8 @@
  */
 package net.sf.odinms.client.anticheat;
 
-import net.sf.odinms.server.Timer.CheatTimer;
+
+import net.sf.odinms.server.timer.CheatTimer;
 
 import java.util.LinkedHashSet;
 import java.util.Set;

@@ -25,7 +25,7 @@ import net.sf.odinms.client.MapleCharacterUtil;
 import net.sf.odinms.constants.GameConstants;
 import net.sf.odinms.handling.world.World;
 import net.sf.odinms.server.AutobanManager;
-import net.sf.odinms.server.Timer.CheatTimer;
+import net.sf.odinms.server.timer.Timer.CheatTimer;
 import net.sf.odinms.tools.FileoutputUtil;
 import net.sf.odinms.tools.MaplePacketCreator;
 import net.sf.odinms.tools.StringUtil;

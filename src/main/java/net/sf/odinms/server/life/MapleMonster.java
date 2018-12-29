@@ -42,7 +42,7 @@ import net.sf.odinms.scripting.EventInstanceManager;
 import net.sf.odinms.server.MapleItemInformationProvider;
 import net.sf.odinms.server.MapleStatEffect;
 import net.sf.odinms.server.Randomizer;
-import net.sf.odinms.server.Timer.MobTimer;
+import net.sf.odinms.server.timer.Timer.MobTimer;
 import net.sf.odinms.server.maps.MapleMap;
 import net.sf.odinms.server.maps.MapleMapObject;
 import net.sf.odinms.server.maps.MapleMapObjectType;

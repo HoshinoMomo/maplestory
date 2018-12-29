@@ -27,7 +27,7 @@ import net.sf.odinms.handling.channel.ChannelServer;
 import net.sf.odinms.handling.world.World;
 import net.sf.odinms.server.MapleInventoryManipulator;
 import net.sf.odinms.server.RandomRewards;
-import net.sf.odinms.server.Timer.EventTimer;
+import net.sf.odinms.server.timer.Timer.EventTimer;
 import net.sf.odinms.server.maps.MapleMap;
 import net.sf.odinms.server.maps.SavedLocationType;
 import net.sf.odinms.tools.MaplePacketCreator;

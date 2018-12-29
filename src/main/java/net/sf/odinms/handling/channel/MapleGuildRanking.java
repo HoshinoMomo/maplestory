@@ -20,8 +20,7 @@
  */
 package net.sf.odinms.handling.channel;
 
-import net.sf.odinms.database.DatabaseConnection;
-import net.sf.odinms.server.Timer;
+import net.sf.odinms.server.timer.Timer;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

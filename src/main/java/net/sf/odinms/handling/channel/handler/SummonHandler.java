@@ -30,7 +30,7 @@ import net.sf.odinms.client.anticheat.CheatingOffenseEnum;
 import net.sf.odinms.client.status.MonsterStatus;
 import net.sf.odinms.client.status.MonsterStatusEffect;
 import net.sf.odinms.server.MapleStatEffect;
-import net.sf.odinms.server.Timer.CloneTimer;
+import net.sf.odinms.server.timer.Timer.CloneTimer;
 import net.sf.odinms.server.life.MapleMonster;
 import net.sf.odinms.server.life.SummonAttackEntry;
 import net.sf.odinms.server.maps.MapleMap;

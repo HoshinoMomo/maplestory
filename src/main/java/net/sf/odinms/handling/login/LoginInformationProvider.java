@@ -31,6 +31,7 @@ import java.util.List;
 public class LoginInformationProvider {
 
     private final static LoginInformationProvider instance = new LoginInformationProvider();
+
     protected final List<String> ForbiddenName = new ArrayList<String>();
 
     public static LoginInformationProvider getInstance() {

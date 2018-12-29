@@ -143,7 +143,7 @@ public class MaplePet implements Serializable {
             return;
         }
         try {
-            final PreparedStatement ps = InitHikariCP.getCollection().prepareStatement("UPDATE pets SET name = ?, level = ?, closeness = ?, fullness = ?, seconds = ?, flags = ? WHERE petid = ?");
+            final PreparedStatement ps = InitHikariCP.execute("UPDATE pets SET name = ?, level = ?, closeness = ?, fullness = ?, seconds = ?, flags = ? WHERE petid = ?");
             ps.setString(1, name); // Set name
             ps.setByte(2, level); // Set Level
             ps.setShort(3, closeness); // Set Closeness
@@ -168,7 +168,7 @@ public class MaplePet implements Serializable {
         } 
         short ret1 = MapleItemInformationProvider.getInstance().getPetFlagInfo(itemid);    
         try { // Commit to db first
-            PreparedStatement pse = InitHikariCP.getCollection().prepareStatement("INSERT INTO pets (petid, name, level, closeness, fullness, seconds, flags) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement pse = InitHikariCP.execute("INSERT INTO pets (petid, name, level, closeness, fullness, seconds, flags) VALUES (?, ?, ?, ?, ?, ?, ?)");
             pse.setInt(1, uniqueid);
             pse.setString(2, name);
             pse.setByte(3, (byte) level);

@@ -20,7 +20,7 @@
  */
 package net.sf.odinms.server.life;
 
-import net.sf.odinms.database.DatabaseConnection;
+import net.sf.odinms.database.pool.InitHikariCP;
 import net.sf.odinms.provider.MapleData;
 import net.sf.odinms.provider.MapleDataDirectoryEntry;
 import net.sf.odinms.provider.MapleDataFileEntry;
@@ -32,7 +32,6 @@ import net.sf.odinms.tools.Pair;
 import net.sf.odinms.tools.StringUtil;
 
 import java.io.File;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -112,9 +111,8 @@ public class MapleLifeFactory {
             } catch (RuntimeException e) {
             }
         }*/
-        Connection con = InitHikariCP.getCollection();
         try {
-            try (PreparedStatement ps = con.prepareStatement("SELECT * FROM wz_npcnamedata ORDER BY `npc`"); ResultSet rs = ps.executeQuery()) {
+            try (PreparedStatement ps = InitHikariCP.execute("SELECT * FROM wz_npcnamedata ORDER BY `npc`"); ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     npcNames.put(rs.getInt("npc"), rs.getString("name"));
                 }

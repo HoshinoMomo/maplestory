@@ -8,7 +8,7 @@ import net.sf.odinms.handling.world.World.Alliance;
 import net.sf.odinms.handling.world.World.Broadcast;
 import net.sf.odinms.handling.world.World.Family;
 import net.sf.odinms.handling.world.World.Guild;
-import net.sf.odinms.server.Timer.*;
+import net.sf.odinms.server.timer.Timer;
 import net.sf.odinms.tools.MaplePacketCreator;
 
 import java.util.Set;

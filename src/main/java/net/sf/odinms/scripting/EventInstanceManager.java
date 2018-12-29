@@ -29,7 +29,7 @@ import net.sf.odinms.server.MapleCarnivalParty;
 import net.sf.odinms.server.MapleItemInformationProvider;
 import net.sf.odinms.server.MapleSquad;
 import net.sf.odinms.server.MapleSquad.MapleSquadType;
-import net.sf.odinms.server.Timer.EventTimer;
+import net.sf.odinms.server.timer.Timer.EventTimer;
 import net.sf.odinms.server.life.MapleMonster;
 import net.sf.odinms.server.maps.MapleMap;
 import net.sf.odinms.server.maps.MapleMapFactory;

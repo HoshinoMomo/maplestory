@@ -98,7 +98,7 @@ public class MapleMonsterInformationProvider {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            ps = InitHikariCP.getCollection().prepareStatement("SELECT * FROM drop_data WHERE dropperid = ?");
+            ps = InitHikariCP.execute("SELECT * FROM drop_data WHERE dropperid = ?");
             ps.setInt(1, monsterId);
             rs = ps.executeQuery();
             int itemid;

@@ -22,7 +22,7 @@ package net.sf.odinms.server.maps;
 
 import net.sf.odinms.client.MapleClient;
 import net.sf.odinms.scripting.ReactorScriptManager;
-import net.sf.odinms.server.Timer.MapTimer;
+import net.sf.odinms.server.timer.Timer.MapTimer;
 import net.sf.odinms.tools.MaplePacketCreator;
 import net.sf.odinms.tools.Pair;
 

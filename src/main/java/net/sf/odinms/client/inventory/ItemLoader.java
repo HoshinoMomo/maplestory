@@ -62,7 +62,7 @@ public enum ItemLoader {
         Map<Integer, Pair<IItem, MapleInventoryType>> items = new LinkedHashMap<>();
         StringBuilder query = new StringBuilder();
         query.append("SELECT * FROM `hiredmerchitems` LEFT JOIN `hiredmerchequipment` USING(`inventoryitemid`) WHERE `type` = ? AND `id` = ? AND `accountid` = ? ");
-        PreparedStatement ps = InitHikariCP.getCollection().prepareStatement(query.toString());
+        PreparedStatement ps = InitHikariCP.execute(query.toString());
         ps.setInt(1, value);
         ps.setInt(2, id);
         ps.setInt(3, accountid);
@@ -164,7 +164,7 @@ public enum ItemLoader {
             query.append(" AND `inventorytype` = ");
             query.append(MapleInventoryType.EQUIPPED.getType());
         }
-        PreparedStatement ps = InitHikariCP.getCollection().prepareStatement(query.toString());
+        PreparedStatement ps = InitHikariCP.execute(query.toString());
         ps.setInt(1, value);
         for (int i = 0; i < lulz.size(); i++) {
             ps.setInt(i + 2, lulz.get(i));

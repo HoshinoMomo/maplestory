@@ -28,7 +28,7 @@ import net.sf.odinms.constants.GameConstants;
 import net.sf.odinms.handling.channel.ChannelServer;
 import net.sf.odinms.server.MapleInventoryManipulator;
 import net.sf.odinms.server.MapleItemInformationProvider;
-import net.sf.odinms.server.Timer.EtcTimer;
+import net.sf.odinms.server.timer.Timer.EtcTimer;
 import net.sf.odinms.server.maps.MapleMap;
 import net.sf.odinms.server.maps.MapleMapObject;
 import net.sf.odinms.server.maps.MapleMapObjectType;

@@ -72,7 +72,7 @@ public class MonsterBook implements Serializable {
     }
 
     public final static MonsterBook loadCards(final int charid) throws SQLException {
-        final PreparedStatement ps = InitHikariCP.getCollection().prepareStatement("SELECT * FROM monsterbook WHERE charid = ? ORDER BY cardid ASC");
+        final PreparedStatement ps = InitHikariCP.execute("SELECT * FROM monsterbook WHERE charid = ? ORDER BY cardid ASC");
         ps.setInt(1, charid);
         final ResultSet rs = ps.executeQuery();
         Map<Integer, Integer> cards = new LinkedHashMap<Integer, Integer>();

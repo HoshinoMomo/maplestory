@@ -22,7 +22,6 @@ package net.sf.odinms.client;
 
 import net.sf.odinms.constants.GameConstants;
 import net.sf.odinms.constants.ServerConstants;
-import net.sf.odinms.database.DatabaseConnection;
 import net.sf.odinms.database.DatabaseException;
 import net.sf.odinms.handling.cashshop.CashShopServer;
 import net.sf.odinms.handling.channel.ChannelServer;
@@ -33,7 +32,7 @@ import net.sf.odinms.handling.world.PartyOperation;
 import net.sf.odinms.handling.world.World;
 import net.sf.odinms.handling.world.family.MapleFamilyCharacter;
 import net.sf.odinms.handling.world.guild.MapleGuildCharacter;
-import net.sf.odinms.server.Timer.PingTimer;
+import net.sf.odinms.server.timer.Timer.PingTimer;
 import net.sf.odinms.server.maps.MapleMap;
 import net.sf.odinms.server.quest.MapleQuest;
 import net.sf.odinms.server.shops.IMaplePlayerShop;
@@ -226,7 +225,7 @@ public class MapleClient implements Serializable {
             return false;
         }
         boolean ret = false;
-        try (PreparedStatement ps = InitHikariCP.getCollection().prepareStatement("SELECT COUNT(*) FROM macbans WHERE mac = ?")) {
+        try (PreparedStatement ps = InitHikariCP.execute("SELECT COUNT(*) FROM macbans WHERE mac = ?")) {
             ps.setString(1, mac);
             try (ResultSet rs = ps.executeQuery()) {
                 rs.next();
@@ -998,7 +997,7 @@ public class MapleClient implements Serializable {
 
     public final boolean CheckIPAddress() {
         try {
-            final PreparedStatement ps = InitHikariCP.getCollection().prepareStatement("SELECT SessionIP FROM accounts WHERE id = ?");
+            final PreparedStatement ps = InitHikariCP.execute("SELECT SessionIP FROM accounts WHERE id = ?");
             ps.setInt(1, this.accId);
             final ResultSet rs = ps.executeQuery();
 

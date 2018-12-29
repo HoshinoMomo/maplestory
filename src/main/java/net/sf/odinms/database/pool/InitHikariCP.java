@@ -2,10 +2,12 @@ package net.sf.odinms.database.pool;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import net.sf.odinms.database.DatabaseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Objects;
 
@@ -35,10 +37,10 @@ public class InitHikariCP {
 
     /**
      * by reading hikariCP code
-     * we know when ds is close it will throw a exception
-     * so what we can do is restart the hikariCP
+     * we know when ds is closed it will throw a exception
+     * so restart the hikariCP
      */
-    public static Connection getCollection(){
+    private static Connection getCollection(){
         if(Objects.isNull(ds) || ds.isClosed()){
             init();
         }
@@ -47,6 +49,22 @@ public class InitHikariCP {
         } catch (SQLException e) {
             logger.error(e.getMessage(),e);
             return getCollection();
+        }
+    }
+
+    /**
+     * execute the sql
+     * @param sql
+     * @return
+     */
+    public static PreparedStatement execute(String sql){
+        logger.info("execute sql {}",sql);
+        try {
+            return getCollection().prepareStatement(sql);
+        } catch (SQLException e) {
+            logger.error(e.getMessage(),e);
+            // i don't know what to return
+            throw new DatabaseException("执行SQL异常");
         }
     }
 }

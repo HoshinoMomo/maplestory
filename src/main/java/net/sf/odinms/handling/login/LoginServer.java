@@ -86,13 +86,13 @@ public class LoginServer {
     }
 
     public static final void run_startup_configurations() {
-        userLimit = Integer.parseInt(ServerProperties.getProperty("MinaMS.UserLimit"));
-        serverName = ServerProperties.getProperty("MinaMS.ServerName");
-        eventMessage = ServerProperties.getProperty("MinaMS.EventMessage");
-        flag = Byte.parseByte(ServerProperties.getProperty("MinaMS.Flag"));
-        PORT = Integer.parseInt(ServerProperties.getProperty("MinaMS.LPort"));
-        adminOnly = Boolean.parseBoolean(ServerProperties.getProperty("MinaMS.Admin", "false"));
-        maxCharacters = Integer.parseInt(ServerProperties.getProperty("MinaMS.MaxCharacters"));
+        userLimit = Integer.parseInt(ServerProperties.getProperty("UserLimit"));
+        serverName = ServerProperties.getProperty("ServerName");
+        eventMessage = ServerProperties.getProperty("EventMessage");
+        flag = Byte.parseByte(ServerProperties.getProperty("Flag"));
+        PORT = Integer.parseInt(ServerProperties.getProperty("LPort"));
+        adminOnly = Boolean.parseBoolean(ServerProperties.getProperty("Admin", "false"));
+        maxCharacters = Integer.parseInt(ServerProperties.getProperty("MaxCharacters"));
 
         IoBuffer.setUseDirectBuffer(false);
         IoBuffer.setAllocator(new SimpleBufferAllocator());
@@ -159,7 +159,7 @@ public class LoginServer {
 
     public static final int getUserLimit() {
         return userLimit;
-        //  return Integer.parseInt(ServerProperties.getProperty("MinaMS.UserLimit"));
+        //  return Integer.parseInt(ServerProperties.getProperty("UserLimit"));
     }
 
     public static final int getUsersOn() {

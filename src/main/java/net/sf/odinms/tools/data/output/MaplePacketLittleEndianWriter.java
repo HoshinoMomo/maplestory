@@ -37,7 +37,7 @@ import java.io.ByteArrayOutputStream;
 public class MaplePacketLittleEndianWriter extends GenericLittleEndianWriter {
 
     private final ByteArrayOutputStream baos;
-    private static boolean debugMode = Boolean.parseBoolean(ServerProperties.getProperty("MinaMS.Debug", "false"));
+    private static boolean debugMode = Boolean.parseBoolean(ServerProperties.getProperty("Debug", "false"));
 
     /**
      * Constructor - initializes this stream with a default size.

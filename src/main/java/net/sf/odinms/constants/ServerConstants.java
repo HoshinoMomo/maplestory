@@ -43,9 +43,9 @@ public class ServerConstants {
     public static final int MTS_MESO = 5000; //mesos needed
     public static final int CHANNEL_COUNT = 200;
     //过图输出日志
-    public static boolean mapChangeLog = Boolean.parseBoolean(ServerProperties.getProperty("MinaMS.mapChangeLog", "false"));
+    public static boolean mapChangeLog = Boolean.parseBoolean(ServerProperties.getProperty("mapChangeLog", "false"));
     //输出调试封包
-    public static boolean isDebug = Boolean.parseBoolean(ServerProperties.getProperty("MinaMS.isDebug", "false"));
+    public static boolean isDebug = Boolean.parseBoolean(ServerProperties.getProperty("isDebug", "false"));
     public static boolean autoRegister = false;
     public static boolean Super_password = false;
     public static String superpw = "";

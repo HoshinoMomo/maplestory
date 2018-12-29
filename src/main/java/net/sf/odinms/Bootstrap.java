@@ -155,7 +155,7 @@ public class Bootstrap {
 
         CheatTimer.getInstance().register(AutobanManager.getInstance(), 60000);
         autoSave();
-        if (Boolean.parseBoolean(ServerProperties.getProperty("MinaMS.RandDrop"))) {
+        if (Boolean.parseBoolean(ServerProperties.getProperty("RandDrop"))) {
             ChannelServer.getInstance(1).getMapFactory().getMap(910000000).spawnRandDrop();
         }
         Runtime.getRuntime().addShutdownHook(new Thread(new Shutdown()));
@@ -166,11 +166,11 @@ public class Bootstrap {
         }
         World.registerRespawn();
         LoginServer.setOn();
-        System.out.println("\r\n经验倍率:" + Integer.parseInt(ServerProperties.getProperty("MinaMS.Exp")) + "  物品倍率：" + Integer.parseInt(ServerProperties.getProperty("MinaMS.Drop")) + "  金币倍率" + Integer.parseInt(ServerProperties.getProperty("MinaMS.Meso")));
+        System.out.println("\r\n经验倍率:" + Integer.parseInt(ServerProperties.getProperty("Exp")) + "  物品倍率：" + Integer.parseInt(ServerProperties.getProperty("Drop")) + "  金币倍率" + Integer.parseInt(ServerProperties.getProperty("Meso")));
         System.out.println("\r\n当前开放职业: "
-                + " 冒险家 = " + Boolean.parseBoolean(ServerProperties.getProperty("MinaMS.冒险家"))
-                + " 骑士团 = " + Boolean.parseBoolean(ServerProperties.getProperty("MinaMS.骑士团"))
-                + " 战神 = " + Boolean.parseBoolean(ServerProperties.getProperty("MinaMS.战神")));
+                + " 冒险家 = " + Boolean.parseBoolean(ServerProperties.getProperty("冒险家"))
+                + " 骑士团 = " + Boolean.parseBoolean(ServerProperties.getProperty("骑士团"))
+                + " 战神 = " + Boolean.parseBoolean(ServerProperties.getProperty("战神")));
         System.out.println("\r\n服务端启动完毕 可以进入游戏了:::");
     }
 

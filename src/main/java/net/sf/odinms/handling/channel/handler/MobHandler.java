@@ -22,7 +22,7 @@ package net.sf.odinms.handling.channel.handler;
 
 import net.sf.odinms.client.MapleCharacter;
 import net.sf.odinms.client.MapleClient;
-import net.sf.odinms.client.anticheat.CheatingOffense;
+import net.sf.odinms.client.anticheat.CheatingOffenseEnum;
 import net.sf.odinms.client.inventory.MapleInventoryType;
 import net.sf.odinms.server.MapleInventoryManipulator;
 import net.sf.odinms.server.Randomizer;
@@ -140,7 +140,7 @@ public class MobHandler {
                 if (((reduce_x > 200 || reduce_y > GeneallyDistance_y) && reduce_y != 0) || (reduce_x > Check_x && reduce_y == 0)) {
                     chr.addMobVac(1);
                     if (c.getPlayer().getMobVac(1) % 50 == 0) {
-                        c.getPlayer().getCheatTracker().registerOffense(CheatingOffense.吸怪, "(地图: " + chr.getMapId() + " 怪物数量:" + chr.getMobVac(1) + ")");
+                        c.getPlayer().getCheatTracker().registerOffense(CheatingOffenseEnum.吸怪, "(地图: " + chr.getMapId() + " 怪物数量:" + chr.getMobVac(1) + ")");
                         //World.Broadcast.broadcastGMMessage(MaplePacketCreator.serverNotice(6, "[GM信息] " + chr.getName() + "怪物数量(" + chr.getMobVac(1) + ")! 地图:" + chr.getMapId() + "(" + chr.getMap().getMapName() + ")").getBytes());
                         FileoutputUtil.logToFile_chr(c.getPlayer(), FileoutputUtil.MobVac_log, " 怪物: " + monster.getId() + " 起始坐标 " + startPos.x + "," + startPos.y + " 结束坐标 " + endPos.x + "," + endPos.y + " 相差x:" + reduce_x + "相差y" + reduce_y);
                         if (chr.hasGmLevel(1)) {

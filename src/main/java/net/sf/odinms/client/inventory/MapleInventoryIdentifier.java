@@ -88,7 +88,7 @@ public class MapleInventoryIdentifier implements Serializable {
         }
         try {
             int[] ids = new int[4];
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("SELECT MAX(uniqueid) FROM inventoryitems");
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {

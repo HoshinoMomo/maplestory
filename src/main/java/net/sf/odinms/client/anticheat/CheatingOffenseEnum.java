@@ -20,7 +20,10 @@
  */
 package net.sf.odinms.client.anticheat;
 
-public enum CheatingOffense {
+/**
+ * 作弊行为的枚举
+ */
+public enum CheatingOffenseEnum {
 
     FAST_SUMMON_ATTACK((byte) 5, 6000, 50, (byte) 2), //召唤兽快速攻击
     FAST_ATTACK((byte) 5, 6000, 200, (byte) 2), //快速攻击
@@ -69,11 +72,12 @@ public enum CheatingOffense {
     /**
      * 超过几次自动封号
      */
-    private final int autobancount;
+    private final int autoBanCount;
+
     /**
      * 0 = Disabled, 1 = Enabled, 2 = DC
      */
-    private byte bantype = 0;
+    private byte banType;
 
     public final byte getPoints() {
         return points;
@@ -83,37 +87,37 @@ public enum CheatingOffense {
         return validityDuration;
     }
 
-    public final boolean shouldAutoban(final int count) {
-        if (autobancount == -1) {
+    public final boolean shouldAutoBan(final int count) {
+        if (autoBanCount == -1) {
             return false;
         }
-        return count >= autobancount;
+        return count >= autoBanCount;
     }
 
     public final byte getBanType() {
-        return bantype;
+        return banType;
     }
 
     public final void setEnabled(final boolean enabled) {
-        bantype = (byte) (enabled ? 1 : 0);
+        banType = (byte) (enabled ? 1 : 0);
     }
 
     public final boolean isEnabled() {
-        return bantype >= 1;
+        return banType >= 1;
     }
 
-    private CheatingOffense(final byte points, final long validityDuration) {
+    CheatingOffenseEnum(final byte points, final long validityDuration) {
         this(points, validityDuration, -1, (byte) 1);
     }
 
-    private CheatingOffense(final byte points, final long validityDuration, final int autobancount) {
-        this(points, validityDuration, autobancount, (byte) 1);
+    CheatingOffenseEnum(final byte points, final long validityDuration, final int autoBanCount) {
+        this(points, validityDuration, autoBanCount, (byte) 1);
     }
 
-    private CheatingOffense(final byte points, final long validityDuration, final int autobancount, final byte bantype) {
+    CheatingOffenseEnum(final byte points, final long validityDuration, final int autoBanCount, final byte banType) {
         this.points = points;
         this.validityDuration = validityDuration;
-        this.autobancount = autobancount;
-        this.bantype = bantype;
+        this.autoBanCount = autoBanCount;
+        this.banType = banType;
     }
 }

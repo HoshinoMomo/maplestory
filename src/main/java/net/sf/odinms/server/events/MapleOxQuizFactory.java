@@ -68,7 +68,7 @@ public class MapleOxQuizFactory {
         }
         //System.out.println("加载 OX Quiz  :::");
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("SELECT * FROM wz_oxdata");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -86,7 +86,7 @@ public class MapleOxQuizFactory {
     public MapleOxQuizEntry getFromSQL(String sql) {
         MapleOxQuizEntry ret = null;
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {

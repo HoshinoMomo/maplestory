@@ -26,7 +26,7 @@ import net.sf.odinms.client.MapleCharacter;
 import net.sf.odinms.server.MapleItemInformationProvider;
 import net.sf.odinms.server.MapleStatEffect;
 import net.sf.odinms.server.MapleStatEffect.CancelEffectAction;
-import net.sf.odinms.server.Timer.BuffTimer;
+import net.sf.odinms.server.timer.Timer.BuffTimer;
 import net.sf.odinms.tools.MaplePacketCreator;
 import net.sf.odinms.tools.Pair;
 

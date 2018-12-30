@@ -6,7 +6,6 @@ import net.sf.odinms.client.BuddyList.BuddyOperation;
 import net.sf.odinms.client.inventory.MapleInventoryType;
 import net.sf.odinms.client.inventory.MaplePet;
 import net.sf.odinms.client.inventory.PetDataFactory;
-import net.sf.odinms.database.DatabaseConnection;
 import net.sf.odinms.handling.MaplePacket;
 import net.sf.odinms.handling.cashshop.CashShopServer;
 import net.sf.odinms.handling.channel.ChannelServer;
@@ -18,7 +17,7 @@ import net.sf.odinms.handling.world.guild.MapleGuild;
 import net.sf.odinms.handling.world.guild.MapleGuildAlliance;
 import net.sf.odinms.handling.world.guild.MapleGuildCharacter;
 import net.sf.odinms.handling.world.guild.MapleGuildSummary;
-import net.sf.odinms.server.Timer.WorldTimer;
+import net.sf.odinms.server.timer.Timer.WorldTimer;
 import net.sf.odinms.server.maps.MapleMap;
 import net.sf.odinms.server.maps.MapleMapItem;
 import net.sf.odinms.tools.CollectionUtil;
@@ -164,7 +163,7 @@ public class World {
         private static final AtomicInteger runningPartyId = new AtomicInteger();
 
         static {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps;
             try {
                 ps = con.prepareStatement("SELECT MAX(party)+2 FROM characters");

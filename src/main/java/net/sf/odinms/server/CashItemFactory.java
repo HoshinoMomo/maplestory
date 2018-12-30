@@ -1,14 +1,12 @@
 package net.sf.odinms.server;
 
-
-import net.sf.odinms.database.DatabaseConnection;
+import net.sf.odinms.database.pool.InitHikariCP;
 import net.sf.odinms.provider.MapleData;
 import net.sf.odinms.provider.MapleDataProvider;
 import net.sf.odinms.provider.MapleDataProviderFactory;
 import net.sf.odinms.provider.MapleDataTool;
 
 import java.io.File;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -175,8 +173,7 @@ public class CashItemFactory {
                 return null;
             }
             try {
-                Connection con = DatabaseConnection.getConnection();
-                PreparedStatement ps = con.prepareStatement("SELECT * FROM cashshop_modified_items WHERE serial = ?");
+                PreparedStatement ps = InitHikariCP.execute("SELECT * FROM cashshop_modified_items WHERE serial = ?");
                 ps.setInt(1, sn);
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {

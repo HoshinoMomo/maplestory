@@ -22,7 +22,7 @@ public class DumpQuests {
     protected boolean hadError = false;
     protected boolean update = false;
     protected int id = 0;
-    private Connection con = DatabaseConnection.getConnection();
+    private Connection con = InitHikariCP.getCollection();
 
     public DumpQuests(boolean update) throws Exception {
         this.update = update;

@@ -29,13 +29,6 @@ import net.sf.odinms.handling.cashshop.CashShopServer;
 import net.sf.odinms.handling.login.LoginServer;
 import net.sf.odinms.handling.mina.MapleCodecFactory;
 import net.sf.odinms.handling.world.CheaterData;
-import org.apache.mina.core.buffer.IoBuffer;
-import org.apache.mina.core.buffer.SimpleBufferAllocator;
-import org.apache.mina.core.filterchain.IoFilter;
-import org.apache.mina.core.service.IoAcceptor;
-import org.apache.mina.filter.codec.ProtocolCodecFilter;
-import org.apache.mina.transport.socket.SocketSessionConfig;
-import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 import net.sf.odinms.scripting.EventScriptManager;
 import net.sf.odinms.server.MapleSquad;
 import net.sf.odinms.server.MapleSquad.MapleSquadType;
@@ -52,6 +45,12 @@ import net.sf.odinms.server.shops.HiredMerchant;
 import net.sf.odinms.tools.CollectionUtil;
 import net.sf.odinms.tools.ConcurrentEnumMap;
 import net.sf.odinms.tools.MaplePacketCreator;
+import org.apache.mina.core.buffer.IoBuffer;
+import org.apache.mina.core.buffer.SimpleBufferAllocator;
+import org.apache.mina.core.service.IoAcceptor;
+import org.apache.mina.filter.codec.ProtocolCodecFilter;
+import org.apache.mina.transport.socket.SocketSessionConfig;
+import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -129,31 +128,32 @@ public class ChannelServer implements Serializable {
     public final void run_startup_configurations() {
         setChannel(this.channel); //instances.put
         try {
-            expRate = Integer.parseInt(ServerProperties.getProperty("MinaMS.Exp"));
-            mesoRate = Integer.parseInt(ServerProperties.getProperty("MinaMS.Meso"));
-            dropRate = Integer.parseInt(ServerProperties.getProperty("MinaMS.Drop"));
-            BossdropRate = Integer.parseInt(ServerProperties.getProperty("MinaMS.BDrop"));
-            cashRate = Integer.parseInt(ServerProperties.getProperty("MinaMS.Cash"));
-            serverMessage = ServerProperties.getProperty("MinaMS.ServerMessage");
-            serverName = ServerProperties.getProperty("MinaMS.ServerName");
-            flags = Integer.parseInt(ServerProperties.getProperty("MinaMS.WFlags", "0"));
-            adminOnly = Boolean.parseBoolean(ServerProperties.getProperty("MinaMS.Admin", "false"));
-            eventSM = new EventScriptManager(this, ServerProperties.getProperty("MinaMS.Events").split(","));
-            port = Short.parseShort(ServerProperties.getProperty("MinaMS.Port" + this.channel, String.valueOf(DEFAULT_PORT + this.channel)));
+            expRate = Integer.parseInt(ServerProperties.getProperty("Exp"));
+            mesoRate = Integer.parseInt(ServerProperties.getProperty("Meso"));
+            dropRate = Integer.parseInt(ServerProperties.getProperty("Drop"));
+            //boss drop
+            BossdropRate = Integer.parseInt(ServerProperties.getProperty("BDrop"));
+            cashRate = Integer.parseInt(ServerProperties.getProperty("Cash"));
+            serverMessage = ServerProperties.getProperty("ServerMessage");
+            serverName = ServerProperties.getProperty("ServerName");
+            flags = Integer.parseInt(ServerProperties.getProperty("WFlags", "0"));
+            adminOnly = Boolean.parseBoolean(ServerProperties.getProperty("Admin", "false"));
+            eventSM = new EventScriptManager(this, ServerProperties.getProperty("Events").split(","));
+            port = Short.parseShort(ServerProperties.getProperty("Port" + this.channel, String.valueOf(DEFAULT_PORT + this.channel)));
             //他不会去 启动 tms.Port  而是启动的 DEFAULT_PORT的yto
-            //   port = Short.parseShort(ServerProperties.getProperty("MinaMS.Port" + channel));
+            //   port = Short.parseShort(ServerProperties.getProperty("Port" + channel));
             // port = Integer.parseInt(this.props.getProperty("net.sf.cherry.channel.net.port"));
 
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
-        ip = ServerProperties.getProperty("MinaMS.IP") + ":" + port;
+        ip = ServerProperties.getProperty("IP") + ":" + port;
 
         IoBuffer.setUseDirectBuffer(false);
         IoBuffer.setAllocator(new SimpleBufferAllocator());
         acceptor = new NioSocketAcceptor();
-        acceptor.getFilterChain().addLast("codec", (IoFilter) new ProtocolCodecFilter(new MapleCodecFactory()));
+        acceptor.getFilterChain().addLast("codec",new ProtocolCodecFilter(new MapleCodecFactory()));
         players = new PlayerStorage(channel);
         loadEvents();
         try {
@@ -311,7 +311,7 @@ public class ChannelServer implements Serializable {
 
     public final void reloadEvents() {//事件脚本启动
         eventSM.cancel();
-        eventSM = new EventScriptManager(this, ServerProperties.getProperty("MinaMS.Events").split(","));
+        eventSM = new EventScriptManager(this, ServerProperties.getProperty("Events").split(","));
         eventSM.init();
     }
 
@@ -386,7 +386,7 @@ public class ChannelServer implements Serializable {
 
     public static void startChannel_Main() {
         serverStartTime = System.currentTimeMillis();
-        int ch = Integer.parseInt(ServerProperties.getProperty("MinaMS.Count", "0"));
+        int ch = Integer.parseInt(ServerProperties.getProperty("Count", "0"));
         if (ch > 10) {
             ch = 10;
         }
@@ -397,7 +397,7 @@ public class ChannelServer implements Serializable {
 
     public static final void startChannel(final int channel) {
         serverStartTime = System.currentTimeMillis();
-        for (int i = 0; i < Integer.parseInt(ServerProperties.getProperty("MinaMS.Count", "0")); i++) {
+        for (int i = 0; i < Integer.parseInt(ServerProperties.getProperty("Count", "0")); i++) {
             if (channel == i + 1) {
 
                 //newInstance(ServerConstants.Channel_Key[i], i + 1).run_startup_configurations();

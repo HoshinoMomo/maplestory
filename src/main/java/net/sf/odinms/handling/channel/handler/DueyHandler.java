@@ -205,7 +205,7 @@ public class DueyHandler {
     }
 
     private static final boolean addMesoToDB(final int mesos, final String sName, final int recipientID, final boolean isOn) {
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         try {
             PreparedStatement ps = con.prepareStatement("INSERT INTO dueys (RecieverId, SenderName, Mesos, TimeStamp, Checked, Type) VALUES (?, ?, ?, ?, ?, ?)");
             ps.setInt(1, recipientID);
@@ -226,7 +226,7 @@ public class DueyHandler {
     }
 
     private static final boolean addItemToDB(final IItem item, final int quantity, final int mesos, final String sName, final int recipientID, final boolean isOn) {
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         try {
             PreparedStatement ps = con.prepareStatement("INSERT INTO dueys (RecieverId, SenderName, Mesos, TimeStamp, Checked, Type) VALUES (?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, recipientID);
@@ -254,7 +254,7 @@ public class DueyHandler {
 
     public static final List<MapleDueyActions> loadItems(final MapleCharacter chr) {
         List<MapleDueyActions> s = new LinkedList<MapleDueyActions>();
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         try {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM dueys WHERE RecieverId = ?");
             ps.setInt(1, chr.getId());
@@ -277,7 +277,7 @@ public class DueyHandler {
 
     public static final MapleDueyActions loadSingleItem(final int id, final int charid) {
         List<MapleDueyActions> s = new LinkedList<MapleDueyActions>();
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         try {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM dueys WHERE Id = ? and RecieverId = ?");
             ps.setInt(1, id);
@@ -305,7 +305,7 @@ public class DueyHandler {
     }
 
     public static final void reciveMsg(final MapleClient c, final int recipientId) {
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         try {
             PreparedStatement ps = con.prepareStatement("UPDATE dueys SET Checked = 0 where RecieverId = ?");
             ps.setInt(1, recipientId);
@@ -317,7 +317,7 @@ public class DueyHandler {
     }
 
     private static final void removeItemFromDB(final int id, final int charid) {
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         try {
             PreparedStatement ps = con.prepareStatement("DELETE FROM dueys WHERE Id = ? and RecieverId = ?");
             ps.setInt(1, id);

@@ -22,7 +22,6 @@ package net.sf.odinms.client;
 
 import net.sf.odinms.constants.GameConstants;
 import net.sf.odinms.constants.ServerConstants;
-import net.sf.odinms.database.DatabaseConnection;
 import net.sf.odinms.database.DatabaseException;
 import net.sf.odinms.handling.cashshop.CashShopServer;
 import net.sf.odinms.handling.channel.ChannelServer;
@@ -33,7 +32,7 @@ import net.sf.odinms.handling.world.PartyOperation;
 import net.sf.odinms.handling.world.World;
 import net.sf.odinms.handling.world.family.MapleFamilyCharacter;
 import net.sf.odinms.handling.world.guild.MapleGuildCharacter;
-import net.sf.odinms.server.Timer.PingTimer;
+import net.sf.odinms.server.timer.Timer.PingTimer;
 import net.sf.odinms.server.maps.MapleMap;
 import net.sf.odinms.server.quest.MapleQuest;
 import net.sf.odinms.server.shops.IMaplePlayerShop;
@@ -176,7 +175,7 @@ public class MapleClient implements Serializable {
     private List<CharNameAndId> loadCharactersInternal(int serverId) {
         List<CharNameAndId> chars = new LinkedList<CharNameAndId>();
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("SELECT id, name FROM characters WHERE accountid = ? AND world = ?");
             ps.setInt(1, accId);
             ps.setInt(2, serverId);
@@ -226,7 +225,7 @@ public class MapleClient implements Serializable {
             return false;
         }
         boolean ret = false;
-        try (PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("SELECT COUNT(*) FROM macbans WHERE mac = ?")) {
+        try (PreparedStatement ps = InitHikariCP.execute("SELECT COUNT(*) FROM macbans WHERE mac = ?")) {
             ps.setString(1, mac);
             try (ResultSet rs = ps.executeQuery()) {
                 rs.next();
@@ -243,7 +242,7 @@ public class MapleClient implements Serializable {
 
     public boolean isBannedIP(String ip) {
         boolean ret = false;
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         try (PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM ipbans WHERE ? LIKE CONCAT(ip, '%')")) {
             ps.setString(1, ip);
             try (ResultSet rs = ps.executeQuery()) {
@@ -261,7 +260,7 @@ public class MapleClient implements Serializable {
     public boolean hasBannedIP() {
         boolean ret = false;
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM ipbans WHERE ? LIKE CONCAT(ip, '%')");
             ps.setString(1, session.getRemoteAddress().toString());
             ResultSet rs = ps.executeQuery();
@@ -284,7 +283,7 @@ public class MapleClient implements Serializable {
         boolean ret = false;
         int i = 0;
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM macbans WHERE mac IN (");
             for (i = 0; i < macs.size(); i++) {
                 sql.append("?");
@@ -314,7 +313,7 @@ public class MapleClient implements Serializable {
 
     private void loadMacsIfNescessary() throws SQLException {
         if (macs.isEmpty()) {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("SELECT macs FROM accounts WHERE id = ?");
             ps.setInt(1, accId);
             ResultSet rs = ps.executeQuery();
@@ -355,7 +354,7 @@ public class MapleClient implements Serializable {
     }
 
     public static final void banMacs(String macs) {
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         try {
             List<String> filtered = new LinkedList<String>();
             PreparedStatement ps = con.prepareStatement("SELECT filter FROM macfilters");
@@ -390,7 +389,7 @@ public class MapleClient implements Serializable {
     }
 
     public static final void banMacs(String[] macs) {
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         try {
             List<String> filtered = new LinkedList<String>();
             PreparedStatement ps = con.prepareStatement("SELECT filter FROM macfilters");
@@ -450,7 +449,7 @@ public class MapleClient implements Serializable {
     public int fblogin(String login, String pwd, boolean ipMacBanned) {
         int loginok = 5;
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("SELECT * FROM accounts WHERE facebook_id = ?");
             ps.setString(1, login);
             ResultSet rs = ps.executeQuery();
@@ -530,7 +529,7 @@ public class MapleClient implements Serializable {
     public int login(String login, String pwd, boolean ipMacBanned) {
         int loginok = 5;
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("SELECT * FROM accounts WHERE name = ?");
             ps.setString(1, login);
             ResultSet rs = ps.executeQuery();
@@ -645,7 +644,7 @@ public class MapleClient implements Serializable {
             allow = true;
         }
         if (updatePasswordHash) {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             try {
                 PreparedStatement ps = con.prepareStatement("UPDATE `accounts` SET `2ndpassword` = ?, `salt2` = ? WHERE id = ?");
                 final String newSalt = LoginCrypto.makeSalt();
@@ -663,7 +662,7 @@ public class MapleClient implements Serializable {
 
     private void unban() {
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("UPDATE accounts SET banned = 0 and banreason = '' WHERE id = ?");
             ps.setInt(1, accId);
             ps.executeUpdate();
@@ -675,7 +674,7 @@ public class MapleClient implements Serializable {
 
     public static final byte unban(String charname) {
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("SELECT accountid from characters where name = ?");
             ps.setString(1, charname);
 
@@ -715,7 +714,7 @@ public class MapleClient implements Serializable {
     public final void updateLoginState(final int newstate, final String SessionID) { // TODO hide?
         if (SessionID != null) {
             try {
-                Connection con = DatabaseConnection.getConnection();
+                Connection con = InitHikariCP.getCollection();
                 PreparedStatement ps = con.prepareStatement("UPDATE accounts SET loggedin = ?, SessionIP = ?, lastlogin = CURRENT_TIMESTAMP() WHERE id = ?");
                 ps.setInt(1, newstate);
                 ps.setString(2, SessionID);
@@ -727,7 +726,7 @@ public class MapleClient implements Serializable {
             }
         } else {
             try {
-                Connection con = DatabaseConnection.getConnection();
+                Connection con = InitHikariCP.getCollection();
                 PreparedStatement ps = con.prepareStatement("UPDATE accounts SET loggedin = ?, lastlogin = CURRENT_TIMESTAMP() WHERE id = ?");
                 ps.setInt(1, newstate);
                 ps.setInt(2, getAccID());
@@ -748,7 +747,7 @@ public class MapleClient implements Serializable {
 
     public final void updateSecondPassword() {
         try {
-            final Connection con = DatabaseConnection.getConnection();
+            final Connection con = InitHikariCP.getCollection();
 
             PreparedStatement ps = con.prepareStatement("UPDATE `accounts` SET `2ndpassword` = ?, `salt2` = ? WHERE id = ?");
             final String newSalt = LoginCrypto.makeSalt();
@@ -765,7 +764,7 @@ public class MapleClient implements Serializable {
 
     public final void updateGender() {
         try {
-            final Connection con = DatabaseConnection.getConnection();
+            final Connection con = InitHikariCP.getCollection();
 
             PreparedStatement ps = con.prepareStatement("UPDATE `accounts` SET `gender` = ? WHERE id = ?");
             ps.setInt(1, gender);
@@ -779,7 +778,7 @@ public class MapleClient implements Serializable {
     }
 
     public final byte getLoginState() { // TODO hide?
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         try {
             PreparedStatement ps;
             ps = con.prepareStatement("SELECT loggedin, lastlogin, `birthday` + 0 AS `bday` FROM accounts WHERE id = ?");
@@ -998,7 +997,7 @@ public class MapleClient implements Serializable {
 
     public final boolean CheckIPAddress() {
         try {
-            final PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("SELECT SessionIP FROM accounts WHERE id = ?");
+            final PreparedStatement ps = InitHikariCP.execute("SELECT SessionIP FROM accounts WHERE id = ?");
             ps.setInt(1, this.accId);
             final ResultSet rs = ps.executeQuery();
 
@@ -1045,7 +1044,7 @@ public class MapleClient implements Serializable {
 
     public final int deleteCharacter(final int cid) {
         try {
-            final Connection con = DatabaseConnection.getConnection();
+            final Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("SELECT guildid, guildrank, familyid, name FROM characters WHERE id = ? AND accountid = ?");
             ps.setInt(1, cid);
             ps.setInt(2, accId);
@@ -1214,7 +1213,7 @@ public class MapleClient implements Serializable {
 
     public static final int findAccIdForCharacterName(final String charName) {
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("SELECT accountid FROM characters WHERE name = ?");
             ps.setString(1, charName);
             ResultSet rs = ps.executeQuery();
@@ -1281,7 +1280,7 @@ public class MapleClient implements Serializable {
             return charslots; //save a sql
         }
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("SELECT * FROM character_slots WHERE accid = ? AND worldid = ?");
             ps.setInt(1, accId);
             ps.setInt(2, world);
@@ -1312,7 +1311,7 @@ public class MapleClient implements Serializable {
         charslots++;
 
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("UPDATE character_slots SET charslots = ? WHERE worldid = ? AND accid = ?");
             ps.setInt(1, charslots);
             ps.setInt(2, world);
@@ -1328,7 +1327,7 @@ public class MapleClient implements Serializable {
 
     public static final byte unbanIPMacs(String charname) {
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("SELECT accountid from characters where name = ?");
             ps.setString(1, charname);
 
@@ -1383,7 +1382,7 @@ public class MapleClient implements Serializable {
 
     public static final byte unHellban(String charname) {
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("SELECT accountid from characters where name = ?");
             ps.setString(1, charname);
 
@@ -1460,7 +1459,7 @@ public class MapleClient implements Serializable {
             return;
         }
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             try (PreparedStatement ps = con.prepareStatement("UPDATE accounts SET macs = ? WHERE id = ?")) {
                 ps.setString(1, macData);
                 ps.setInt(2, accId);
@@ -1473,7 +1472,7 @@ public class MapleClient implements Serializable {
     }
 
     public void loadAccountData(int accountID) {
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {

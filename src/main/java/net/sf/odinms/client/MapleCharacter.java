@@ -24,7 +24,6 @@ import net.sf.odinms.client.anticheat.CheatTracker;
 import net.sf.odinms.client.inventory.*;
 import net.sf.odinms.constants.GameConstants;
 import net.sf.odinms.constants.ServerConstants;
-import net.sf.odinms.database.DatabaseConnection;
 import net.sf.odinms.database.DatabaseException;
 import net.sf.odinms.handling.MaplePacket;
 import net.sf.odinms.handling.channel.ChannelServer;
@@ -42,11 +41,11 @@ import net.sf.odinms.provider.MapleDataProviderFactory;
 import net.sf.odinms.scripting.EventInstanceManager;
 import net.sf.odinms.scripting.NPCScriptManager;
 import net.sf.odinms.server.*;
-import net.sf.odinms.server.Timer;
-import net.sf.odinms.server.Timer.BuffTimer;
-import net.sf.odinms.server.Timer.EtcTimer;
-import net.sf.odinms.server.Timer.EventTimer;
-import net.sf.odinms.server.Timer.MapTimer;
+import net.sf.odinms.server.timer.Timer;
+import net.sf.odinms.server.timer.Timer.BuffTimer;
+import net.sf.odinms.server.timer.Timer.EtcTimer;
+import net.sf.odinms.server.timer.Timer.EventTimer;
+import net.sf.odinms.server.timer.Timer.MapTimer;
 import net.sf.odinms.server.life.MapleLifeFactory;
 import net.sf.odinms.server.life.MapleMonster;
 import net.sf.odinms.server.life.MobSkill;
@@ -239,7 +238,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
         ret.prefix = 0;
 
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps;
             ps = con.prepareStatement("SELECT * FROM accounts WHERE id = ?");
             ps.setInt(1, ret.accountid);
@@ -421,7 +420,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
         ret.client = client;
         ret.id = charid;
 
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         PreparedStatement ps = null;
         PreparedStatement pse = null;
         ResultSet rs = null;
@@ -806,7 +805,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
     }
 
     public static void saveNewCharToDB(final MapleCharacter chr, final int type, final boolean db) {
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
 
         PreparedStatement ps = null;
         PreparedStatement pse = null;
@@ -981,7 +980,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
         if (isClone()) {
             return;
         }
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
 
         PreparedStatement ps = null;
         PreparedStatement pse = null;
@@ -3627,7 +3626,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
         }
 
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("INSERT INTO ipbans VALUES (DEFAULT, ?)");
             ps.setString(1, client.getSession().getRemoteAddress().toString().split(":")[0]);
             ps.execute();
@@ -3655,7 +3654,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
             throw new RuntimeException("Trying to ban a non-loaded character (testhack)");
         }
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("UPDATE accounts SET banned = ?, banreason = ? WHERE id = ?");
             ps.setInt(1, autoban ? 2 : 1);
             ps.setString(2, reason);
@@ -3698,7 +3697,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
 
     public static boolean ban(String id, String reason, boolean accountId, int gmlevel, boolean hellban) {
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps;
 
             if (id.matches("/[0-9]{1,3}\\..*")) {
@@ -4009,7 +4008,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
     public void hasGivenFame(MapleCharacter to) {
         lastfametime = System.currentTimeMillis();
         lastmonthfameids.add(Integer.valueOf(to.getId()));
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         try {
             PreparedStatement ps = con.prepareStatement("INSERT INTO famelog (characterid, characterid_to) VALUES (?, ?)");
             ps.setInt(1, getId());
@@ -4236,7 +4235,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
 
     public void saveFamilyStatus() {
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("UPDATE characters SET familyid = ?, seniorid = ?, junior1 = ?, junior2 = ? WHERE id = ?");
             if (mfc == null) {
                 ps.setInt(1, 0);
@@ -4448,7 +4447,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
             }
         } else {
             try {
-                Connection con = DatabaseConnection.getConnection();
+                Connection con = InitHikariCP.getCollection();
                 PreparedStatement ps = con.prepareStatement("SELECT SkillID,StartTime,length FROM skills_cooldowns WHERE charid = ?");
                 ps.setInt(1, getId());
                 ResultSet rs = ps.executeQuery();
@@ -4584,7 +4583,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
 
     public void showNote() {
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("SELECT * FROM notes WHERE `to`=?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ps.setString(1, getName());
             ResultSet rs = ps.executeQuery();
@@ -4601,7 +4600,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
 
     public void deleteNote(int id, int fame) {
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("SELECT gift FROM notes WHERE `id`=?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
@@ -4878,7 +4877,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
     }
 
     public int getOneTimeLog(String bossid) {
-        Connection con1 = DatabaseConnection.getConnection();
+        Connection con1 = InitHikariCP.getCollection();
         try {
             int ret_count = 0;
             PreparedStatement ps;
@@ -4901,7 +4900,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
     }
 
     public void setOneTimeLog(String bossid) {
-        Connection con1 = DatabaseConnection.getConnection();
+        Connection con1 = InitHikariCP.getCollection();
         try {
             PreparedStatement ps;
             ps = con1.prepareStatement("insert into onetimelog (characterid, log) values (?,?)");
@@ -4915,7 +4914,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
     }
 
     public int getBossLog(String bossid) {
-        Connection con1 = DatabaseConnection.getConnection();
+        Connection con1 = InitHikariCP.getCollection();
         try {
             int ret_count = 0;
             PreparedStatement ps;
@@ -4938,7 +4937,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
     }
 
     public void setBossLog(String bossid) {
-        Connection con1 = DatabaseConnection.getConnection();
+        Connection con1 = InitHikariCP.getCollection();
         try {
             PreparedStatement ps;
             ps = con1.prepareStatement("insert into bosslog (characterid, bossid) values (?,?)");
@@ -4952,7 +4951,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
     }
 
     public void setPrizeLog(String bossid) {
-        Connection con1 = DatabaseConnection.getConnection();
+        Connection con1 = InitHikariCP.getCollection();
         try {
             PreparedStatement ps;
             ps = con1.prepareStatement("insert into Prizelog (accid, bossid) values (?,?)");
@@ -4965,7 +4964,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
     }
 
     public int getPrizeLog(String bossid) {
-        Connection con1 = DatabaseConnection.getConnection();
+        Connection con1 = InitHikariCP.getCollection();
         try {
             int ret_count = 0;
             PreparedStatement ps;
@@ -6282,7 +6281,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
     public int getHyPay(int type) {
         int pay = 0;
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("select * from hypay where accname = ?");
             ps.setString(1, getClient().getAccountName());
             ResultSet rs = ps.executeQuery();
@@ -6323,7 +6322,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
             return 0;
         }
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("UPDATE hypay SET pay = ? ,payUsed = ? ,payReward = ? where accname = ?");
             ps.setInt(1, pay + hypay);
             ps.setInt(2, payUsed);
@@ -6346,7 +6345,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
             return -1;
         }
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("UPDATE hypay SET pay = ? ,payUsed = ? ,payReward = ? where accname = ?");
             ps.setInt(1, pay - hypay);
             ps.setInt(2, payUsed + hypay);
@@ -6370,7 +6369,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
             return -1;
         }
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("UPDATE hypay SET payReward = ? where accname = ?");
             ps.setInt(1, payReward - pay);
             ps.setString(2, getClient().getAccountName());
@@ -6386,7 +6385,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
     public int getGamePoints() {
         try {
             int gamePoints = 0;
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             try (PreparedStatement ps = con.prepareStatement("SELECT * FROM accounts_info WHERE accId = ? AND worldId = ?")) {
                 ps.setInt(1, getClient().getAccID());
                 ps.setInt(2, getWorld());
@@ -6428,7 +6427,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
     public int getGamePointsPD() {
         try {
             int gamePointsPD = 0;
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             try (PreparedStatement ps = con.prepareStatement("SELECT * FROM accounts_info WHERE accId = ? AND worldId = ?")) {
                 ps.setInt(1, getClient().getAccID());
                 ps.setInt(2, getWorld());
@@ -6482,7 +6481,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
 
     public void updateGamePointsPD(int amount) {
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("UPDATE accounts_info SET gamePointspd = ?, updateTime = CURRENT_TIMESTAMP() WHERE accId = ? AND worldId = ?");
 
             ps.setInt(1, amount);
@@ -6501,7 +6500,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
 
     public void updateGamePoints(int amount) {
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             try (PreparedStatement ps = con.prepareStatement("UPDATE accounts_info SET gamePoints = ?, updateTime = CURRENT_TIMESTAMP() WHERE accId = ? AND worldId = ?")) {
                 ps.setInt(1, amount);
                 ps.setInt(2, getClient().getAccID());
@@ -6516,7 +6515,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
     public int getGamePointsRQ() {
         try {
             int gamePointsRQ = 0;
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             try (PreparedStatement ps = con.prepareStatement("SELECT * FROM accounts_info WHERE accId = ? AND worldId = ?")) {
                 ps.setInt(1, getClient().getAccID());
                 ps.setInt(2, getWorld());
@@ -6564,7 +6563,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
 
     public void updateGamePointsRQ(int amount) {
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("UPDATE accounts_info SET gamePointsrq = ?, updateTime = CURRENT_TIMESTAMP() WHERE accId = ? AND worldId = ?");
 
             ps.setInt(1, amount);

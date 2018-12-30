@@ -123,7 +123,7 @@ public class MTSCart implements Serializable {
         }
 
         ItemLoader.MTS_TRANSFER.saveItems(itemsWithType, characterId);
-        final Connection con = DatabaseConnection.getConnection();
+        final Connection con = InitHikariCP.getCollection();
         PreparedStatement ps = con.prepareStatement("DELETE FROM mts_cart WHERE characterid = ?");
         ps.setInt(1, characterId);
         ps.execute();
@@ -143,7 +143,7 @@ public class MTSCart implements Serializable {
     }
 
     public void loadCart() throws SQLException {
-        final PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM mts_cart WHERE characterid = ?");
+        final PreparedStatement ps = InitHikariCP.execute("SELECT * FROM mts_cart WHERE characterid = ?");
         ps.setInt(1, characterId);
         final ResultSet rs = ps.executeQuery();
         int iId;
@@ -160,7 +160,7 @@ public class MTSCart implements Serializable {
     }
 
     public void loadNotYetSold() throws SQLException {
-        final PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM mts_items WHERE characterid = ?");
+        final PreparedStatement ps = InitHikariCP.execute("SELECT * FROM mts_items WHERE characterid = ?");
         ps.setInt(1, characterId);
         final ResultSet rs = ps.executeQuery();
         int pId;

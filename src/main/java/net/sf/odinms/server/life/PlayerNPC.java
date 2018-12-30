@@ -67,7 +67,7 @@ public class PlayerNPC extends MapleNPC {
             }
         }
 
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         PreparedStatement ps = con.prepareStatement("SELECT * FROM playernpcs_equip WHERE NpcId = ?");
         ps.setInt(1, getId());
         ResultSet rs2 = ps.executeQuery();
@@ -97,7 +97,7 @@ public class PlayerNPC extends MapleNPC {
 
     public static void loadAll() {
         List<PlayerNPC> toAdd = new ArrayList<PlayerNPC>();
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         try {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM playernpcs");
             ResultSet rs = ps.executeQuery();
@@ -160,7 +160,7 @@ public class PlayerNPC extends MapleNPC {
     }
 
     public void destroy(boolean remove) {
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         try {
             PreparedStatement ps = con.prepareStatement("DELETE FROM playernpcs WHERE scriptid = ?");
             ps.setInt(1, getId());
@@ -180,7 +180,7 @@ public class PlayerNPC extends MapleNPC {
     }
 
     public void saveToDB() {
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         try {
 
             if (getNPCFromWZ() == null) {

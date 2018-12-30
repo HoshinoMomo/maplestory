@@ -24,7 +24,7 @@ package net.sf.odinms.server.events;
 
 import net.sf.odinms.client.MapleCharacter;
 import net.sf.odinms.client.MapleStat;
-import net.sf.odinms.server.Timer;
+import net.sf.odinms.server.timer.Timer;
 import net.sf.odinms.server.maps.MapleMap;
 import net.sf.odinms.tools.MaplePacketCreator;
 import net.sf.odinms.tools.Pair;

@@ -51,7 +51,7 @@ public class MapleRing implements Serializable {
 
     public static Equip loadFromDb(IItem ring) {
         try {
-            Connection con = DatabaseConnection.getConnection(); // Get a connection to the database
+            Connection con = InitHikariCP.getCollection(); // Get a connection to the database
 
             PreparedStatement ps = con.prepareStatement("SELECT * FROM rings WHERE ringid = ?"); // Get ring details..
 
@@ -78,7 +78,7 @@ public class MapleRing implements Serializable {
 
     public static MapleRing loadFromDb(int ringId, boolean equipped) {
         try {
-            Connection con = DatabaseConnection.getConnection(); // Get a connection to the database
+            Connection con = InitHikariCP.getCollection(); // Get a connection to the database
             PreparedStatement ps = con.prepareStatement("SELECT * FROM rings WHERE ringId = ?"); // Get details..
             ps.setInt(1, ringId);
 
@@ -100,7 +100,7 @@ public class MapleRing implements Serializable {
     }
 
     public static void addToDB(int itemid, MapleCharacter chr, String player, int id, int[] ringId) throws SQLException {
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         PreparedStatement ps = con.prepareStatement("INSERT INTO rings (ringId, itemid, partnerChrId, partnerName, partnerRingId) VALUES (?, ?, ?, ?, ?)");
         ps.setInt(1, ringId[0]);
         ps.setInt(2, itemid);
@@ -196,7 +196,7 @@ public class MapleRing implements Serializable {
 
     public static void removeRingFromDb(MapleCharacter player) {
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("SELECT * FROM rings WHERE partnerChrId = ?");
             ps.setInt(1, player.getId());
             ResultSet rs = ps.executeQuery();

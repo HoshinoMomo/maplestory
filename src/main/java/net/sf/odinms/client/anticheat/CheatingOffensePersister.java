@@ -20,7 +20,8 @@
  */
 package net.sf.odinms.client.anticheat;
 
-import net.sf.odinms.server.Timer.CheatTimer;
+
+import net.sf.odinms.server.timer.CheatTimer;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -30,7 +31,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class CheatingOffensePersister {
 
     private final static CheatingOffensePersister instance = new CheatingOffensePersister();
-    private final Set<CheatingOffenseEntry> toPersist = new LinkedHashSet<CheatingOffenseEntry>();
+    private final Set<CheatingOffenseEntry> toPersist = new LinkedHashSet<>();
     private final Lock mutex = new ReentrantLock();
 
     private CheatingOffensePersister() {
@@ -66,7 +67,7 @@ public class CheatingOffensePersister {
             }
 
             /*try {
-             Connection con = DatabaseConnection.getConnection();
+             Connection con = InitHikariCP.getCollection();
              PreparedStatement insertps = con.prepareStatement("INSERT INTO cheatlog (characterid, offense, count, lastoffensetime, param) VALUES (?, ?, ?, ?, ?)", DatabaseConnection.RETURN_GENERATED_KEYS);
              PreparedStatement updateps = con.prepareStatement("UPDATE cheatlog SET count = ?, lastoffensetime = ?, param = ? WHERE id = ?");
              for (CheatingOffenseEntry offense : offenses) {

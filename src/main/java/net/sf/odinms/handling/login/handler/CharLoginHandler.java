@@ -79,7 +79,7 @@ public class CharLoginHandler {
         final boolean banned = ipBan || macBan;
 
         int loginok = 0;
-        if (Boolean.parseBoolean(ServerProperties.getProperty("MinaMS.AutoRegister"))) {
+        if (Boolean.parseBoolean(ServerProperties.getProperty("AutoRegister"))) {
 
             if (AutoRegister.autoRegister && !AutoRegister.getAccountExists(login) && (!banned)) {
                 if (pwd.equalsIgnoreCase("disconnect") || pwd.equalsIgnoreCase("fixme")) {
@@ -231,9 +231,9 @@ public class CharLoginHandler {
             return;
         }*/
         final int JobType = slea.readInt(); // 1 = 冒险家, 0 = 骑士团, 2 = 战神
-        boolean 冒险家 = Boolean.parseBoolean(ServerProperties.getProperty("MinaMS.冒险家", "false"));
-        boolean 骑士团 = Boolean.parseBoolean(ServerProperties.getProperty("MinaMS.骑士团", "false"));
-        boolean 战神 = Boolean.parseBoolean(ServerProperties.getProperty("MinaMS.战神", "false"));
+        boolean 冒险家 = Boolean.parseBoolean(ServerProperties.getProperty("冒险家", "false"));
+        boolean 骑士团 = Boolean.parseBoolean(ServerProperties.getProperty("骑士团", "false"));
+        boolean 战神 = Boolean.parseBoolean(ServerProperties.getProperty("战神", "false"));
         if (!骑士团 && JobType == 0) {
             c.getSession().write(MaplePacketCreator.serverNotice(1, "骑士团职业未开放！"));
             return;//直接return可能会导致客户端收不到消息，假死状态,需重新登录方可

@@ -24,7 +24,7 @@ import java.util.Map;
  */
 public class DumpNpcNames {
 
-    private final Connection con = DatabaseConnection.getConnection();
+    private final Connection con = InitHikariCP.getCollection();
     private static final Map<Integer, String> npcNames = new HashMap<>();
 
     public static void main(String[] args) throws SQLException {

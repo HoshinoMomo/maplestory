@@ -79,7 +79,7 @@ public class MapleCharacterUtil {
     }
 
     public static final int getIdByName(final String name) {
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         try {
             PreparedStatement ps = con.prepareStatement("SELECT id FROM characters WHERE name = ?");
             ps.setString(1, name);
@@ -107,7 +107,7 @@ public class MapleCharacterUtil {
 
         boolean prompt = false;
         try {
-            ps = DatabaseConnection.getConnection().prepareStatement("SELECT * from game_poll_reply where AccountId = ?");
+            ps = InitHikariCP.execute("SELECT * from game_poll_reply where AccountId = ?");
             ps.setInt(1, accountid);
 
             rs = ps.executeQuery();
@@ -134,7 +134,7 @@ public class MapleCharacterUtil {
 
         PreparedStatement ps = null;
         try {
-            ps = DatabaseConnection.getConnection().prepareStatement("INSERT INTO game_poll_reply (AccountId, SelectAns) VALUES (?, ?)");
+            ps = InitHikariCP.execute("INSERT INTO game_poll_reply (AccountId, SelectAns) VALUES (?, ?)");
             ps.setInt(1, accountid);
             ps.setInt(2, selection);
 
@@ -157,7 +157,7 @@ public class MapleCharacterUtil {
     // 1 = The password you have input is wrong
     // 2 = Password Changed successfully
     public static final int Change_SecondPassword(final int accid, final String password, final String newpassword) {
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         try {
             PreparedStatement ps = con.prepareStatement("SELECT * from accounts where id = ?");
             ps.setInt(1, accid);
@@ -225,7 +225,7 @@ public class MapleCharacterUtil {
     public static Pair<Integer, Pair<Integer, Integer>> getInfoByName(String name, int world) {
         try {
 
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("SELECT * FROM characters WHERE name = ? AND world = ?");
             ps.setString(1, name);
             ps.setInt(2, world);
@@ -246,7 +246,7 @@ public class MapleCharacterUtil {
     }
 
     public static void setNXCodeUsed(String name, String code) throws SQLException {
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         PreparedStatement ps = con.prepareStatement("UPDATE nxcode SET `user` = ?, `valid` = 0 WHERE code = ?");
         ps.setString(1, name);
         ps.setString(2, code);
@@ -256,7 +256,7 @@ public class MapleCharacterUtil {
 
     public static void sendNote(String to, String name, String msg, int fame) {
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("INSERT INTO notes (`to`, `from`, `message`, `timestamp`, `gift`) VALUES (?, ?, ?, ?, ?)");
             ps.setString(1, to);
             ps.setString(2, name);
@@ -271,7 +271,7 @@ public class MapleCharacterUtil {
     }
 
     public static boolean getNXCodeValid(String code, boolean validcode) throws SQLException {
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         PreparedStatement ps = con.prepareStatement("SELECT `valid` FROM nxcode WHERE code = ?");
         ps.setString(1, code);
         ResultSet rs = ps.executeQuery();
@@ -285,7 +285,7 @@ public class MapleCharacterUtil {
 
     public static int getNXCodeType(String code) throws SQLException {
         int type = -1;
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         PreparedStatement ps = con.prepareStatement("SELECT `type` FROM nxcode WHERE code = ?");
         ps.setString(1, code);
         ResultSet rs = ps.executeQuery();
@@ -299,7 +299,7 @@ public class MapleCharacterUtil {
 
     public static int getNXCodeItem(String code) throws SQLException {
         int item = -1;
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         PreparedStatement ps = con.prepareStatement("SELECT `item` FROM nxcode WHERE code = ?");
         ps.setString(1, code);
         ResultSet rs = ps.executeQuery();

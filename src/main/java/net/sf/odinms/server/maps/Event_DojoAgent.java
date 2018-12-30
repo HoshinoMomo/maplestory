@@ -24,7 +24,7 @@ import net.sf.odinms.client.MapleCharacter;
 import net.sf.odinms.handling.channel.ChannelServer;
 import net.sf.odinms.handling.world.MaplePartyCharacter;
 import net.sf.odinms.server.Randomizer;
-import net.sf.odinms.server.Timer.MapTimer;
+import net.sf.odinms.server.timer.Timer.MapTimer;
 import net.sf.odinms.server.life.MapleLifeFactory;
 import net.sf.odinms.tools.MaplePacketCreator;
 

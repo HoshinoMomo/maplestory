@@ -48,7 +48,7 @@ public class CashShopServer {
     private static boolean finishedShutdown = false;
 
     public static void run_startup_configurations() {
-        ip = ServerProperties.getProperty("MinaMS.IP") + ":" + PORT;
+        ip = ServerProperties.getProperty("IP") + ":" + PORT;
 
         IoBuffer.setUseDirectBuffer(false);
         IoBuffer.setAllocator(new SimpleBufferAllocator());

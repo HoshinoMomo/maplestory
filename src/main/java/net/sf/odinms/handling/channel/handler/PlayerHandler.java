@@ -27,7 +27,7 @@ import net.sf.odinms.client.MapleClient;
 import net.sf.odinms.client.PlayerStats;
 import net.sf.odinms.client.SkillFactory;
 import net.sf.odinms.client.SkillMacro;
-import net.sf.odinms.client.anticheat.CheatingOffense;
+import net.sf.odinms.client.anticheat.CheatingOffenseEnum;
 import net.sf.odinms.client.inventory.IItem;
 import net.sf.odinms.client.inventory.MapleInventoryType;
 import net.sf.odinms.constants.GameConstants;
@@ -39,7 +39,7 @@ import net.sf.odinms.server.MapleItemInformationProvider;
 import net.sf.odinms.server.MaplePortal;
 import net.sf.odinms.server.MapleStatEffect;
 import net.sf.odinms.server.Randomizer;
-import net.sf.odinms.server.Timer.CloneTimer;
+import net.sf.odinms.server.timer.Timer.CloneTimer;
 import net.sf.odinms.server.events.MapleSnowball.MapleSnowballs;
 import net.sf.odinms.server.life.MapleMonster;
 import net.sf.odinms.server.life.MobAttackInfo;
@@ -146,7 +146,7 @@ public class PlayerHandler {
         final IItem toUse = chr.getInventory(MapleInventoryType.SETUP).findById(itemId);
 
         if (toUse == null) {
-            chr.getCheatTracker().registerOffense(CheatingOffense.使用不存在道具, Integer.toString(itemId));
+            chr.getCheatTracker().registerOffense(CheatingOffenseEnum.使用不存在道具, Integer.toString(itemId));
             return;
         }
         if (itemId == 3011000) {
@@ -664,7 +664,7 @@ public class PlayerHandler {
             return;
         }
         if (!chr.isAlive() || chr.getMap() == null) {
-            chr.getCheatTracker().registerOffense(CheatingOffense.人物死亡攻击);
+            chr.getCheatTracker().registerOffense(CheatingOffenseEnum.人物死亡攻击);
             return;
         }
         final AttackInfo attack = DamageParse.Modify_AttackCrit(DamageParse.parseDmgM(slea, chr), chr, 1);
@@ -806,7 +806,7 @@ public class PlayerHandler {
             return;
         }
         if (!chr.isAlive() || chr.getMap() == null) {
-            chr.getCheatTracker().registerOffense(CheatingOffense.人物死亡攻击);
+            chr.getCheatTracker().registerOffense(CheatingOffenseEnum.人物死亡攻击);
             return;
         }
         final AttackInfo attack = DamageParse.Modify_AttackCrit(DamageParse.parseDmgR(slea, chr), chr, 2);
@@ -947,7 +947,7 @@ public class PlayerHandler {
             return;
         }
         if (!chr.isAlive() || chr.getMap() == null) {
-            chr.getCheatTracker().registerOffense(CheatingOffense.人物死亡攻击);
+            chr.getCheatTracker().registerOffense(CheatingOffenseEnum.人物死亡攻击);
             return;
         }
         final AttackInfo attack = DamageParse.Modify_AttackCrit(DamageParse.parseDmgMa(slea, chr), chr, 3);
@@ -1004,7 +1004,7 @@ public class PlayerHandler {
             final int emoteid = 5159992 + emote;
             final MapleInventoryType type = GameConstants.getInventoryType(emoteid);
             if (chr.getInventory(type).findById(emoteid) == null) {
-                chr.getCheatTracker().registerOffense(CheatingOffense.使用不存在道具, Integer.toString(emoteid));
+                chr.getCheatTracker().registerOffense(CheatingOffenseEnum.使用不存在道具, Integer.toString(emoteid));
                 return;
             }
         }
@@ -1049,7 +1049,7 @@ public class PlayerHandler {
                     check_hp += 150;
                 }
                 if (healHP > check_hp * 2 && healHP > 20) {
-                    chr.getCheatTracker().registerOffense(CheatingOffense.回复过多HP, String.valueOf(healHP) + " 服务器:" + check_hp);
+                    chr.getCheatTracker().registerOffense(CheatingOffenseEnum.回复过多HP, String.valueOf(healHP) + " 服务器:" + check_hp);
                     //  healHP = check_hp;
                 }
                 chr.addHP(healHP);
@@ -1058,7 +1058,7 @@ public class PlayerHandler {
         if (chr.canMP()) {
             if (healMP != 0) {
                 if (healMP > check_mp * 2 && healMP > 20) {
-                    chr.getCheatTracker().registerOffense(CheatingOffense.回复过多MP, String.valueOf(healMP) + "服务器:" + check_mp);
+                    chr.getCheatTracker().registerOffense(CheatingOffenseEnum.回复过多MP, String.valueOf(healMP) + "服务器:" + check_mp);
                     //  healMP = check_mp;
                 }
                 chr.addMP(healMP);
@@ -1191,7 +1191,7 @@ public class PlayerHandler {
                 c.getSession().write(MaplePacketCreator.yellowChat(msg));
             }
         } else if (chr.isAdmin()) {
-            String msg = "更新保存玩家数据 离下次保存还有: " + chr.getCheatTracker().getlastSaveTime() + " 秒..";
+            String msg = "更新保存玩家数据 离下次保存还有: " + chr.getCheatTracker().getLastSaveTime() + " 秒..";
             c.getSession().write(MaplePacketCreator.yellowChat(msg));
         }
     }
@@ -1371,7 +1371,7 @@ public class PlayerHandler {
         if (portal == null) {
             return;
         } else if (portal.getPosition().distanceSq(chr.getPosition()) > 22500) {
-            chr.getCheatTracker().registerOffense(CheatingOffense.使用过远传送点);
+            chr.getCheatTracker().registerOffense(CheatingOffenseEnum.使用过远传送点);
         }
         chr.getMap().movePlayer(chr, new Point(toX, toY));
         chr.checkFollow();

@@ -233,7 +233,7 @@ public class CashShop implements Serializable {
 
     public void gift(int recipient, String from, String message, int sn, int uniqueid) {
         try {
-            PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("INSERT INTO `gifts` VALUES (DEFAULT, ?, ?, ?, ?, ?)");
+            PreparedStatement ps = InitHikariCP.execute("INSERT INTO `gifts` VALUES (DEFAULT, ?, ?, ?, ?, ?)");
             ps.setInt(1, recipient);
             ps.setString(2, from);
             ps.setString(3, message);
@@ -248,7 +248,7 @@ public class CashShop implements Serializable {
 
     public List<Pair<IItem, String>> loadGifts() {
         List<Pair<IItem, String>> gifts = new ArrayList<Pair<IItem, String>>();
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         try {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM `gifts` WHERE `recipient` = ?");
             ps.setInt(1, characterId);

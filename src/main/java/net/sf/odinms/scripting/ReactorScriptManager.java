@@ -79,7 +79,7 @@ public class ReactorScriptManager extends AbstractScriptManager {
         ResultSet rs = null;
 
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             ps = con.prepareStatement("SELECT * FROM reactordrops WHERE reactorid = ?");
             ps.setInt(1, rid);
             rs = ps.executeQuery();

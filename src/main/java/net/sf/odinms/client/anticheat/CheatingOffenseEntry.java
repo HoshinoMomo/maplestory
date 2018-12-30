@@ -22,7 +22,7 @@ package net.sf.odinms.client.anticheat;
 
 public class CheatingOffenseEntry {
 
-    private CheatingOffense offense;
+    private CheatingOffenseEnum offense;
     private int count = 0;
     private int characterId;
     private long lastOffense;
@@ -30,14 +30,14 @@ public class CheatingOffenseEntry {
     private String param;
     private int dbid = -1;
 
-    public CheatingOffenseEntry(CheatingOffense offense, int characterId) {
+    public CheatingOffenseEntry(CheatingOffenseEnum offense, int characterId) {
         super();
         this.offense = offense;
         this.characterId = characterId;
         firstOffense = System.currentTimeMillis();
     }
 
-    public CheatingOffense getOffense() {
+    public CheatingOffenseEnum getOffense() {
         return offense;
     }
 

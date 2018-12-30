@@ -22,7 +22,7 @@ package net.sf.odinms.handling.login;
 
 import net.sf.odinms.client.MapleClient;
 import net.sf.odinms.handling.channel.ChannelServer;
-import net.sf.odinms.server.Timer.PingTimer;
+import net.sf.odinms.server.timer.Timer.PingTimer;
 import net.sf.odinms.tools.MaplePacketCreator;
 import net.sf.odinms.tools.packet.LoginPacket;
 

@@ -19,7 +19,7 @@ public class AddCashItemToDB {
     public static void addItem(int id, int Count, int Price, int SN, int Expire, int Gender, int OnSale) throws Exception {
         //获得连接
         try {
-            Connection conn = DatabaseConnection.getConnection();
+            Connection conn = InitHikariCP.getCollection();
             //你建好表后  改下这里 问号代表你要插入的数据，  要插入几个属性 就写几个问号， default代表主键默认生生
             // String sql = "insert into cashshop_items (itemid, count, price, sn, expire, gender, onsale) values(default,?,?,?,?,?,?,?)";
             PreparedStatement ps = (PreparedStatement) conn.prepareStatement("INSERT INTO `cashshop_items` VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?)");

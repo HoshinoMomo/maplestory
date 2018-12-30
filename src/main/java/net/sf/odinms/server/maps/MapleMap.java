@@ -32,7 +32,6 @@ import net.sf.odinms.client.status.MonsterStatus;
 import net.sf.odinms.client.status.MonsterStatusEffect;
 import net.sf.odinms.constants.GameConstants;
 import net.sf.odinms.constants.ServerConstants;
-import net.sf.odinms.database.DatabaseConnection;
 import net.sf.odinms.handling.MaplePacket;
 import net.sf.odinms.handling.channel.ChannelServer;
 import net.sf.odinms.handling.world.MaplePartyCharacter;
@@ -48,7 +47,7 @@ import net.sf.odinms.server.MapleSquad.MapleSquadType;
 import net.sf.odinms.server.MapleStatEffect;
 import net.sf.odinms.server.Randomizer;
 import net.sf.odinms.server.SpeedRunner;
-import net.sf.odinms.server.Timer.MapTimer;
+import net.sf.odinms.server.timer.Timer.MapTimer;
 import net.sf.odinms.server.events.MapleEvent;
 import net.sf.odinms.server.life.*;
 import net.sf.odinms.server.life.MapleLifeFactory;
@@ -3141,7 +3140,7 @@ public final class MapleMap {
             if (squad != null) {
                 z = z.substring(0, z.length() - 1);
             }
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("INSERT INTO speedruns(`type`, `leader`, `timestring`, `time`, `members`) VALUES (?,?,?,?,?)");
             ps.setString(1, type.name());
             ps.setString(2, leader);

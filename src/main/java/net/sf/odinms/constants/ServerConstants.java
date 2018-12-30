@@ -43,9 +43,9 @@ public class ServerConstants {
     public static final int MTS_MESO = 5000; //mesos needed
     public static final int CHANNEL_COUNT = 200;
     //过图输出日志
-    public static boolean mapChangeLog = Boolean.parseBoolean(ServerProperties.getProperty("MinaMS.mapChangeLog", "false"));
+    public static boolean mapChangeLog = Boolean.parseBoolean(ServerProperties.getProperty("mapChangeLog", "false"));
     //输出调试封包
-    public static boolean isDebug = Boolean.parseBoolean(ServerProperties.getProperty("MinaMS.isDebug", "false"));
+    public static boolean isDebug = Boolean.parseBoolean(ServerProperties.getProperty("isDebug", "false"));
     public static boolean autoRegister = false;
     public static boolean Super_password = false;
     public static String superpw = "";
@@ -63,8 +63,8 @@ public class ServerConstants {
 
     public static List<Balloon> getBalloons() {
         if (lBalloon.isEmpty()) {
-            lBalloon.add(new Balloon("[MinaMS服务端]致力于打造最完善的079", 236, 122));
-            lBalloon.add(new Balloon("购买请联系QQ：529926174", 0, 276));
+            lBalloon.add(new Balloon("[冒险岛Online]欢迎来到冒险岛online", 236, 122));
+            lBalloon.add(new Balloon("欢迎来到冒险岛online", 0, 276));
         }
         return lBalloon;
     }

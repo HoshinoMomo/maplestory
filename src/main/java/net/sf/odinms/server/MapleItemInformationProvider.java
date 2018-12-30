@@ -173,7 +173,7 @@ public class MapleItemInformationProvider {
 
     public void runItems() {
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
 
             // Load Item Data
             PreparedStatement ps = con.prepareStatement("SELECT * FROM wz_itemdata");

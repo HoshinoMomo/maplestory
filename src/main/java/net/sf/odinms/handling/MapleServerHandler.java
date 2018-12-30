@@ -331,7 +331,7 @@ public class MapleServerHandler extends IoHandlerAdapter implements MapleServerH
                 session.close();
                 return;
             }
-        } else if (LoginServer.isShutdown()) {
+        } else if (LoginServer.isClosed()) {
             System.out.print("自动断开连接E");
             session.close();
             return;

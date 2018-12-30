@@ -13,11 +13,13 @@ import net.sf.odinms.tools.MaplePacketCreator;
 
 import java.util.Set;
 
-public class ShutdownServer implements Runnable {
+public class ShutdownServer extends Thread {
 
     private static final ShutdownServer instance = new ShutdownServer();
     public static boolean running = false;
     public int mode = 0;
+
+    private ShutdownServer(){}
 
     public static ShutdownServer getInstance() {
         return instance;

@@ -1,6 +1,7 @@
 package net.sf.odinms.server;
 
 import net.sf.odinms.database.DatabaseConnection;
+import net.sf.odinms.database.pool.InitHikariCP;
 import net.sf.odinms.server.maps.SpeedRunType;
 import net.sf.odinms.tools.Pair;
 import net.sf.odinms.tools.StringUtil;

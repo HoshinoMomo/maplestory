@@ -22,6 +22,7 @@ package net.sf.odinms.handling.login;
 
 import net.sf.odinms.handling.MapleServerHandler;
 import net.sf.odinms.handling.mina.MapleCodecFactory;
+import net.sf.odinms.server.config.Configuration;
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.buffer.SimpleBufferAllocator;
 import org.apache.mina.core.filterchain.IoFilter;
@@ -29,7 +30,7 @@ import org.apache.mina.core.service.IoAcceptor;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.transport.socket.SocketSessionConfig;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
-import net.sf.odinms.server.ServerProperties;
+import net.sf.odinms.server.Configuration;
 import net.sf.odinms.tools.Triple;
 
 import java.io.IOException;
@@ -47,7 +48,8 @@ public class LoginServer {
     private static String serverName, eventMessage;
     private static byte flag;
     private static int maxCharacters, userLimit, usersOn = 0;
-    private static boolean finishedShutdown = true, adminOnly = false;
+    private static boolean isClosed = true;
+    private static boolean adminOnly = false;
     private static final HashMap<Integer, Triple<String, String, Integer>> loginAuth = new HashMap();
     private static final HashSet<String> loginIPAuth = new HashSet();
     private static LoginServer instance = new LoginServer();
@@ -86,13 +88,14 @@ public class LoginServer {
     }
 
     public static final void run_startup_configurations() {
-        userLimit = Integer.parseInt(ServerProperties.getProperty("UserLimit"));
-        serverName = ServerProperties.getProperty("ServerName");
-        eventMessage = ServerProperties.getProperty("EventMessage");
-        flag = Byte.parseByte(ServerProperties.getProperty("Flag"));
-        PORT = Integer.parseInt(ServerProperties.getProperty("LPort"));
-        adminOnly = Boolean.parseBoolean(ServerProperties.getProperty("Admin", "false"));
-        maxCharacters = Integer.parseInt(ServerProperties.getProperty("MaxCharacters"));
+        userLimit = Integer.MAX_VALUE;
+        isClosed = false;
+        serverName = Configuration.getProperty("ServerName");
+        eventMessage = Configuration.getProperty("EventMessage");
+        flag = Byte.parseByte(Configuration.getProperty("Flag"));
+        PORT = Integer.parseInt(Configuration.getProperty("LPort"));
+        adminOnly = Boolean.parseBoolean(Configuration.getProperty("Admin", "false"));
+        maxCharacters = Integer.parseInt(Configuration.getProperty("MaxCharacters"));
 
         IoBuffer.setUseDirectBuffer(false);
         IoBuffer.setAllocator(new SimpleBufferAllocator());
@@ -112,7 +115,7 @@ public class LoginServer {
     }
 
     public static final void shutdown() {
-        if (finishedShutdown) {
+        if (isClosed) {
             return;
         }
         System.out.println("正在关闭登录伺服器...");
@@ -121,7 +124,7 @@ public class LoginServer {
 //            ss.close(true);
 //        }
         //acceptor.unbind();
-        finishedShutdown = true; //nothing. lol
+        isClosed = true; //nothing. lol
     }
 
     public static final String getServerName() {
@@ -159,7 +162,7 @@ public class LoginServer {
 
     public static final int getUserLimit() {
         return userLimit;
-        //  return Integer.parseInt(ServerProperties.getProperty("UserLimit"));
+        //  return Integer.parseInt(Configuration.getProperty("UserLimit"));
     }
 
     public static final int getUsersOn() {
@@ -178,11 +181,8 @@ public class LoginServer {
         return adminOnly;
     }
 
-    public static final boolean isShutdown() {
-        return finishedShutdown;
+    public static final boolean isClosed() {
+        return isClosed;
     }
 
-    public static final void setOn() {
-        finishedShutdown = false;
-    }
 }

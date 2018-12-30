@@ -20,6 +20,7 @@ import net.sf.odinms.server.RandomRewards;
 import net.sf.odinms.server.ServerProperties;
 import net.sf.odinms.server.ShutdownServer;
 import net.sf.odinms.server.SpeedRunner;
+import net.sf.odinms.server.config.Configuration;
 import net.sf.odinms.server.life.MapleLifeFactory;
 import net.sf.odinms.server.quest.MapleQuest;
 import net.sf.odinms.server.timer.BuffTimer;
@@ -50,7 +51,8 @@ public class Bootstrap {
         //auto open autoRegister
         ServerConstants.autoRegister = true;
         try {
-            try (PreparedStatement ps = InitHikariCP.execute("UPDATE accounts SET loggedin = 0")) {//重置数据库登录状态
+            //set online user to offline
+            try (PreparedStatement ps = InitHikariCP.execute("UPDATE accounts SET loggedin = 0 WHERE loggedin=1")) {
                 ps.executeUpdate();
             }
             try (PreparedStatement ps = InitHikariCP.execute("UPDATE accounts SET lastGainHM = 0")) {
@@ -61,6 +63,10 @@ public class Bootstrap {
         }
         //init world server
         World.init();
+        //init config by server.yaml
+        Configuration.init();
+        autoSave();
+        addShutdownHook();
 
         System.out.println("====================================================-[ 时钟线程 ]");
         long szxctime = System.currentTimeMillis();
@@ -154,24 +160,18 @@ public class Bootstrap {
 
 
         CheatTimer.getInstance().register(AutobanManager.getInstance(), 60000);
-        autoSave();
-        if (Boolean.parseBoolean(ServerProperties.getProperty("RandDrop"))) {
+
+        /*if (Boolean.parseBoolean(ServerProperties.getProperty("RandDrop"))) {
             ChannelServer.getInstance(1).getMapFactory().getMap(910000000).spawnRandDrop();
-        }
-        Runtime.getRuntime().addShutdownHook(new Thread(new Shutdown()));
+        }*/
+
         try {
             SpeedRunner.getInstance().loadSpeedRuns();
         } catch (SQLException e) {
             System.out.println("SpeedRunner错误:" + e);
         }
         World.registerRespawn();
-        LoginServer.setOn();
-        System.out.println("\r\n经验倍率:" + Integer.parseInt(ServerProperties.getProperty("Exp")) + "  物品倍率：" + Integer.parseInt(ServerProperties.getProperty("Drop")) + "  金币倍率" + Integer.parseInt(ServerProperties.getProperty("Meso")));
-        System.out.println("\r\n当前开放职业: "
-                + " 冒险家 = " + Boolean.parseBoolean(ServerProperties.getProperty("冒险家"))
-                + " 骑士团 = " + Boolean.parseBoolean(ServerProperties.getProperty("骑士团"))
-                + " 战神 = " + Boolean.parseBoolean(ServerProperties.getProperty("战神")));
-        System.out.println("\r\n服务端启动完毕 可以进入游戏了:::");
+        logger.info("start on 100ms");
     }
 
     /**
@@ -198,10 +198,11 @@ public class Bootstrap {
         }, 60 * 1000);
     }
 
-    public static class Shutdown implements Runnable {
-        @Override
-        public void run() {
-            new Thread(ShutdownServer.getInstance()).start();
-        }
+    /**
+     * when jvm close,it will execute
+     */
+    private static void addShutdownHook() {
+        logger.info("addShutdownHook....");
+        Runtime.getRuntime().addShutdownHook(ShutdownServer.getInstance());
     }
 }

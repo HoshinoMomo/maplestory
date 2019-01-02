@@ -44,7 +44,7 @@ public class MapleStorage implements Serializable {
     }
 
     public static int create(int id) throws SQLException {
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         PreparedStatement ps = con.prepareStatement("INSERT INTO storages (accountid, slots, meso) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
         ps.setInt(1, id);
         ps.setInt(2, 4);
@@ -68,7 +68,7 @@ public class MapleStorage implements Serializable {
         MapleStorage ret = null;
         int storeId;
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("SELECT * FROM storages WHERE accountid = ?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
@@ -99,7 +99,7 @@ public class MapleStorage implements Serializable {
             return;
         }
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
 
             PreparedStatement ps = con.prepareStatement("UPDATE storages SET slots = ?, meso = ? WHERE storageid = ?");
             ps.setInt(1, slots);

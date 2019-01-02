@@ -69,7 +69,7 @@ public class MapleKeyLayout implements Serializable {
         if (!changed || keymap.size() == 0) {
             return;
         }
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
 
         PreparedStatement ps = con.prepareStatement("DELETE FROM keymap WHERE characterid = ?");
         ps.setInt(1, charid);

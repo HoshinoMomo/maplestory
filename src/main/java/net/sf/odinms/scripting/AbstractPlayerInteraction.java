@@ -39,7 +39,7 @@ import net.sf.odinms.server.*;
 import net.sf.odinms.server.MapleInventoryManipulator;
 import net.sf.odinms.server.MapleItemInformationProvider;
 import net.sf.odinms.server.Randomizer;
-import net.sf.odinms.server.Timer.*;
+import net.sf.odinms.server.timer.Timer.*;
 import net.sf.odinms.server.events.MapleEvent;
 import net.sf.odinms.server.events.MapleEventType;
 import net.sf.odinms.server.life.MapleLifeFactory;

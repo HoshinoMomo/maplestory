@@ -30,7 +30,7 @@ public class MonsterBookPacket {
     public static MaplePacket addCard(boolean full, int cardid, int level) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("addCard--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MONSTERBOOK_ADD.getValue());
@@ -49,7 +49,7 @@ public class MonsterBookPacket {
     public static MaplePacket showGainCard(final int itemid) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showGainCard--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_ITEM_GAIN_INCHAT.getValue());
@@ -61,7 +61,7 @@ public class MonsterBookPacket {
     public static MaplePacket showForeginCardEffect(int id) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("showForeginCardEffect--------------------");
         }
         mplew.writeShort(SendPacketOpcode.SHOW_FOREIGN_EFFECT.getValue());
@@ -74,7 +74,7 @@ public class MonsterBookPacket {
     public static MaplePacket changeCover(int cardid) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 
-        if (ServerConstants.调试输出封包) {
+        if (ServerConstants.isDebug) {
             System.out.println("changeCover--------------------");
         }
         mplew.writeShort(SendPacketOpcode.MONSTERBOOK_CHANGE_COVER.getValue());

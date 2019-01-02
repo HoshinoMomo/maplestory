@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class FixShopItemsPrice {
 
-    private final Connection con = DatabaseConnection.getConnection();
+    private final Connection con = InitHikariCP.getCollection();
 
     private List<Integer> loadFromDB() {
         List<Integer> shopItemsId = new ArrayList<Integer>();

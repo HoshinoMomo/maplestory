@@ -21,7 +21,7 @@ public class AutoRegister {
 
     public static boolean getAccountExists(String login) {
         boolean accountExists = false;
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         try {
             PreparedStatement ps = con.prepareStatement("SELECT name FROM accounts WHERE name = ?");
             ps.setString(1, login);
@@ -42,7 +42,7 @@ public class AutoRegister {
         Connection con;
 
         try {
-            con = DatabaseConnection.getConnection();
+            con = InitHikariCP.getCollection();
         } catch (Exception ex) {
             System.out.println(ex);
             return;

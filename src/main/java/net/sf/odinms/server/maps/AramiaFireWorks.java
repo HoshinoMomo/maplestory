@@ -23,7 +23,7 @@ package net.sf.odinms.server.maps;
 import net.sf.odinms.client.MapleCharacter;
 import net.sf.odinms.handling.world.World;
 import net.sf.odinms.server.Randomizer;
-import net.sf.odinms.server.Timer.EventTimer;
+import net.sf.odinms.server.timer.Timer.EventTimer;
 import net.sf.odinms.server.life.MapleLifeFactory;
 import net.sf.odinms.tools.MaplePacketCreator;
 

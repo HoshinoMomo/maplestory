@@ -1,6 +1,7 @@
 package net.sf.odinms.server;
 
 import net.sf.odinms.database.DatabaseConnection;
+import net.sf.odinms.database.pool.InitHikariCP;
 import net.sf.odinms.server.maps.SpeedRunType;
 import net.sf.odinms.tools.Pair;
 import net.sf.odinms.tools.StringUtil;
@@ -47,7 +48,7 @@ public class SpeedRunner {
     }
 
     public final void loadSpeedRunData(SpeedRunType type) throws SQLException {
-        PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM speedruns WHERE type = ? ORDER BY time LIMIT 25"); //or should we do less
+        PreparedStatement ps = InitHikariCP.execute("SELECT * FROM speedruns WHERE type = ? ORDER BY time LIMIT 25"); //or should we do less
         ps.setString(1, type.name());
         StringBuilder ret = new StringBuilder("#rThese are the speedrun times for " + StringUtil.makeEnumHumanReadable(type.name()) + ".#k\r\n\r\n");
         Map<Integer, String> rett = new LinkedHashMap<Integer, String>();

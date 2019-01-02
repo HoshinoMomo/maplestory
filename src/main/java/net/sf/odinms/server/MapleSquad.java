@@ -4,7 +4,7 @@ import net.sf.odinms.client.MapleCharacter;
 import net.sf.odinms.client.MapleClient;
 import net.sf.odinms.handling.channel.ChannelServer;
 import net.sf.odinms.handling.world.World;
-import net.sf.odinms.server.Timer.EtcTimer;
+import net.sf.odinms.server.timer.Timer.EtcTimer;
 import net.sf.odinms.server.maps.MapleMap;
 import net.sf.odinms.tools.MaplePacketCreator;
 import net.sf.odinms.tools.Pair;

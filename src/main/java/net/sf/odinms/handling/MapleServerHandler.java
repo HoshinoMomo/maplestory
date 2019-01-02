@@ -96,7 +96,7 @@ public class MapleServerHandler extends IoHandlerAdapter implements MapleServerH
     private static final String nl = System.getProperty("line.separator");
     private static final File loggedIPs = new File("日志/logs/LogIPs.txt");
     private static final HashMap<String, FileWriter> logIPMap = new HashMap<String, FileWriter>();
-    private static boolean debugMode = Boolean.parseBoolean(ServerProperties.getProperty("MinaMS.Debug", "false"));
+    private static boolean debugMode = Boolean.parseBoolean(ServerProperties.getProperty("Debug", "false"));
     //Note to Zero: Use an enumset. Don't iterate through an array.
     private static final EnumSet<RecvPacketOpcode> blocked = EnumSet.noneOf(RecvPacketOpcode.class);
 
@@ -331,7 +331,7 @@ public class MapleServerHandler extends IoHandlerAdapter implements MapleServerH
                 session.close();
                 return;
             }
-        } else if (LoginServer.isShutdown()) {
+        } else if (LoginServer.isClosed()) {
             System.out.print("自动断开连接E");
             session.close();
             return;
@@ -646,7 +646,7 @@ public class MapleServerHandler extends IoHandlerAdapter implements MapleServerH
                 break;
             case CHANGE_MAP:
                 if (cs) {
-                    if (ServerConstants.调试输出封包) {
+                    if (ServerConstants.isDebug) {
                         System.out.println("退出商城");
                     }
                     CashShopOperation.LeaveCS(slea, c, c.getPlayer());

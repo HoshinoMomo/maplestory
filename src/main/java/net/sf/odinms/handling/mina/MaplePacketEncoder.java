@@ -21,21 +21,20 @@
 package net.sf.odinms.handling.mina;
 
 import net.sf.odinms.client.MapleClient;
-import net.sf.odinms.constants.ServerConstants;
 import net.sf.odinms.handling.MaplePacket;
 import net.sf.odinms.handling.SendPacketOpcode;
-import org.apache.mina.core.buffer.IoBuffer;
-import org.apache.mina.core.session.IoSession;
-import org.apache.mina.filter.codec.ProtocolEncoder;
-import org.apache.mina.filter.codec.ProtocolEncoderOutput;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import net.sf.odinms.tools.FileoutputUtil;
 import net.sf.odinms.tools.HexTool;
 import net.sf.odinms.tools.MapleAESOFB;
 import net.sf.odinms.tools.MapleCustomEncryption;
 import net.sf.odinms.tools.data.input.ByteArrayByteStream;
 import net.sf.odinms.tools.data.input.GenericLittleEndianAccessor;
+import org.apache.mina.core.buffer.IoBuffer;
+import org.apache.mina.core.session.IoSession;
+import org.apache.mina.filter.codec.ProtocolEncoder;
+import org.apache.mina.filter.codec.ProtocolEncoderOutput;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.locks.Lock;
 
@@ -52,41 +51,41 @@ public class MaplePacketEncoder implements ProtocolEncoder {
 
             //final byte[] inputInitialPacket = ((byte[]) message);
             final byte[] inputInitialPacket = ((MaplePacket) message).getBytes();
-            if (ServerConstants.封包显示) {
-                int packetLen = inputInitialPacket.length;
-                int pHeader = readFirstShort(inputInitialPacket);
-                String pHeaderStr = Integer.toHexString(pHeader).toUpperCase();
-                String op = lookupRecv(pHeader);
-                boolean show = true;
-              /*  switch (op) {
-                    case "WARP_TO_MAP":
-                    case "PING":
-                    case "NPC_ACTION":
-                    case "UPDATE_STATS":
-                    case "MOVE_PLAYER":
-                    case "SPAWN_NPC":
-                    case "SPAWN_NPC_REQUEST_CONTROLLER":
-                    case "REMOVE_NPC":
-                    case "MOVE_LIFE":
-                    case "MOVE_MONSTER":
-                    case "MOVE_MONSTER_RESPONSE":
-                    case "SPAWN_MONSTER":
-                    case "SPAWN_MONSTER_CONTROL":
-                    case "ANDROID_MOVE":
-                        show = false;
-                }*/
-                String Recv = "服务端发送 " + op + " [" + pHeaderStr + "] (" + packetLen + ")\r\n";
-                if (packetLen <= 50000) {
-                    String RecvTo = Recv + HexTool.toString(inputInitialPacket) + "\r\n" + HexTool.toStringFromAscii(inputInitialPacket);
-                    if (show) {
-                        FileoutputUtil.packetLog("日志\\log\\服务端封包.log", RecvTo);
-                        System.out.println(RecvTo);
-                    } //log.info("服务端发送" + "\r\n" + HexTool.toString(inputInitialPacket));
-                } else {
-                    log.info(HexTool.toString(new byte[]{inputInitialPacket[0], inputInitialPacket[1]}) + " ...");
-                }
 
+            //服务端发送的封包
+            int packetLen = inputInitialPacket.length;
+            int pHeader = readFirstShort(inputInitialPacket);
+            String pHeaderStr = Integer.toHexString(pHeader).toUpperCase();
+            String op = lookupRecv(pHeader);
+            boolean show = true;
+          /*  switch (op) {
+                case "WARP_TO_MAP":
+                case "PING":
+                case "NPC_ACTION":
+                case "UPDATE_STATS":
+                case "MOVE_PLAYER":
+                case "SPAWN_NPC":
+                case "SPAWN_NPC_REQUEST_CONTROLLER":
+                case "REMOVE_NPC":
+                case "MOVE_LIFE":
+                case "MOVE_MONSTER":
+                case "MOVE_MONSTER_RESPONSE":
+                case "SPAWN_MONSTER":
+                case "SPAWN_MONSTER_CONTROL":
+                case "ANDROID_MOVE":
+                    show = false;
+            }*/
+            String Recv = "服务端发送 " + op + " [" + pHeaderStr + "] (" + packetLen + ")\r\n";
+            if (packetLen <= 50000) {
+                String RecvTo = Recv + HexTool.toString(inputInitialPacket) + "\r\n" + HexTool.toStringFromAscii(inputInitialPacket);
+                if (show) {
+                    FileoutputUtil.packetLog("日志\\log\\服务端封包.log", RecvTo);
+                    System.out.println(RecvTo);
+                } //log.info("服务端发送" + "\r\n" + HexTool.toString(inputInitialPacket));
+            } else {
+                log.info(HexTool.toString(new byte[]{inputInitialPacket[0], inputInitialPacket[1]}) + " ...");
             }
+
             final byte[] unencrypted = new byte[inputInitialPacket.length];
             System.arraycopy(inputInitialPacket, 0, unencrypted, 0, inputInitialPacket.length); // Copy the input > "unencrypted"
             final byte[] ret = new byte[unencrypted.length + 4]; // Create new bytes with length = "unencrypted" + 4

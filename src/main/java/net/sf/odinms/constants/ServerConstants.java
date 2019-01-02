@@ -42,28 +42,29 @@ public class ServerConstants {
     public static final int MTS_TAX = 10; //+% to everything
     public static final int MTS_MESO = 5000; //mesos needed
     public static final int CHANNEL_COUNT = 200;
-    //服务端输出操作
-    public static boolean 封包显示 = Boolean.parseBoolean(ServerProperties.getProperty("MinaMS.封包显示", "false"));
-    public static boolean 调试输出封包 = Boolean.parseBoolean(ServerProperties.getProperty("MinaMS.调试输出封包", "false"));
-    public static boolean 自动注册 = false;
+    //过图输出日志
+    public static boolean mapChangeLog = Boolean.parseBoolean(ServerProperties.getProperty("mapChangeLog", "false"));
+    //输出调试封包
+    public static boolean isDebug = Boolean.parseBoolean(ServerProperties.getProperty("isDebug", "false"));
+    public static boolean autoRegister = false;
     public static boolean Super_password = false;
     public static String superpw = "";
     public static final List<Balloon> lBalloon = new ArrayList();
     public static boolean 防卡号 = true;
 
     public static boolean getAutoReg() {
-        return 自动注册;
+        return autoRegister;
     }
 
     public static String ChangeAutoReg() {
-        自动注册 = !getAutoReg();
-        return 自动注册 ? "开启" : "关闭";
+        autoRegister = !getAutoReg();
+        return autoRegister ? "开启" : "关闭";
     }
 
     public static List<Balloon> getBalloons() {
         if (lBalloon.isEmpty()) {
-            lBalloon.add(new Balloon("[MinaMS服务端]致力于打造最完善的079", 236, 122));
-            lBalloon.add(new Balloon("购买请联系QQ：529926174", 0, 276));
+            lBalloon.add(new Balloon("[冒险岛Online]欢迎来到冒险岛online", 236, 122));
+            lBalloon.add(new Balloon("欢迎来到冒险岛online", 0, 276));
         }
         return lBalloon;
     }

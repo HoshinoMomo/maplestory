@@ -57,7 +57,7 @@ public class MapleFamily implements java.io.Serializable {
         super();
 
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("SELECT * FROM families WHERE familyid = ?");
             ps.setInt(1, fid);
             ResultSet rs = ps.executeQuery();
@@ -176,7 +176,7 @@ public class MapleFamily implements java.io.Serializable {
         final Collection<MapleFamily> ret = new ArrayList<MapleFamily>();
         MapleFamily g;
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("SELECT familyid FROM families");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -196,7 +196,7 @@ public class MapleFamily implements java.io.Serializable {
 
     public final void writeToDB(final boolean bDisband) {
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             if (!bDisband) {
                 if (changed) {
                     PreparedStatement ps = con.prepareStatement("UPDATE families SET notice = ? WHERE familyid = ?");
@@ -487,7 +487,7 @@ public class MapleFamily implements java.io.Serializable {
 
     public static void setOfflineFamilyStatus(int familyid, int seniorid, int junior1, int junior2, int currentrep, int totalrep, int cid) {
         try {
-            java.sql.Connection con = DatabaseConnection.getConnection();
+            java.sql.Connection con = InitHikariCP.getCollection();
             java.sql.PreparedStatement ps = con.prepareStatement("UPDATE characters SET familyid = ?, seniorid = ?, junior1 = ?, junior2 = ?, currentrep = ?, totalrep = ? WHERE id = ?");
             ps.setInt(1, familyid);
             ps.setInt(2, seniorid);
@@ -506,7 +506,7 @@ public class MapleFamily implements java.io.Serializable {
 
     public static int createFamily(int leaderId) {
         try {
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
 
             PreparedStatement ps = con.prepareStatement("INSERT INTO families (`leaderid`) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, leaderId);

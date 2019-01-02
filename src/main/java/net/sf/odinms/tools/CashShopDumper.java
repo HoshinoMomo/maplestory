@@ -42,7 +42,7 @@ public class CashShopDumper {
     public static final CashModInfo getModInfo(int sn) {
         CashModInfo ret = null;
 
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         try (PreparedStatement ps = con.prepareStatement("SELECT * FROM cashshop_modified_items WHERE serial = ?")) {
             ps.setInt(1, sn);
             try (ResultSet rs = ps.executeQuery()) {
@@ -63,7 +63,7 @@ public class CashShopDumper {
         CashModInfo m = getModInfo(20000393);
         CashItemFactory.getInstance().initialize();
         Collection<CashModInfo> list = CashItemFactory.getInstance().getAllModInfo();
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
 
         final List<Integer> itemids = new ArrayList<Integer>();
         List<Integer> qq = new ArrayList<Integer>();

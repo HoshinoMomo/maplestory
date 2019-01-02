@@ -33,7 +33,7 @@ public class Skill implements ISkill {
 
     //public static final int[] skills = new int[]{4311003, 4321000, 4331002, 4331005, 4341004, 4341007};
     private String name = "";
-    private final List<MapleStatEffect> effects = new ArrayList<MapleStatEffect>();
+    private final List<MapleStatEffect> effects = new ArrayList<>();
     private Element element;
     private byte level;
     private int id, animationTime, requiredSkill, masterLevel;
@@ -88,13 +88,13 @@ public class Skill implements ISkill {
                     action = true;
                 } else {
                     switch (id) {
-                        case 5201001:
-                        case 5221009:
-                        case 4221001:
-                        case 4321001:
-                        case 4321000:
-                        case 4331001: //o_o
-                        case 3101005: //or is this really hack
+                        case 5201001:   //快枪手
+                        case 5221009:   //心灵控制
+                        case 4221001:  //暗杀
+                        case 4321001:  //龙卷风攻击
+                        case 4321000:  //龙卷风
+                        case 4331001:  //轻功
+                        case 3101005: //or is this really hack  //爆炸弓
                             action = true;
                             break;
                     }

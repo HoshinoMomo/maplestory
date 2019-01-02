@@ -1,123 +1,85 @@
 package net.sf.odinms.server;
 
-import net.sf.odinms.database.DatabaseConnection;
-import net.sf.odinms.handling.cashshop.CashShopServer;
+import net.sf.odinms.database.pool.InitHikariCP;
 import net.sf.odinms.handling.channel.ChannelServer;
 import net.sf.odinms.handling.login.LoginServer;
 import net.sf.odinms.handling.world.World.Alliance;
 import net.sf.odinms.handling.world.World.Broadcast;
 import net.sf.odinms.handling.world.World.Family;
 import net.sf.odinms.handling.world.World.Guild;
-import net.sf.odinms.server.Timer.*;
+import net.sf.odinms.server.timer.BuffTimer;
+import net.sf.odinms.server.timer.CloneTimer;
+import net.sf.odinms.server.timer.EtcTimer;
+import net.sf.odinms.server.timer.EventTimer;
+import net.sf.odinms.server.timer.MapTimer;
+import net.sf.odinms.server.timer.PingTimer;
+import net.sf.odinms.server.timer.WorldTimer;
 import net.sf.odinms.tools.MaplePacketCreator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Set;
 
-public class ShutdownServer implements Runnable {
+public class ShutdownServer extends Thread {
 
+    private static final Logger logger = LoggerFactory.getLogger(ShutdownServer.class);
+    private static final String ANNOUNCE = "MapleStory World will stop, please get offline.";
     private static final ShutdownServer instance = new ShutdownServer();
     public static boolean running = false;
     public int mode = 0;
+
+    private ShutdownServer(){}
 
     public static ShutdownServer getInstance() {
         return instance;
     }
 
-    /*
-     * @Override public void run() { synchronized (this) { if (running) { //Run
-     * once! return; } running = true; } World.isShutDown = true; try { for
-     * (ChannelServer cs : ChannelServer.getAllInstances()) { cs.setShutdown();
-     * } LoginServer.shutdown(); Integer[] chs =
-     * ChannelServer.getAllInstance().toArray(new Integer[0]);
-     *
-     * for (int i : chs) { try { ChannelServer cs =
-     * ChannelServer.getInstance(i); synchronized (this) { cs.shutdown(this); //
-     * try { // this.wait(); // } catch (InterruptedException ex) { // } } }
-     * catch (Exception e) { e.printStackTrace(); } } //
-     * CashShopServer.shutdown(); World.Guild.save(); World.Alliance.save();
-     * World.Family.save(); DatabaseConnection.closeAll(); } catch (SQLException
-     * e) { System.err.println("THROW" + e); } WorldTimer.getInstance().stop();
-     * MapTimer.getInstance().stop(); MobTimer.getInstance().stop();
-     * BuffTimer.getInstance().stop(); CloneTimer.getInstance().stop();
-     * EventTimer.getInstance().stop(); EtcTimer.getInstance().stop();
-     *
-     * try { Thread.sleep(5000); } catch (Exception e) { //shutdown }
-     * System.exit(0); //not sure if this is really needed for ChannelServer }
-     */
-    public void shutdown() {
-        run();
-    }
 
     @Override
     public void run() {
 
         //Timer
-        Timer.WorldTimer.getInstance().stop();
-        Timer.MapTimer.getInstance().stop();
-        Timer.BuffTimer.getInstance().stop();
-        Timer.CloneTimer.getInstance().stop();
-        Timer.EventTimer.getInstance().stop();
-        Timer.EtcTimer.getInstance().stop();
+        WorldTimer.getInstance().stop();
+        MapTimer.getInstance().stop();
+        BuffTimer.getInstance().stop();
+        CloneTimer.getInstance().stop();
+        EventTimer.getInstance().stop();
+        EtcTimer.getInstance().stop();
+        PingTimer.getInstance().stop();
 
         //Merchant
         for (ChannelServer cs : ChannelServer.getAllInstances()) {
             cs.closeAllMerchant();
         }
 
-        try {
-            //Guild
-            Guild.save();
-            //Alliance
-            Alliance.save();
-            //Family
-            Family.save();
-        } catch (Exception ex) {
-        }
+        //Guild
+        Guild.save();
+        //Alliance
+        Alliance.save();
+        //Family
+        Family.save();
 
-        Broadcast.broadcastMessage(MaplePacketCreator.serverNotice(0, " 游戏服务器将关闭维护，请玩家安全下线..."));
+        Broadcast.broadcastMessage(MaplePacketCreator.serverNotice(0, ANNOUNCE));
         for (ChannelServer cs : ChannelServer.getAllInstances()) {
-            try {
-                cs.setServerMessage("游戏服务器将关闭维护，请玩家安全下线...");
-            } catch (Exception ex) {
-            }
+            cs.setServerMessage(ANNOUNCE);
         }
+
         Set<Integer> channels = ChannelServer.getAllInstance();
-
         for (Integer channel : channels) {
-            try {
-                ChannelServer cs = ChannelServer.getInstance(channel);
-                cs.saveAll();
-                cs.setFinishShutdown();
-                cs.shutdown();
-            } catch (Exception e) {
-                System.out.println("频道" + String.valueOf(channel) + " 关闭错误.");
-            }
+            ChannelServer cs = ChannelServer.getInstance(channel);
+            cs.saveAll();
+            cs.setFinishShutdown();
+            cs.shutdown();
         }
 
-        System.out.println("服务端关闭事件 1 已完成.");
-        System.out.println("服务端关闭事件 2 开始...");
+        LoginServer.shutdown();
 
-        try {
-            LoginServer.shutdown();
-            System.out.println("登录伺服器关闭完成...");
-        } catch (Exception e) {
-        }
-        try {
-            CashShopServer.shutdown();
-            System.out.println("商城伺服器关闭完成...");
-        } catch (Exception e) {
-        }
-        try {
-            DatabaseConnection.closeAll();
-        } catch (Exception e) {
-        }
-        //Timer.PingTimer.getInstance().stop();
-        System.out.println("服务端关闭事件 2 已完成.");
+        InitHikariCP.close();
+
         try {
             Thread.sleep(1000);
         } catch (Exception e) {
             System.out.println("关闭服务端错误 - 2" + e);
-
         }
         System.exit(0);
 

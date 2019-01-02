@@ -22,7 +22,7 @@ package net.sf.odinms.server.maps;
 
 import net.sf.odinms.client.MapleCharacter;
 import net.sf.odinms.client.MapleClient;
-import net.sf.odinms.client.anticheat.CheatingOffense;
+import net.sf.odinms.client.anticheat.CheatingOffenseEnum;
 import net.sf.odinms.constants.GameConstants;
 import net.sf.odinms.server.MapleStatEffect;
 import net.sf.odinms.tools.MaplePacketCreator;
@@ -191,12 +191,12 @@ public class MapleSummon extends AbstractAnimatedMapleMapObject {
     public final void CheckSummonAttackFrequency(final MapleCharacter chr, final int tickcount) {
         final int tickdifference = (tickcount - lastSummonTickCount);
         if (tickdifference < GameConstants.getSummonAttackDelay(skill)) {
-            chr.getCheatTracker().registerOffense(CheatingOffense.召唤兽快速攻击);
+            chr.getCheatTracker().registerOffense(CheatingOffenseEnum.召唤兽快速攻击);
         }
         final long STime_TC = System.currentTimeMillis() - tickcount;
         final long S_C_Difference = Server_ClientSummonTickDiff - STime_TC;
         if (S_C_Difference > 200) {
-            chr.getCheatTracker().registerOffense(CheatingOffense.召唤兽快速攻击);
+            chr.getCheatTracker().registerOffense(CheatingOffenseEnum.召唤兽快速攻击);
         }
         Summon_tickResetCount++;
         if (Summon_tickResetCount > 4) {

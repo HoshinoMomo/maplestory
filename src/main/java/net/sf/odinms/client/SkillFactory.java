@@ -28,6 +28,8 @@ import net.sf.odinms.provider.MapleDataProvider;
 import net.sf.odinms.provider.MapleDataProviderFactory;
 import net.sf.odinms.provider.MapleDataTool;
 import net.sf.odinms.tools.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -38,6 +40,8 @@ import java.util.Map;
 
 public class SkillFactory {
 
+    private static final Logger logger = LoggerFactory.getLogger(SkillFactory.class);
+
     private static final Map<Integer, ISkill> skills = new HashMap<Integer, ISkill>();
     private static final Map<Integer, List<Integer>> skillsByJob = new HashMap<Integer, List<Integer>>();
     private static final Map<Integer, SummonSkillEntry> SummonSkillInformation = new HashMap<Integer, SummonSkillEntry>();
@@ -46,9 +50,10 @@ public class SkillFactory {
 
     public static final ISkill getSkill(final int id) {
         if (skills.size() != 0) {
-            return skills.get(Integer.valueOf(id));
+            return skills.get(id);
         }
-        //System.out.println("加载 技能完成 :::");
+        logger.info("技能加载完成.....");
+
         final MapleDataProvider datasource = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath") + "/Skill.wz"));
         final MapleDataDirectoryEntry root = datasource.getRoot();
 
@@ -92,12 +97,12 @@ public class SkillFactory {
         return null;
     }
     public static ISkill getSkill1(int id) {
-        ISkill ret = (ISkill) skills.get(Integer.valueOf(id));
+        ISkill ret = skills.get(id);
         if (ret != null) {
             return ret;
         }
         synchronized (skills) {
-            ret = (ISkill) skills.get(Integer.valueOf(id));
+            ret = skills.get(id);
             if (ret == null) {
                 int job = id / 10000;
                 MapleData skillroot = datasource.getData(StringUtil.getLeftPaddedStr(String.valueOf(job), '0', 3) + ".img");
@@ -105,7 +110,7 @@ public class SkillFactory {
                 if (skillData != null) {
                     ret = Skill.loadFromData(id, skillData);
                 }
-                skills.put(Integer.valueOf(id), ret);
+                skills.put(id, ret);
             }
             return ret;
         }

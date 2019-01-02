@@ -18,7 +18,7 @@ import net.sf.odinms.handling.channel.ChannelServer;
 import net.sf.odinms.provider.MapleData;
 import net.sf.odinms.provider.MapleDataTool;
 import net.sf.odinms.server.MapleCarnivalFactory.MCSkill;
-import net.sf.odinms.server.Timer.BuffTimer;
+import net.sf.odinms.server.timer.Timer.BuffTimer;
 import net.sf.odinms.server.life.MapleMonster;
 import net.sf.odinms.server.maps.MapleDoor;
 import net.sf.odinms.server.maps.MapleMap;

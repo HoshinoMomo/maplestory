@@ -34,7 +34,6 @@ import net.sf.odinms.client.inventory.ItemLoader;
 import net.sf.odinms.client.inventory.MapleInventory;
 import net.sf.odinms.client.inventory.MapleInventoryType;
 import net.sf.odinms.constants.GameConstants;
-import net.sf.odinms.database.DatabaseConnection;
 import net.sf.odinms.handling.channel.ChannelServer;
 import net.sf.odinms.handling.channel.MapleGuildRanking;
 import net.sf.odinms.handling.world.MapleParty;
@@ -53,7 +52,7 @@ import net.sf.odinms.server.MerchItemPackage;
 import net.sf.odinms.server.Randomizer;
 import net.sf.odinms.server.SpeedRunner;
 import net.sf.odinms.server.StructPotentialItem;
-import net.sf.odinms.server.Timer;
+import net.sf.odinms.server.timer.Timer;
 import net.sf.odinms.server.life.MapleLifeFactory;
 import net.sf.odinms.server.life.MapleMonster;
 import net.sf.odinms.server.life.MapleMonsterInformationProvider;
@@ -944,7 +943,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
     public void giveMerchantMesos() {
         long mesos = 0;
         try {
-            Connection con = (Connection) DatabaseConnection.getConnection();
+            Connection con = (Connection) InitHikariCP.getCollection();
             PreparedStatement ps = (PreparedStatement) con.prepareStatement("SELECT * FROM hiredmerchants WHERE merchantid = ?");
             ps.setInt(1, getPlayer().getId());
             ResultSet rs = ps.executeQuery();
@@ -978,7 +977,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
     public long getMerchantMesos() {
         long mesos = 0;
         try {
-            Connection con = (Connection) DatabaseConnection.getConnection();
+            Connection con = (Connection) InitHikariCP.getCollection();
             PreparedStatement ps = (PreparedStatement) con.prepareStatement("SELECT * FROM hiredmerchants WHERE merchantid = ?");
             ps.setInt(1, getPlayer().getId());
             ResultSet rs = ps.executeQuery();
@@ -1013,7 +1012,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
     }
 
     private static final MerchItemPackage loadItemFrom_Database(final int charid, final int accountid) {
-        final Connection con = DatabaseConnection.getConnection();
+        final Connection con = InitHikariCP.getCollection();
 
         try {
             PreparedStatement ps = con.prepareStatement("SELECT * from hiredmerch where characterid = ? OR accountid = ?");
@@ -1617,7 +1616,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
         int money = 0;
         try {
             int cid = getPlayer().getAccountID();
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement limitCheck = con.prepareStatement("SELECT * FROM accounts WHERE id=" + cid + "");
             ResultSet rs = limitCheck.executeQuery();
             if (rs.next()) {
@@ -1634,7 +1633,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
     public void setzb(int slot) {
         try {
             int cid = getPlayer().getAccountID();
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             try (PreparedStatement ps = con.prepareStatement("UPDATE accounts SET money =money+ " + slot + " WHERE id = " + cid + "")) {
                 ps.executeUpdate();
             }
@@ -1647,7 +1646,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
         int moneyb = 0;
         try {
             int cid = getPlayer().getAccountID();
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             ResultSet rs;
             try (PreparedStatement limitCheck = con.prepareStatement("SELECT * FROM accounts WHERE id=" + cid + "")) {
                 rs = limitCheck.executeQuery();
@@ -1665,7 +1664,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
     public void setmoneyb(int slot) {
         try {
             int cid = getPlayer().getAccountID();
-            Connection con = DatabaseConnection.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("UPDATE accounts SET moneyb =moneyb+ " + slot + " WHERE id = " + cid + "");
             ps.executeUpdate();
             ps.close();

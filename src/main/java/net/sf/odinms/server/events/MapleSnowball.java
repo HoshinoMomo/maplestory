@@ -23,7 +23,7 @@ package net.sf.odinms.server.events;
 
 import net.sf.odinms.client.MapleCharacter;
 import net.sf.odinms.client.MapleDisease;
-import net.sf.odinms.server.Timer.EventTimer;
+import net.sf.odinms.server.timer.Timer.EventTimer;
 import net.sf.odinms.server.life.MobSkillFactory;
 import net.sf.odinms.server.maps.MapleMap;
 import net.sf.odinms.tools.MaplePacketCreator;

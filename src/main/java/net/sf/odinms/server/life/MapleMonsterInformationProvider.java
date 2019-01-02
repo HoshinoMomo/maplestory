@@ -57,7 +57,7 @@ public class MapleMonsterInformationProvider {
         ResultSet rs = null;
 
         try {
-            final Connection con = DatabaseConnection.getConnection();
+            final Connection con = InitHikariCP.getCollection();
             ps = con.prepareStatement("SELECT * FROM drop_data_global WHERE chance > 0");
             rs = ps.executeQuery();
 
@@ -98,7 +98,7 @@ public class MapleMonsterInformationProvider {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            ps = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM drop_data WHERE dropperid = ?");
+            ps = InitHikariCP.execute("SELECT * FROM drop_data WHERE dropperid = ?");
             ps.setInt(1, monsterId);
             rs = ps.executeQuery();
             int itemid;

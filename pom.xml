@@ -10,6 +10,12 @@
   <version>1.0-SNAPSHOT</version>
   <dependencies>
     <dependency>
+      <groupId>org.yaml</groupId>
+      <artifactId>snakeyaml</artifactId>
+      <version>1.23</version>
+    </dependency>
+
+    <dependency>
       <groupId>org.apache.mina</groupId>
       <artifactId>mina-core</artifactId>
       <version>2.0.19</version>
@@ -32,6 +38,12 @@
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
       <version>8.0.13</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.zaxxer</groupId>
+      <artifactId>HikariCP</artifactId>
+      <version>3.1.0</version>
     </dependency>
   </dependencies>
 
@@ -58,7 +70,7 @@
           <archive>
             <manifest>
               <!-- 此处指定main方法入口的class -->
-              <mainClass>net.sf.odinms.server.Start</mainClass>
+              <mainClass>net.sf.odinms.Bootstrap</mainClass>
             </manifest>
           </archive>
           </configuration>

@@ -21,12 +21,11 @@
 package net.sf.odinms.scripting;
 
 import net.sf.odinms.client.MapleCharacter;
-import net.sf.odinms.database.DatabaseConnection;
 import net.sf.odinms.handling.channel.ChannelServer;
 import net.sf.odinms.handling.world.MapleParty;
 import net.sf.odinms.server.MapleSquad;
 import net.sf.odinms.server.Randomizer;
-import net.sf.odinms.server.Timer.EventTimer;
+import net.sf.odinms.server.timer.Timer.EventTimer;
 import net.sf.odinms.server.events.MapleEvent;
 import net.sf.odinms.server.events.MapleEventType;
 import net.sf.odinms.server.life.MapleLifeFactory;
@@ -364,7 +363,7 @@ public class EventManager {
     }
     
         public int online() {
-        Connection con = DatabaseConnection.getConnection();
+        Connection con = InitHikariCP.getCollection();
         PreparedStatement ps;
         ResultSet re;
         int count = 0;

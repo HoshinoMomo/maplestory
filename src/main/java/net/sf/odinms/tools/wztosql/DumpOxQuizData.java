@@ -25,7 +25,7 @@ import java.util.logging.Logger;
  */
 public class DumpOxQuizData {
 
-    private final Connection con = DatabaseConnection.getConnection();
+    private final Connection con = InitHikariCP.getCollection();
     static CharsetEncoder asciiEncoder = Charset.forName("GBK").newEncoder();
 
     public static void main(String args[]) {

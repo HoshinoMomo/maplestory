@@ -11,59 +11,57 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class Timer {
 
-    private ScheduledThreadPoolExecutor ses;
-    protected String file, name;
+    private ScheduledThreadPoolExecutor scheduledThreadPoolExecutor;
+    protected String file;
+    protected String name;
 
     public void start() {
-        if (ses != null && !ses.isShutdown() && !ses.isTerminated()) {
+        if (scheduledThreadPoolExecutor != null && !scheduledThreadPoolExecutor.isShutdown() && !scheduledThreadPoolExecutor.isTerminated()) {
             return;
         }
-        file = "日志/logs/Log_" + name + "_Except.rtf";
-        final String tname = name + Randomizer.nextInt(); //just to randomize it. nothing too big
+        file = "logs/" + name + "_.rtf";
         final ThreadFactory thread = new ThreadFactory() {
 
             private final AtomicInteger threadNumber = new AtomicInteger(1);
-
             @Override
             public Thread newThread(Runnable r) {
                 final Thread t = new Thread(r);
-                t.setName(tname + "-Worker-" + threadNumber.getAndIncrement());
+                t.setName(name + threadNumber.getAndIncrement());
                 return t;
             }
         };
 
-        final ScheduledThreadPoolExecutor stpe = new ScheduledThreadPoolExecutor(3, thread);
-        stpe.setKeepAliveTime(10, TimeUnit.MINUTES);
-        stpe.allowCoreThreadTimeOut(true);
-        stpe.setCorePoolSize(4);
-        stpe.setMaximumPoolSize(8);
-        stpe.setContinueExistingPeriodicTasksAfterShutdownPolicy(false);
-        ses = stpe;
+        scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(3, thread);
+        scheduledThreadPoolExecutor.setKeepAliveTime(10, TimeUnit.MINUTES);
+        scheduledThreadPoolExecutor.allowCoreThreadTimeOut(true);
+        scheduledThreadPoolExecutor.setCorePoolSize(4);
+        scheduledThreadPoolExecutor.setMaximumPoolSize(8);
+        scheduledThreadPoolExecutor.setContinueExistingPeriodicTasksAfterShutdownPolicy(false);
     }
 
     public void stop() {
-        ses.shutdown();
+        scheduledThreadPoolExecutor.shutdown();
     }
 
     public ScheduledFuture<?> register(Runnable r, long repeatTime, long delay) {
-        if (ses == null) {
+        if (scheduledThreadPoolExecutor == null) {
             return null;
         }
-        return ses.scheduleAtFixedRate(new LoggingSaveRunnable(r, file), delay, repeatTime, TimeUnit.MILLISECONDS);
+        return scheduledThreadPoolExecutor.scheduleAtFixedRate(new LoggingSaveRunnable(r, file), delay, repeatTime, TimeUnit.MILLISECONDS);
     }
 
     public ScheduledFuture<?> register(Runnable r, long repeatTime) {
-        if (ses == null) {
+        if (scheduledThreadPoolExecutor == null) {
             return null;
         }
-        return ses.scheduleAtFixedRate(new LoggingSaveRunnable(r, file), 0, repeatTime, TimeUnit.MILLISECONDS);
+        return scheduledThreadPoolExecutor.scheduleAtFixedRate(new LoggingSaveRunnable(r, file), 0, repeatTime, TimeUnit.MILLISECONDS);
     }
 
     public ScheduledFuture<?> schedule(Runnable r, long delay) {
-        if (ses == null) {
+        if (scheduledThreadPoolExecutor == null) {
             return null;
         }
-        return ses.schedule(new LoggingSaveRunnable(r, file), delay, TimeUnit.MILLISECONDS);
+        return scheduledThreadPoolExecutor.schedule(new LoggingSaveRunnable(r, file), delay, TimeUnit.MILLISECONDS);
     }
 
     public ScheduledFuture<?> scheduleAtTimestamp(Runnable r, long timestamp) {

@@ -30,7 +30,7 @@ public final class Configuration {
         }
     }
     /* try {
-         PreparedStatement ps = InitHikariCP.execute("SELECT * FROM auth_server_channel_ip");
+         PreparedStatement ps = HikariCPProxy.execute("SELECT * FROM auth_server_channel_ip");
          ResultSet rs = ps.executeQuery();
          while (rs.next()) {
              props.put(rs.getString("name") + rs.getInt("channelid"), rs.getString("value"));

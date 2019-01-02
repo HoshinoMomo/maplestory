@@ -3,7 +3,7 @@ package net.sf.odinms;
 import net.sf.odinms.client.MapleCharacter;
 import net.sf.odinms.client.SkillFactory;
 import net.sf.odinms.constants.ServerConstants;
-import net.sf.odinms.database.pool.InitHikariCP;
+import net.sf.odinms.database.pool.HikariCPProxy;
 import net.sf.odinms.handling.MapleServerHandler;
 import net.sf.odinms.handling.cashshop.CashShopServer;
 import net.sf.odinms.handling.channel.ChannelServer;
@@ -44,17 +44,17 @@ public class Bootstrap {
     public static void main(String[] args) {
         //init database collection pool
         //if collection pool is close means init fail
-        if(!InitHikariCP.init()){
+        if(!HikariCPProxy.init()){
             return;
         }
         //auto open autoRegister
         ServerConstants.autoRegister = true;
         try {
             //set online user to offline
-            try (PreparedStatement ps = InitHikariCP.execute("UPDATE accounts SET loggedin = 0 WHERE loggedin=1")) {
+            try (PreparedStatement ps = HikariCPProxy.execute("UPDATE accounts SET loggedin = 0 WHERE loggedin=1")) {
                 ps.executeUpdate();
             }
-            try (PreparedStatement ps = InitHikariCP.execute("UPDATE accounts SET lastGainHM = 0")) {
+            try (PreparedStatement ps = HikariCPProxy.execute("UPDATE accounts SET lastGainHM = 0")) {
                 ps.executeUpdate();
             }
         } catch (SQLException e) {

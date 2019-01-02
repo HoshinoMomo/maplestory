@@ -13,13 +13,13 @@ import java.util.Objects;
 
 /**
  * @author EasyZhang
- * hikariCP 初始化
+ * hikariCP
  * @date 2018/12/27 -  17:04
  */
 
-public class InitHikariCP {
+public class HikariCPProxy {
 
-    private static final Logger logger = LoggerFactory.getLogger(InitHikariCP.class);
+    private static final Logger logger = LoggerFactory.getLogger(HikariCPProxy.class);
     private static HikariDataSource ds = null;
 
     public static boolean init(){

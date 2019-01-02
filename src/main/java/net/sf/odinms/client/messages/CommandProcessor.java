@@ -31,7 +31,7 @@ import net.sf.odinms.client.messages.commands.PlayerCommand;
 import net.sf.odinms.constants.ServerConstants;
 import net.sf.odinms.constants.ServerConstants.CommandType;
 import net.sf.odinms.constants.ServerConstants.PlayerGMRank;
-import net.sf.odinms.database.pool.InitHikariCP;
+import net.sf.odinms.database.pool.HikariCPProxy;
 import net.sf.odinms.tools.FileoutputUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -167,7 +167,7 @@ public class CommandProcessor {
 
         PreparedStatement ps = null;
         try {
-            ps = InitHikariCP.execute("INSERT INTO gmlog (cid, name, command, mapid, ip) VALUES (?, ?, ?, ?, ?)");
+            ps = HikariCPProxy.execute("INSERT INTO gmlog (cid, name, command, mapid, ip) VALUES (?, ?, ?, ?, ?)");
             ps.setInt(1, player.getId());
             ps.setString(2, player.getName());
             ps.setString(3, command);

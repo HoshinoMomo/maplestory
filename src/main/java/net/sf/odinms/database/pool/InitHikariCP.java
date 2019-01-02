@@ -67,4 +67,11 @@ public class InitHikariCP {
             throw new DatabaseException("执行SQL异常");
         }
     }
+
+    /**
+     * close database cp pool
+     */
+    public static void close(){
+        ds.close();
+    }
 }

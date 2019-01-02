@@ -17,7 +17,6 @@ import net.sf.odinms.server.ItemMakerFactory;
 import net.sf.odinms.server.MapleCarnivalFactory;
 import net.sf.odinms.server.MapleItemInformationProvider;
 import net.sf.odinms.server.RandomRewards;
-import net.sf.odinms.server.ServerProperties;
 import net.sf.odinms.server.ShutdownServer;
 import net.sf.odinms.server.SpeedRunner;
 import net.sf.odinms.server.config.Configuration;
@@ -199,7 +198,7 @@ public class Bootstrap {
     }
 
     /**
-     * when jvm close,it will execute
+     * when jvm close,it will work
      */
     private static void addShutdownHook() {
         logger.info("addShutdownHook....");

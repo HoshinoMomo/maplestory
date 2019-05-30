@@ -21,7 +21,7 @@
 package net.sf.odinms.client;
 
 import net.sf.odinms.constants.GameConstants;
-import net.sf.odinms.database.DatabaseConnection;
+import net.sf.odinms.database.pool.InitHikariCP;
 import net.sf.odinms.server.MapleItemInformationProvider;
 import net.sf.odinms.tools.data.output.MaplePacketLittleEndianWriter;
 import net.sf.odinms.tools.packet.MonsterBookPacket;

@@ -3,7 +3,7 @@ package net.sf.odinms.server.quest;
 import net.sf.odinms.client.MapleCharacter;
 import net.sf.odinms.client.MapleQuestStatus;
 import net.sf.odinms.constants.GameConstants;
-import net.sf.odinms.database.DatabaseConnectionWZ;
+import net.sf.odinms.database.pool.InitHikariCP;
 import net.sf.odinms.scripting.NPCScriptManager;
 import net.sf.odinms.tools.MaplePacketCreator;
 import net.sf.odinms.tools.Pair;
@@ -223,7 +223,7 @@ public class MapleQuest implements Serializable {
 
     public static void initQuests() {
         try {
-            Connection con = DatabaseConnectionWZ.getConnection();
+            Connection con = InitHikariCP.getCollection();
             PreparedStatement ps = con.prepareStatement("SELECT * FROM wz_questdata");
             PreparedStatement psr = con.prepareStatement("SELECT * FROM wz_questreqdata WHERE questid = ?");
             PreparedStatement psa = con.prepareStatement("SELECT * FROM wz_questactdata WHERE questid = ?");

@@ -40,7 +40,7 @@ public class InitHikariCP {
      * we know when ds is closed it will throw a exception
      * so restart the hikariCP
      */
-    private static Connection getCollection(){
+    public static Connection getCollection(){
         if(Objects.isNull(ds) || ds.isClosed()){
             init();
         }

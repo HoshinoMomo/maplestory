@@ -20,7 +20,7 @@
  */
 package net.sf.odinms.server.life;
 
-import net.sf.odinms.database.pool.InitHikariCP;
+import net.sf.odinms.database.pool.HikariCPProxy;
 import net.sf.odinms.provider.MapleData;
 import net.sf.odinms.provider.MapleDataDirectoryEntry;
 import net.sf.odinms.provider.MapleDataFileEntry;
@@ -112,7 +112,7 @@ public class MapleLifeFactory {
             }
         }*/
         try {
-            try (PreparedStatement ps = InitHikariCP.execute("SELECT * FROM wz_npcnamedata ORDER BY `npc`"); ResultSet rs = ps.executeQuery()) {
+            try (PreparedStatement ps = HikariCPProxy.execute("SELECT * FROM wz_npcnamedata ORDER BY `npc`"); ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     npcNames.put(rs.getInt("npc"), rs.getString("name"));
                 }
@@ -144,7 +144,7 @@ public class MapleLifeFactory {
                 }
             }
         }
-        Connection con = InitHikariCP.getCollection();
+        Connection con = HikariCPProxy.getCollection();
         try {
             try (PreparedStatement ps = con.prepareStatement("SELECT * FROM wz_npcnamedata ORDER BY `npc`"); ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {

@@ -1,6 +1,6 @@
 package net.sf.odinms.server;
 
-import net.sf.odinms.database.pool.InitHikariCP;
+import net.sf.odinms.database.pool.HikariCPProxy;
 import net.sf.odinms.handling.channel.ChannelServer;
 import net.sf.odinms.handling.login.LoginServer;
 import net.sf.odinms.handling.world.World.Alliance;
@@ -74,7 +74,7 @@ public class ShutdownServer extends Thread {
 
         LoginServer.shutdown();
 
-        InitHikariCP.close();
+        HikariCPProxy.close();
 
         try {
             Thread.sleep(1000);

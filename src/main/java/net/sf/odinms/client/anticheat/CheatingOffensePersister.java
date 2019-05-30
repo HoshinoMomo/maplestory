@@ -67,7 +67,7 @@ public class CheatingOffensePersister {
             }
 
             /*try {
-             Connection con = InitHikariCP.getCollection();
+             Connection con = HikariCPProxy.getCollection();
              PreparedStatement insertps = con.prepareStatement("INSERT INTO cheatlog (characterid, offense, count, lastoffensetime, param) VALUES (?, ?, ?, ?, ?)", DatabaseConnection.RETURN_GENERATED_KEYS);
              PreparedStatement updateps = con.prepareStatement("UPDATE cheatlog SET count = ?, lastoffensetime = ?, param = ? WHERE id = ?");
              for (CheatingOffenseEntry offense : offenses) {

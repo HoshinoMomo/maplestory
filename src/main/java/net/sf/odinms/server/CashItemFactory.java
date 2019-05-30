@@ -1,6 +1,6 @@
 package net.sf.odinms.server;
 
-import net.sf.odinms.database.pool.InitHikariCP;
+import net.sf.odinms.database.pool.HikariCPProxy;
 import net.sf.odinms.provider.MapleData;
 import net.sf.odinms.provider.MapleDataProvider;
 import net.sf.odinms.provider.MapleDataProviderFactory;
@@ -173,7 +173,7 @@ public class CashItemFactory {
                 return null;
             }
             try {
-                PreparedStatement ps = InitHikariCP.execute("SELECT * FROM cashshop_modified_items WHERE serial = ?");
+                PreparedStatement ps = HikariCPProxy.execute("SELECT * FROM cashshop_modified_items WHERE serial = ?");
                 ps.setInt(1, sn);
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {

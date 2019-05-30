@@ -29,7 +29,18 @@ public final class Configuration {
             System.exit(-1);
         }
     }
-
+    /* try {
+         PreparedStatement ps = HikariCPProxy.execute("SELECT * FROM auth_server_channel_ip");
+         ResultSet rs = ps.executeQuery();
+         while (rs.next()) {
+             props.put(rs.getString("name") + rs.getInt("channelid"), rs.getString("value"));
+         }
+         rs.close();
+         ps.close();
+     } catch (SQLException ex) {
+         ex.printStackTrace();
+         System.exit(0); //Big ass error.
+     }*/
     public static void reload(){
         init();
     }

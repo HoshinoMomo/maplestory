@@ -55,7 +55,7 @@ public class RankingWorker {
             public void run() {
                 try {
 
-                    con = InitHikariCP.getCollection();
+                    con = HikariCPProxy.getCollection();
                     updateRanking();
                     System.out.println("Ranking update");
                 } catch (Exception ex) {
